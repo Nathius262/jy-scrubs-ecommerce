@@ -1,0 +1,24 @@
+{
+  "name": "jy-scrubs-platform",
+  "version": "1.0.0",
+  "description": "**JY Scrubs** is a fully functional e-commerce platform that serves customers by selling scrubs and offering medical consultation services. The store operates globally for scrubs with prices displayed in the user’s local currency, and the consultation service is available exclusively for customers in Nigeria.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nathius262/jy-scrubs-ecommerce.git"
+  },
+  "keywords": [
+    "e-commerce",
+    "jy-scrubs",
+    "online-store"
+  ],
+  "author": "jy-scrubs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nathius262/jy-scrubs-ecommerce/issues"
+  },
+  "homepage": "https://github.com/Nathius262/jy-scrubs-ecommerce#readme"
+}
