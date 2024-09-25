@@ -39,7 +39,7 @@ export const getUserById = async (req, res) => {
   }
 };
 
-// Create a new user with multiple roles
+// Create a new user with the default role of 'User'
 export const createUser = async (req, res) => {
   const { name, username, email, password, roleIds } = req.body; // Expecting an array of roleIds
   
@@ -47,12 +47,21 @@ export const createUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   
   try {
+    // Find the default 'User' role by its name (or ID, if you prefer using IDs)
+    const userRole = await db.Role.findOne({ where: { name: 'User' } });
+    
+    if (!userRole) {
+      return res.status(500).json({ error: 'Default role "User" not found in the system' });
+    }
+
+    // Create the user
     const newUser = await db.User.create({ name, username, email, password: hashedPassword });
 
-    // Associate roles if provided
-    if (roleIds && roleIds.length > 0) {
-      await newUser.setRoles(roleIds); // Use setRoles to link the user with the roles
-    }
+    // Combine the 'User' role with any roles provided in the request
+    const allRoles = roleIds && roleIds.length > 0 ? [userRole.id, ...roleIds] : [userRole.id];
+
+    // Associate roles with the newly created user
+    await newUser.setRoles(allRoles); // `setRoles` to link the user with the roles
 
     // Fetch the user with associated roles for response
     const userWithRoles = await db.User.findByPk(newUser.id, {
