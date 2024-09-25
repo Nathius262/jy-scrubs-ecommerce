@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "**JY Scrubs** is a fully functional e-commerce platform that serves customers by selling scrubs and offering medical consultation services. The store operates globally for scrubs with prices displayed in the user’s local currency, and the consultation service is available exclusively for customers in Nigeria.",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server",
+    "dev": "nodemon server",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:generate": "npx sequelize-cli migration:generate --name",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
