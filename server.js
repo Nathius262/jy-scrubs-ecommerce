@@ -13,6 +13,10 @@ import staticFiles from "./config/staticFiles.js"
 import hbs from "./config/settings.js"
 import removeTrailingSlash  from './middlewares/normalizer.js';
 import db from './models/index.js'
+import { createRequire } from 'module';
+const require = createRequire
+
+import adminSeeder  from './seeders/admin-seeder.cjs'; 
 
 //route import
 
@@ -50,17 +54,22 @@ app.use(pageNotFound);
 app.use(internalServerError);
 
 
+async function initializeAdmin() {
+  try {
+    // Ensure admin user is seeded
+    await adminSeeder.seedAdmin(db.sequelize.getQueryInterface(), db.Sequelize);
+  } catch (error) {
+    console.error('Error while initializing admin user:', error);
+  }
+}
 
-// Test the database connection
-db.sequelize.authenticate()
-  .then(() => {
-    console.log('Connection to the database established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+// Sync database and run seeder if necessary
+db.sequelize.sync().then(() => {
+  initializeAdmin(); // Ensure the admin seeder runs
+
+  // Start the Express server
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
-
-// Start the Express server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
