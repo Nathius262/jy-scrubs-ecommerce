@@ -1,4 +1,4 @@
-import db from '../../models/index.js'; // Adjust the path as necessary
+import db from '../../models/index.cjs'; // Adjust the path as necessary
 import bcrypt from 'bcrypt';
 
 // Get all users with their roles
@@ -7,10 +7,10 @@ export const getAllUsers = async (req, res) => {
     const users = await db.User.findAll({
       include: {
         model: db.Role,
-        as: 'roles', // Alias for the roles association
-        through: { attributes: [] } // Exclude attributes from the join table
+        as: 'roles',
+        through: { attributes: [] }
       }
-    });
+    })
     res.status(200).json(users);
   } catch (error) {
     console.error('Error fetching users:', error);
