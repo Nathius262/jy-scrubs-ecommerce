@@ -1,4 +1,4 @@
-import db from '../../models/index.js';
+import db from '../../models/index.cjs';
 
 // Get all carts
 export const getAllCarts = async (req, res) => {
