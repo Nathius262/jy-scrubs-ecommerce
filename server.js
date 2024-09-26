@@ -66,12 +66,9 @@ async function initializeAdmin() {
 }
 
 // Sync database and run seeder if necessary
-db.sequelize.sync().then(() => {
-  initializeAdmin(); // Ensure the admin seeder runs
+//initializeAdmin(); // Ensure the admin seeder runs
 
   // Start the Express server
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
