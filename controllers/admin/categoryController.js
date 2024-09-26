@@ -1,4 +1,4 @@
-import db from '../../models/index.js'; // Adjust the path as necessary
+import db from '../../models/index.cjs'; // Adjust the path as necessary
 
 // Get all categories
 export const getAllCategories = async (req, res) => {
