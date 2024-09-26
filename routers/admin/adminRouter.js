@@ -1,5 +1,9 @@
 import { Router } from 'express';
 
+import { adminAuthMiddleware } from '../../middlewares/authMiddleware.js';
+
+import {loginAdmin, renderloginAdmin} from '../../controllers/authController.js'
+
 import {getUserById, getAllUsers, createUser, updateUser, deleteUser} from "../../controllers/admin/userController.js"
 import {getAllRoles, getRoleById, createRole, updateRole, deleteRole} from "../../controllers/admin/roleController.js"
 import {getProductById, createProduct, updateProduct, deleteProduct, getAllProducts} from '../../controllers/admin/productController.js'
@@ -8,6 +12,18 @@ import {getAllCarts, getCartById, createCart, updateCart, deleteCart} from '../.
 import {getAllOrders, getOrderById, createOrder, updateOrder, deleteOrder} from '../../controllers/admin/orderController.js'
 
 const router = Router()
+
+//////////////////////
+//////////////////////
+//// USER ROUTER /////
+//////////////////////
+//////////////////////
+
+router.route('/login')
+    .get(renderloginAdmin)
+    .post(loginAdmin);
+
+router.use(adminAuthMiddleware)
 
 
 //////////////////////
