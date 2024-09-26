@@ -1,4 +1,4 @@
-import db from '../../models/index.js';
+import db from '../../models/index.cjs';
 
 // Get all roles
 export const getAllRoles = async (req, res) => {
