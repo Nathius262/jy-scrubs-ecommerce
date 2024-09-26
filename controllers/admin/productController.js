@@ -1,4 +1,4 @@
-import db from '../../models/index.js'; // Adjust the path as necessary
+import db from '../../models/index.cjs'; // Adjust the path as necessary
 
 // Get all products with their categories
 export const getAllProducts = async (req, res) => {
