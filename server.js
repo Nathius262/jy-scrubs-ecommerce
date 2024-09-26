@@ -12,13 +12,14 @@ import {internalServerError, pageNotFound} from './middlewares/errorHandler.js'
 import staticFiles from "./config/staticFiles.js"
 import hbs from "./config/settings.js"
 import removeTrailingSlash  from './middlewares/normalizer.js';
-import db from './models/index.js'
+import db from './models/index.cjs'
 import { createRequire } from 'module';
 const require = createRequire
 
 import adminSeeder  from './seeders/admin-seeder.cjs'; 
 
 //route import
+import adminRouter from './routers/admin/adminRouter.js'
 
 
 dotenv.config()
@@ -47,6 +48,7 @@ app.use(staticFiles);
 
 
 //app.use('/', rootRouter);
+app.use('/admin/', adminRouter);
 
 
 //middlewares\
