@@ -2,7 +2,7 @@ import { verifyToken } from '../helpers/authHelper.js';
 
 // Middleware to protect admin routes
 export const adminAuthMiddleware = (req, res, next) => {
-  const token = req.cookies.adminToken; // Get token from the 'adminToken' cookie
+  const token = req.cookies.token; // Get token from the 'adminToken' cookie
 
   if (!token) {
     return res.status(401).json({ message: 'Access Denied: No Token Provided' });
