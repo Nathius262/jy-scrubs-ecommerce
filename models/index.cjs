@@ -4,13 +4,17 @@ const path = require('path');
 const configFile = require('../config/config.cjs'); // Adjust based on your config
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV;
 const config = configFile[env];
 
 const db = {};
 
 // Initialize Sequelize
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(config.database, config.username, config.password, config,
+  {define: {
+    underscored: false, // Disable automatic snake_case conversion
+  },}
+);
 
 const modelFiles = fs.readdirSync(__dirname)
   .filter(file => {
