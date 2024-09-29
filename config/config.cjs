@@ -30,6 +30,6 @@ module.exports = {
       },
       connectTimeout: 60000,
     },
-    logging: console.log,    // Disable logging in production for performance
+    logging: false //console.log,    // Disable logging in production for performance
   }
 };
