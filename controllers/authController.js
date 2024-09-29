@@ -15,7 +15,7 @@ export const loginAdmin = async (req, res) => {
             include: {
                 model: db.Role,
                 as: 'roles',
-                where: { roleName: 'admin' }, // Ensure the user has the admin role
+                where: { role_name: 'admin' }, // Ensure the user has the admin role
             }
         });
 
