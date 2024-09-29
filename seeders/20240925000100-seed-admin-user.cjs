@@ -23,7 +23,7 @@ module.exports = {
 
     // Remove the roles
     await queryInterface.bulkDelete('Roles', {
-      roleName: { [Sequelize.Op.in]: ['admin', 'staff', 'user'] }
+      role_name: { [Sequelize.Op.in]: ['admin', 'staff', 'user'] }
     }, {});
   }
 };
