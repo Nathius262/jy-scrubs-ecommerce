@@ -8,12 +8,34 @@ dotenv.config();
 const DEFAULT_PASSWORD = process.env.USER_ADMIN_PASSWORD;
 
 // Helper to check if the Roles table exists
-async function doesTableExist(queryInterface, tableName) {
-  const tableExists = await queryInterface.sequelize.query(
-    `SELECT name FROM sqlite_master WHERE type='table' AND name='${tableName}';`
-  );
-  return tableExists[0].length > 0;
-}
+const doesTableExist = async (queryInterface, tableName) => {
+  // Check the dialect and perform different queries based on the DBMS
+  const { dialect } = queryInterface.sequelize.options;
+
+  if (dialect === 'postgres') {
+    const tableExists = await queryInterface.sequelize.query(
+      `SELECT to_regclass('${tableName}');`
+    );
+    return tableExists[0][0].to_regclass !== null;
+  }
+
+  if (dialect === 'mysql') {
+    const tableExists = await queryInterface.sequelize.query(
+      `SELECT table_name FROM information_schema.tables WHERE table_schema = '${process.env.DB_NAME}' AND table_name = '${tableName}';`
+    );
+    return tableExists[0].length > 0;
+  }
+
+  if (dialect === 'sqlite'){
+    const tableExists = await queryInterface.sequelize.query(
+      `SELECT name FROM sqlite_master WHERE type='table' AND name='${tableName}';`
+    );
+    return tableExists[0].length > 0;
+  }
+
+  throw new Error('Unsupported database dialect');
+};
+
 
 // Function to run migrations
 async function runMigrations() {
@@ -35,23 +57,17 @@ async function seedAdmin(queryInterface, Sequelize) {
   
   try {
     // Check if the "Roles" table exists
-    const rolesTableExists = await doesTableExist(queryInterface, 'Roles');
-
-    if (!rolesTableExists) {
-      console.log("Roles table does not exist. Running migrations...");
-      await runMigrations(); // Run migrations if table doesn't exist
-    }
-
+    
     // Insert roles if they don't exist
     await queryInterface.bulkInsert('Roles', [
-      { roleName: 'admin', createdAt: new Date(), updatedAt: new Date() },
-      { roleName: 'staff', createdAt: new Date(), updatedAt: new Date() },
-      { roleName: 'user', createdAt: new Date(), updatedAt: new Date() }
+      { role_name: 'admin', createdAt: new Date(), updatedAt: new Date() },
+      { role_name: 'staff', createdAt: new Date(), updatedAt: new Date() },
+      { role_name: 'user', createdAt: new Date(), updatedAt: new Date() }
     ], { ignoreDuplicates: true });
 
     // Fetch the roles from the database after insertion
     const [roles] = await queryInterface.sequelize.query(
-      `SELECT id, roleName FROM "Roles" WHERE roleName IN ('admin', 'staff', 'user')`
+      `SELECT id, role_name FROM "Roles" WHERE role_name IN ('admin', 'staff', 'user')`
     );
 
     // Check if the admin user exists
