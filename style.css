@@ -1,0 +1,145 @@
+/* Define Color Variables */
+:root {
+    --primary-blue: #0056b3;
+    --primary-blue-dark: #003a7c;
+    --light-gray: #f8f9fa;
+    --dark-gray: #666;
+    --text-color: #333;
+    --text-muted: #777;
+    --background-color: #eef1f4;
+    --footer-bg-color: #333;
+    --footer-text-color: #ffffff;
+}
+
+/* Body */
+body {
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color);
+    background-color: var(--light-gray);
+}
+
+/* Navbar */
+.navbar-brand img {
+    max-width: 150px;
+}
+
+.nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.nav-link:hover {
+    color: var(--primary-blue);
+}
+
+/* Hero Banner */
+.hero-banner {
+    background-color: var(--background-color);
+    padding: 80px 0;
+}
+
+.hero-banner h1 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+}
+
+.hero-banner p {
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+}
+
+.hero-banner .btn-primary {
+    background-color: var(--primary-blue);
+    border: none;
+}
+
+.hero-banner .btn-primary:hover {
+    background-color: var(--primary-blue-dark);
+}
+
+/* Shop by Category */
+.shop-category .card {
+    border: none;
+}
+
+.shop-category .card-title {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.shop-category .card-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* Featured Products */
+.featured-products {
+    background-color: var(--light-gray);
+}
+
+.featured-products .card {
+    border: none;
+}
+
+.featured-products .card-title {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.featured-products .card-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* Footer */
+footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+/* Footer Styling */
+.footer {
+    background-color: #333;
+    color: white;
+}
+
+.footer h5 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.footer p, .footer a {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: white;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    color: #ccc;
+}
+
+.footer ul {
+    padding-left: 0;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+.footer .btn-primary {
+    background-color: #0056b3;
+    border: none;
+}
+
+.footer .btn-primary:hover {
+    background-color: #003a7c;
+}

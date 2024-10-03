@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JY Scrubs - Shop Men's Collection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css"
+        integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/solid.min.css"
+        integrity="sha512-Hp+WwK4QdKZk9/W0ViDvLunYjFrGJmNDt6sCflZNkjgvNq9mY+0tMbd6tWMiAlcf1OQyqL4gn2rYp7UsfssZPA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css"
+        integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid align-items-center text-align-center">
+                <a class="navbar-brand" href="#">
+                    <h2>JY SCRUBS</h2>
+                </a>
+                <!-- Search Icon and Form -->
+                <div class="nav-item dropdown position-relative d-block d-md-none">
+                    <a class="nav-link" href="#" id="searchDropdown" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <!-- Search form (hidden by default, shown on hover) -->
+                    <div class="dropdown-menu search-dropdown p-3">
+                        <form class="d-flex align-items-center">
+                            <button type="submit" class="ms-2"><i class="fas fa-search"></i></button>
+                            <input class="border-bottom rounded-0" type="search" placeholder="Search..."
+                                aria-label="Search">
+                        </form>
+                    </div>
+                </div>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <!-- Main Navigation Links -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Men Section for Small Screens (Collapsible) -->
+                    <div class="custom-accordion mt-4">
+                        <div class="accordion d-block d-md-none">
+                            <!-- About Section -->
+                            <div class="custom-card">
+                                <div class="card-header" id="aboutNavHeader">
+                                    <h5 class="m-0">
+                                        <button class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#aboutNavSection" aria-expanded="false" aria-controls="aboutNavSection">
+                                            <span>About</span> <i class="fas fa-plus float-end"></i>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="aboutNavSection" class="collapse" aria-labelledby="aboutNavHeader" data-bs-parent="#footerAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><a href="#">Our Story</a></li>
+                                            <li><a href="#">Privacy Policy</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Scrubs Section -->
+                            <div class="custom-card">
+                                <div class="card-header" id="scrubsHeader">
+                                    <h5 class="m-0">
+                                        <button class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#scrubsSection" aria-expanded="false" aria-controls="scrubsSection">
+                                            <span>Scrubs</span> <i class="fas fa-plus float-end"></i>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="scrubsSection" class="collapse" aria-labelledby="scrubsHeader" data-bs-parent="#footerAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><a href="#">Scrub Tops</a></li>
+                                            <li><a href="#">Scrub Pants</a></li>
+                                            <li><a href="#">Scrub Sets</a></li>
+                                            <li><a href="#">Scrub Set Builder</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Colors Section -->
+                            <div class="custom-card">
+                                <div class="card-header" id="colorsHeader">
+                                    <h5 class="m-0">
+                                        <button class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#colorsSection" aria-expanded="false" aria-controls="colorsSection">
+                                            <span>Colors</span> <i class="fas fa-plus float-end"></i>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="colorsSection" class="collapse" aria-labelledby="colorsHeader" data-bs-parent="#footerAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><a href="#">Navy Blue</a></li>
+                                            <li><a href="#">Black</a></li>
+                                            <li><a href="#">Ceil Blue</a></li>
+                                            <li><a href="#">Wine</a></li>
+                                            <li><a href="#">Green</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Trending Section -->
+                            <div class="custom-card">
+                                <div class="card-header" id="trendingHeader">
+                                    <h5 class="m-0">
+                                        <button class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#trendingSection" aria-expanded="false" aria-controls="trendingSection">
+                                            <span>Trending</span> <i class="fas fa-plus float-end"></i>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="trendingSection" class="collapse" aria-labelledby="trendingHeader" data-bs-parent="#footerAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><a href="#">Best Sellers</a></li>
+                                            <li><a href="#">New Arrivals</a></li>
+                                            <li><a href="#">Limited Editions</a></li>
+                                            <li><a href="#">Staff Favorites</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="custom-card">
+                                <div class="card-header">
+                                    <h5 class="m-0">
+                                        <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" href="">
+                                            Assets
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+
+                            <div class="custom-card">
+                                <div class="card-header">
+                                    <h5 class="m-0">
+                                        <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" href="">
+                                            Shop
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+
+                            <div class="custom-card">
+                                <div class="card-header">
+                                    <h5 class="m-0">
+                                        <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between" href="">
+                                            Trending
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                            
+                    
+                        </div>
+                    </div>
+                    <ul class="navbar-nav dropdown d-none d-md-flex text-start">
+                        <!-- Men Dropdown for Medium and Above -->
+                        <li class="nav-item position-static">
+                            <a class="nav-link" href="#" id="menDropdown" role="button" aria-expanded="false">
+                                Men
+                            </a>
+                            <div class="dropdown-menu men-dropdown w-100 mt-0">
+                                <div class="container-fluid">
+                                    <div class="row text-center py-4">
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Tops</a>
+                                            <a href="#" class="dropdown-item">Pants</a>
+                                            <a href="#" class="dropdown-item">Scrubs</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Jackets</a>
+                                            <a href="#" class="dropdown-item">Shoes</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Accessories</a>
+                                            <a href="#" class="dropdown-item">Hats</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Sale</a>
+                                            <a href="#" class="dropdown-item">New Arrivals</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+    
+                        <!-- Women Dropdown for Medium and Above -->
+                        <li class="nav-item position-static">
+                            <a class="nav-link" href="#" id="womenDropdown" role="button" aria-expanded="false">
+                                Women
+                            </a>
+                            <div class="dropdown-menu women-dropdown w-100 mt-0">
+                                <div class="container-fluid">
+                                    <div class="row text-center py-4">
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Tops</a>
+                                            <a href="#" class="dropdown-item">Pants</a>
+                                            <a href="#" class="dropdown-item">Scrubs</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Jackets</a>
+                                            <a href="#" class="dropdown-item">Shoes</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Accessories</a>
+                                            <a href="#" class="dropdown-item">Hats</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#" class="dropdown-item">Sale</a>
+                                            <a href="#" class="dropdown-item">New Arrivals</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Accessories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Consultations</a>
+                        </li>
+                    </ul>
+    
+                    
+
+                    
+                </div>
+
+                <!-- Search Icon and Form -->
+                <div class="nav-item dropdown position-relative d-none d-md-block">
+                    <!-- Right Section: Search, Cart, and User Icons -->
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item me-3">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link" href="#" id="searchDropdown" role="button">
+                                <i class="fas fa-search"></i>
+                            </a>
+                            <!-- Search form (hidden by default, shown on hover) -->
+                            <div class="dropdown-menu search-dropdown p-3">
+                                <form class="d-flex align-items-center">
+                                    <button type="submit" class="ms-2"><i class="fas fa-search"></i></button>
+                                    <input class="border-bottom rounded-0" type="search" placeholder="Search..."
+                                        aria-label="Search">
+                                </form>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                
+            </div>
+        </nav>
+    </header>
+    
+    
+
+    <!-- Hero Banner -->
+    <section class="hero-banner position-relative ">
+        <!-- Video Background -->
+        <div class="video-container">
+
+            <video autoplay muted loop playsinline class="bg-video">
+                <source src="vid/women.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+    
+        <!-- Content Overlay -->
+        <div class="container position-relative text-white">
+            <div class="row align-items-center mb-3">
+                <div class="col-md-6 mb-4">
+                    <h1 class="display-4">Women's Scrubs Collection</h1>
+                    <p>Explore our premium collection of scrubs designed for comfort and durability.</p>
+                    <a href="#" class="btn btn-light rounded-0 px-3 btn-lg">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+
+    <!-- Shop by Category Section -->
+    <section class="shop-category py-5">
+        <div class="container">
+            <h2 class="text-center text-md-start mb-4">Shop by Category</h2>
+            <div class="row justify-content-center justify-content-sm-start">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
+                    <div class="w-100 category-btn">
+                        <a href="#">Scrub Tops</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
+                    <div class="w-100 category-btn">
+                        <a href="#">Scrub Sets</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
+                    <div class="w-100 category-btn">
+                        <a href="#">Lab Coats</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
+                    <div class="w-100 category-btn">
+                        <a href="#">Accessories</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
+                    <div class="w-100 category-btn">
+                        <a href="#">Footwear</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop by Color Section -->
+    <section class="shop-color py-5">
+        <div class="container overflow-hidden">
+            <div class="d-sm-flex  justify-content-between align-items-center">
+                <h2>Shop by Color</h2>
+                <div class="my-2">
+                    <i id="prev-btn" class="fas bg-secondary rounded-5 p-2 fa-arrow-left"></i>
+                    <i id="next-btn" class="fas bg-secondary rounded-5 p-2 fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="color-row d-flex text-start justify-content-start">
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/ShopByColor-Clay-Desktop.jpg?auto=format"
+                        alt="Clay" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Clay</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Olive.jpg?auto=format"
+                        alt="Olive" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Olive</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_MidnightNavy.jpg?auto=format"
+                        alt="Navy" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Navy</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Black.jpg?auto=format"
+                        alt="Black" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Black</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_CarbonGray.jpg?auto=format"
+                        alt="Grey" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Grey</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/ShopByColor-Clay-Desktop.jpg?auto=format"
+                        alt="Clay" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Clay</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Olive.jpg?auto=format"
+                        alt="Olive" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Olive</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_MidnightNavy.jpg?auto=format"
+                        alt="Navy" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Navy</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Black.jpg?auto=format"
+                        alt="Black" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Black</h5>
+                </div>
+                <div class="color-card">
+                    <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_CarbonGray.jpg?auto=format"
+                        alt="Grey" class="img-fluid">
+                    <h5 class="mt-2 fs-6 fw-light">Grey</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Items Section -->
+    <section class="featured-items py-5">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card position-relative">
+                        <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/NewArrivals-2-M-Desktop.jpg?auto=format"
+                            class="card-img" alt="Item 1">
+                        <div class="card-overlay">
+                            <h5 class="card-title">Featured Scrub</h5>
+                            <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card position-relative">
+                        <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/ScrubSets-M-Desktop.jpg?auto=format"
+                            class="card-img" alt="Item 2">
+                        <div class="card-overlay">
+                            <h5 class="card-title">Featured Scrub</h5>
+                            <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card position-relative">
+                        <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/BestSellers-M-Desktop.jpg?auto=format"
+                            class="card-img" alt="Item 3">
+                        <div class="card-overlay">
+                            <h5 class="card-title">Featured Scrub</h5>
+                            <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card position-relative">
+                        <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/Loyalty_Program_Desktop_M.jpg?auto=format"
+                            class="card-img" alt="Item 4">
+                        <div class="card-overlay">
+                            <h5 class="card-title">Featured Scrub</h5>
+                            <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Collection Section -->
+    <section class="core-collection py-5">
+        <div class="container overflow-hidden">
+            <div class="d-sm-flex justify-content-between align-items-center">
+                <h2>Core Collection</h2>
+                <div class="my-2">
+                    <i id="prev-core-btn" class="fas bg-secondary rounded-5 p-2 fa-arrow-left"></i>
+                    <i id="next-core-btn" class="fas bg-secondary rounded-5 p-2 fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="core-row d-flex">
+                <!-- Product 1 -->
+                <div class="core-item">
+                    <div class="core-img-wrapper position-relative">
+                        <img src="https://via.placeholder.com/300x400?text=Product+1" alt="Product 1"
+                            class="core-img img-fluid">
+                        <img src="https://via.placeholder.com/300x400?text=Product+1+Alt" alt="Product 1 Alt"
+                            class="core-img-hover img-fluid position-absolute">
+                    </div>
+                    <h5 class="mt-2 fs-6 fw-light">Product Title 1</h5>
+                    <p class="price">$40.00</p>
+                    <div class="colors d-flex align-items-center">
+                        <div class="color-box bg-primary"></div>
+                        <div class="color-box bg-secondary"></div>
+                        <div class="color-box bg-dark"></div>
+                        <i class="fas fa-plus ms-2"></i>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="core-item">
+                    <div class="core-img-wrapper position-relative">
+                        <img src="https://via.placeholder.com/300x400?text=Product+2" alt="Product 2"
+                            class="core-img img-fluid">
+                        <img src="https://via.placeholder.com/300x400?text=Product+2+Alt" alt="Product 2 Alt"
+                            class="core-img-hover img-fluid position-absolute">
+                    </div>
+                    <h5 class="mt-2 fs-6 fw-light">Product Title 2</h5>
+                    <p class="price">$45.00</p>
+                    <div class="colors d-flex align-items-center">
+                        <div class="color-box bg-success"></div>
+                        <div class="color-box bg-info"></div>
+                        <div class="color-box bg-warning"></div>
+                        <i class="fas fa-plus ms-2"></i>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="core-item">
+                    <div class="core-img-wrapper position-relative">
+                        <img src="https://via.placeholder.com/300x400?text=Product+3" alt="Product 3"
+                            class="core-img img-fluid">
+                        <img src="https://via.placeholder.com/300x400?text=Product+3+Alt" alt="Product 3 Alt"
+                            class="core-img-hover img-fluid position-absolute">
+                    </div>
+                    <h6 class="mt-2 fs-6 fw-light">Product Title 3</h6>
+                    <p class="price">$50.00</p>
+                    <div class="colors d-flex align-items-center">
+                        <div class="color-box bg-danger"></div>
+                        <div class="color-box bg-primary"></div>
+                        <div class="color-box bg-light"></div>
+                        <i class="color-box bg-light fas fa-plus ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee, Shipping, Store Section -->
+<section class="info-section py-5">
+    <div class="container">
+        <hr>
+
+        <div class="row text-center mt-5">
+            <!-- Column 1: 90-Day Guarantee -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-undo-alt fa-3x me-3"></i>
+                <div>
+                    <h5>90-Day Guarantee</h5>
+                    <p>We believe in lasting quality. If our products aren’t meeting your standards, send them back within 90 days and receive a full refund.</p>
+                </div>
+            </div>
+
+            <!-- Column 2: Free Shipping -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-shipping-fast fa-3x me-3"></i>
+                <div>
+                    <h5>Free Shipping</h5>
+                    <p>Enjoy free shipping on U.S. orders of $50 or more.</p>
+                </div>
+            </div>
+
+            <!-- Column 3: Find a Store -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-map-marker-alt fa-3x me-3"></i>
+                <div>
+                    <h5>Find a Store</h5>
+                    <p>Our products are located in 95+ stores across the U.S.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reimagine Greatness Section -->
+<section class="greatness-section">
+    <div class="overlay">
+        <div class="container row">
+            <div class="col-sm-6">
+                <h2>Through every obstacle in life, we discover our purpose and unlock that greatness we didn’t even know was there.</h2>
+                <h6>Reimagine Greatness</h6>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- Footer Section -->
+<footer class="footer py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Newsletter Section (now first on small screens) -->
+            <div class="col-md-4 order-md-3 mb-5 newsletter-section text-center text-md-start">
+                <h5>Be in the know.</h5>
+                <p>Sign up for new arrivals, offers, and more!</p>
+                <form action="#" method="post" class="container">
+                    <div class="form-group row">
+                        <input type="email" placeholder="Your Email" class="rounded-0 col-sm-6 form-control" required> 
+                        <button type="submit" class="btn btn-dark rounded-0 col-sm-6">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Accordion Version for Small Screens -->
+            <div class="col-md-5 order-md-2 d-md-none footer-links custom-accordion">
+                <div class="accordion" id="footerAccordion">
+                    <!-- About Section -->
+                    <div class="custom-card">
+                        <div class="card-header" id="aboutHeader">
+                            <h5 class="m-0">
+                                <button class="btn w-100 mr-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
+                                    <span>About</span> <i class="fas fa-plus float-end"></i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="aboutSection" class="collapse" aria-labelledby="aboutHeader" data-bs-parent="#footerAccordion">
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">Our Story</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Do Not Sell My Info</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Site Map</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Find a Store</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shop Section -->
+                    <div class="custom-card">
+                        <div class="card-header" id="shopHeader">
+                            <h5 class="mb-0">
+                                <button class="btn w-100 mr-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#shopSection" aria-expanded="false" aria-controls="shopSection">
+                                    Shop <i class="fas fa-plus float-end"></i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="shopSection" class="collapse" aria-labelledby="shopHeader" data-bs-parent="#footerAccordion">
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">Shop All Scrubs</a></li>
+                                    <li><a href="#">Scrub Tops</a></li>
+                                    <li><a href="#">Scrub Pants</a></li>
+                                    <li><a href="#">Scrub Sets</a></li>
+                                    <li><a href="#">Scrub Set Builder</a></li>
+                                    <li><a href="#">Gift Cards</a></li>
+                                    <li><a href="#">Group Orders</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Help Section -->
+                    <div class="custom-card">
+                        <div class="card-header" id="helpHeader">
+                            <h5 class="mb-0">
+                                <button class="btn w-100 mr-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#helpSection" aria-expanded="false" aria-controls="helpSection">
+                                    Help <i class="fas fa-plus float-end"></i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="helpSection" class="collapse" aria-labelledby="helpHeader" data-bs-parent="#footerAccordion">
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">Account</a></li>
+                                    <li><a href="#">My Orders</a></li>
+                                    <li><a href="#">Returns & Exchanges</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">Help Center</a></li>
+                                    <li><a href="#">Fit Guide</a></li>
+                                    <li><a href="#">Student Discount</a></li>
+                                    <li><a href="#">Loyalty Program</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Normal Layout for Medium Screens and Above -->
+            <div class="col-md-5 order-md-2 d-none d-md-block footer-links">
+                <div class="row text-sm-start text-center">
+                    <div class="col-sm-4">
+                        <h5>About</h5>
+                        <ul>
+                            <li><a href="#">Our Story</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Do Not Sell My Info</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Site Map</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Find a Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Shop</h5>
+                        <ul>
+                            <li><a href="#">Shop All Scrubs</a></li>
+                            <li><a href="#">Scrub Tops</a></li>
+                            <li><a href="#">Scrub Pants</a></li>
+                            <li><a href="#">Scrub Sets</a></li>
+                            <li><a href="#">Scrub Set Builder</a></li>
+                            <li><a href="#">Gift Cards</a></li>
+                            <li><a href="#">Group Orders</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Help</h5>
+                        <ul>
+                            <li><a href="#">Account</a></li>
+                            <li><a href="#">My Orders</a></li>
+                            <li><a href="#">Returns & Exchanges</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Fit Guide</a></li>
+                            <li><a href="#">Student Discount</a></li>
+                            <li><a href="#">Loyalty Program</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Section (now last on small screens) -->
+            <div class="col-md-3 order-md-1 footer-section text-center text-md-start">
+                <h2>JY SCURBS</h2>
+                <ul class="d-flex justify-content-md-between justify-content-center text-center text-md-start container mx-auto">
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-facebook fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-twitter fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-instagram fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-youtube fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-tiktok fs-4"></i></a></li>
+                </ul>
+                <p class="d-md-grid">2024 Jy Scurbs.<span> All Rights Reserved.</span></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
