@@ -23,6 +23,7 @@ module.exports = {
     host:process.env.POSTGRES_HOST, // Replace with your PostgreSQL host
     port:process.env.POSTGRES_PORT,  // Make sure the port is correct
     dialect:process.env.POSTGRES_DIALECT,
+    protocol: 'postgres',
     dialectOptions: {
       ssl: {
         require: false,  // Make sure SSL is required if you're using a production server that needs it
