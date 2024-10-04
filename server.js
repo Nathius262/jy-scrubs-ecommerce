@@ -19,7 +19,8 @@ const require = createRequire
 import adminSeeder  from './seeders/admin-seeder.cjs'; 
 
 //route import
-import adminRouter from './routers/admin/adminRouter.js'
+import adminRouter from './routers/admin/adminRouter.js';
+import rootRouter from './routers/rootRouter.js';
 
 
 dotenv.config()
@@ -47,7 +48,7 @@ app.use(bodyParser.json())
 app.use(staticFiles);
 
 
-//app.use('/', rootRouter);
+app.use('/', rootRouter);
 app.use('/admin/', adminRouter);
 
 

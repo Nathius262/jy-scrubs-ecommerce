@@ -9,92 +9,58 @@
         <meta property="og:description" content="">
         <meta property="og:image" content="">
         <meta property="og:url" content="">
-
+    
         <!--twitter social share-->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="" id="twitterTitle">
         <meta name="twitter:description" content="" id="twitterDescription">
         <meta name="twitter:image" content="" id="twitterImage">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
         <title> {{title}} </title>
-
+    
         <link rel="icon" href="img/logo.png">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&amp;display=swap" rel="stylesheet"> 
-
+    
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/solid.min.css" integrity="sha512-Hp+WwK4QdKZk9/W0ViDvLunYjFrGJmNDt6sCflZNkjgvNq9mY+0tMbd6tWMiAlcf1OQyqL4gn2rYp7UsfssZPA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-
-
+    
+    
         <link href="css/style.css" rel="stylesheet">
-
+    
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    
         
         <script>
             //global script
         </script>
-
+    
     </head>
     <body>
 
         <!--============ROOT SECTION==============-->
         <section id="root" class="position-relative overflow-x-hidden">
             <!--=========HEADER BEGIN===========-->
-            {{> header }}
+           
             <!--=========HEADER END===========-->
             
             <!--=========MAIN BEGIN===========-->
             {{{body}}}
             <!--=========MAIN END===========-->
 
-            <div class="newsletter">
-                <div class="mailist-box ajax-mailinglist" data-callfront="mailinglist_callfront"
-                    data-callback="mailinglist_response">
-                    <form method="post" name="mailing" action="">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <h2>Mailing List</h2>
-                                </div>
-                                <div class="col-md-8 col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-xs-12">
-                                            <div class="mailinglist-form clearfix">
-                                                <input class="mailinglist-input form-control rounded-0" type="text" name="email"
-                                                    placeholder=" Email Address" autocomplete="off" aria-required="true"
-                                                    aria-label="email address" aria-invalid="true">
-                                                <button class="mailinglist-submit btn btn-default btn-inverse text-dark" type="submit"
-                                                    name="www" aria-label="mailinglist button">
-                                                    <span id="mailing-btn-txt "><i class="fa-solid fa-envelope"></i></span>
-                                                    <span id="mailing-btn-load"
-                                                        class="mailing-btn-load icon-spin2 animate-spin hidden"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-xs-12 antiCls" style="visibility: visible;">
-                                            <div class="clearfix maillist-options">
-                                                <div class="subscribe"><input id="list_subscribe" type="radio" name="subscribe"
-                                                        value="1" checked="checked"> <label for="list_subscribe">Subscribe</label>
-                                                </div>
-                                                <div class="subscribe"><input id="list_unsubscribe" type="radio" name="subscribe"
-                                                        value="0"> <label for="list_unsubscribe">Unsubscribe</label></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-
             <!--=========FOOTER BEGIN===========-->
-            {{> footer }}
+            <div id="floating-cart" class="floating-cart" style="display: block;">
+                <a href="" class="minicart-inner clearfix">
+                    <i class="fas fa-solid fa-cart-shopping text-light"></i>
+                    <span class="cart-details">
+                        <span class="minicart-items">0 Item</span>
+                    </span>
+                </a>
+            </div>
+        
             <!--=========FOOTER END===========-->
         </section>
         <!--============ROOT SECTION END==============-->
