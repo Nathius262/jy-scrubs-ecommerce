@@ -7,7 +7,14 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
-    "install-pg": "npm install pg"
+    "install-pg": "npm install pg",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:status": "npx sequelize-cli db:migrate:status",
+    "migrate:generate": "npx sequelize-cli migration:generate --name",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
+    "seed:all": "npx sequelize-cli db:seed:all",
+    "migrate:prod": "set NODE_ENV=production && sequelize db:migrate"
   },
   "repository": {
     "type": "git",
