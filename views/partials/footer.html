@@ -1,99 +1,154 @@
-
-
-
-<footer class="site-footer antiCls" id="site-footer" style="visibility: visible;">
+<!-- Footer Section -->
+<footer class="footer py-5">
     <div class="container">
         <div class="row">
-            <div class="col-sm-8">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="visible-xs extrapages-shower">
-                            <a href="#extrapages" role="button" data-toggle="collapse" class="collapsed">Links</a>
+            <!-- Newsletter Section (now first on small screens) -->
+            <div class="col-md-4 order-md-3 mb-5 newsletter-section text-center text-md-start">
+                <h5>Be in the know.</h5>
+                <p>Sign up for new arrivals, offers, and more!</p>
+                <form action="#" method="post" class="container">
+                    <div class="form-group row">
+                        <input type="email" placeholder="Your Email" class="rounded-0 col-sm-6 form-control" required> 
+                        <button type="submit" class="btn btn-dark rounded-0 col-sm-6">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Accordion Version for Small Screens -->
+            <div class="col-md-5 order-md-2 d-md-none footer-links custom-accordion">
+                <div class="accordion" id="footerAccordion">
+                    <!-- About Section -->
+                    <div class="custom-card">
+                        <div class="card-header" id="aboutHeader">
+                            <h5 class="m-0">
+                                <button class="btn w-100 mr-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
+                                    <span>About</span> <i class="fas fa-plus float-end"></i>
+                                </button>
+                            </h5>
                         </div>
-                        <div id="FRAME_LINKS">
-                            <ul id="extrapages" class="list-unstyled extrapages row" role="list">
-                                <li class="label hidden">Links</li>
+                        <div id="aboutSection" class="collapse" aria-labelledby="aboutHeader" data-bs-parent="#footerAccordion">
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">Our Story</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Do Not Sell My Info</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Site Map</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Find a Store</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-                                <li class="col-md-4 col-sm-6" role="listitem"><a href="blog.asp" target="_self"
-                                        class="menu-bottom">Blog</a></li>
-                                <li class="col-md-4 col-sm-6" role="listitem"><a href="Terms-and-Conditions_ep_2-1.html"
-                                        target="_self" class="menu-bottom">Terms and Conditions</a></li>
-                                <li class="col-md-4 col-sm-6" role="listitem"><a href="affiliateInfo.asp" target="_self"
-                                        class="menu-bottom">Become an Affiliate</a></li>
-                                <li class="col-md-4 col-sm-6" role="listitem"><a href="product_index.asp" target="_self"
-                                        class="menu-bottom">Product Index</a></li>
-                                <li class="col-md-4 col-sm-6" role="listitem"><a href="category_index.asp"
-                                        target="_self" class="menu-bottom">Category Index</a></li>
+                    <!-- Shop Section -->
+                    <div class="custom-card">
+                        <div class="card-header" id="shopHeader">
+                            <h5 class="mb-0">
+                                <button class="btn w-100 mr-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#shopSection" aria-expanded="false" aria-controls="shopSection">
+                                    Shop <i class="fas fa-plus float-end"></i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="shopSection" class="collapse" aria-labelledby="shopHeader" data-bs-parent="#footerAccordion">
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">Shop All Scrubs</a></li>
+                                    <li><a href="#">Scrub Tops</a></li>
+                                    <li><a href="#">Scrub Pants</a></li>
+                                    <li><a href="#">Scrub Sets</a></li>
+                                    <li><a href="#">Scrub Set Builder</a></li>
+                                    <li><a href="#">Gift Cards</a></li>
+                                    <li><a href="#">Group Orders</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-                            </ul>
+                    <!-- Help Section -->
+                    <div class="custom-card">
+                        <div class="card-header" id="helpHeader">
+                            <h5 class="mb-0">
+                                <button class="btn w-100 mr-0 btn-link collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#helpSection" aria-expanded="false" aria-controls="helpSection">
+                                    Help <i class="fas fa-plus float-end"></i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="helpSection" class="collapse" aria-labelledby="helpHeader" data-bs-parent="#footerAccordion">
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">Account</a></li>
+                                    <li><a href="#">My Orders</a></li>
+                                    <li><a href="#">Returns & Exchanges</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">Help Center</a></li>
+                                    <li><a href="#">Fit Guide</a></li>
+                                    <li><a href="#">Student Discount</a></li>
+                                    <li><a href="#">Loyalty Program</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
 
-                <ul class="social-icons list-unstyled list-inline d-flex">
-                    <li class="social-icons-label hidden-xs"> Stay Connected</li>
-
-
-                    <li>
-                        <a href="#" class="facebook" target="_blank" title="Like Us on Facebook"
-                            aria-label="Like Us on Facebook" role="button">
-                            <i class="fa-brands fa-facebook"></i>
-                        </a>
-                    </li>
-
-
-
-                    <li>
-                        <a href="#" class="twitter" target="_blank" title="Follow Us on Twitter"
-                            aria-label="Follow Us on Twitter" role="button">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
-                    </li>
-
-
-                    <li>
-                        <a href="#" class="youtube" target="_blank" title="Subscribe to our Channel"
-                            aria-label="Subscribe to our Channel" role="button">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                    </li>
-
-
-                    <li>
-                        <a href="#" class="instagram" target="_blank" title="Follow Us on Instagram"
-                            aria-label="Follow Us on Instagram" role="button">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                    </li>
-
-
-                </ul>
-
-                <div class="clearfix"></div>
-                <ul class="payment-icons list-unstyled list-inline">
-                </ul>
-            </div>
-            <div class="col-sm-12">
-
-            </div>
-        </div>
-    </div>
-    <div class="copyright">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xs-12">
-                    <div class="copyright_txt">
-                        <p class="text-center">Copyright <span id="current-year">2024</span>
-                            <script type="text/javascript"
-                                language="javascript">document.getElementById("current-year").innerHTML = new Date().getFullYear();</script>
-                            Gadget Gallery Store. All Rights Reserved. <a
-                                href="https://www.pixtinfinity.com" target="_blank">by
-                                Pixtinfinity</a>.
-                        </p>
+            <!-- Normal Layout for Medium Screens and Above -->
+            <div class="col-md-5 order-md-2 d-none d-md-block footer-links">
+                <div class="row text-sm-start text-center">
+                    <div class="col-sm-4">
+                        <h5>About</h5>
+                        <ul>
+                            <li><a href="#">Our Story</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Do Not Sell My Info</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Site Map</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Find a Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Shop</h5>
+                        <ul>
+                            <li><a href="#">Shop All Scrubs</a></li>
+                            <li><a href="#">Scrub Tops</a></li>
+                            <li><a href="#">Scrub Pants</a></li>
+                            <li><a href="#">Scrub Sets</a></li>
+                            <li><a href="#">Scrub Set Builder</a></li>
+                            <li><a href="#">Gift Cards</a></li>
+                            <li><a href="#">Group Orders</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Help</h5>
+                        <ul>
+                            <li><a href="#">Account</a></li>
+                            <li><a href="#">My Orders</a></li>
+                            <li><a href="#">Returns & Exchanges</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Fit Guide</a></li>
+                            <li><a href="#">Student Discount</a></li>
+                            <li><a href="#">Loyalty Program</a></li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+
+            <!-- Brand Section (now last on small screens) -->
+            <div class="col-md-3 order-md-1 footer-section text-center text-md-start">
+                <h2>JY SCURBS</h2>
+                <ul class="d-flex justify-content-md-between justify-content-center text-center text-md-start container mx-auto">
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-facebook fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-twitter fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-instagram fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-youtube fs-4"></i></a></li>
+                    <li class="text-center mx-1"><a href="#"><i class="fab fa-tiktok fs-4"></i></a></li>
+                </ul>
+                <p class="d-md-grid">2024 Jy Scurbs.<span> All Rights Reserved.</span></p>
             </div>
         </div>
     </div>
