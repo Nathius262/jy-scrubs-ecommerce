@@ -1,130 +1,262 @@
-<section class="navbar-expand-md flex-md-nowrap p-0">
-    <nav class="navbar m-0 p-0 navbar-light sticky-top align-items-center">
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <div class="container-fluid align-items-center text-align-center">
+            <a class="navbar-brand" href="#">
+                <h2>JY SCRUBS</h2>
+            </a>
+            <!-- Search Icon and Form -->
+            <div class="nav-item dropdown position-relative d-block d-md-none">
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal" role="button">
+                    <i class="fas fa-search"></i>
+                </a>
 
-        <div id="sidebarMenu" class="collapse navbar-collapse pt-2">
-            <div class="container d-flex justify-content-between align-items-center" style="width: 100%;">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-    
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand text-light fs-6 ms-3 underline" href="#">Home</a>
-                    </li>
-
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand text-light fs-6 ms-3 underline" href="#">Product</a>
-                    </li>
-
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand text-light fs-6 ms-3 underline" href="#">Category</a>
-                    </li>
-
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand text-light fs-6 ms-3 underline" href="#">Featured</a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav mb-2 mb-lg-0">
-    
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand text-light fs-6 ms-3 underline" href="#"><i class="fas fa-solid fa-user text-light"></i> Login</a>
-                    </li>
-
-                    <li class="nav-item mb-1">
-                        <a class="navbar-brand text-light fs-6 ms-3 underline" href="#">Cart <i class="fas fa-solid fa-cart-shopping text-light"></i></a>
-                    </li>
-                </ul>
             </div>
-        </div>                   
-        
-    </nav>
 
-    <nav id="nav-title" class="navbar navbar-light mx-auto py-3">
-        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <a class="navbar-brand fs-4 fw-bold" href="#" style="color:var(--main-blue);">JY Scrubs</a>
+            <!-- Main Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Men Section for Small Screens (Collapsible) -->
+                <div class="custom-accordion mt-4">
+                    <div class="accordion d-block d-md-none">
+                        <!-- About Section -->
+                        <div class="custom-card">
+                            <div class="card-header" id="aboutNavHeader">
+                                <h5 class="m-0">
+                                    <button
+                                        class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#aboutNavSection"
+                                        aria-expanded="false" aria-controls="aboutNavSection">
+                                        <span>About</span> <i class="fas fa-plus float-end"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="aboutNavSection" class="collapse" aria-labelledby="aboutNavHeader"
+                                data-bs-parent="#footerAccordion">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><a href="#">Our Story</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
-            <form id="form-search" class="d-none d-md-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100  navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light small" placeholder="Search for..."
-                        aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn border bg-light rounded-0" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
+                        <!-- Scrubs Section -->
+                        <div class="custom-card">
+                            <div class="card-header" id="scrubsHeader">
+                                <h5 class="m-0">
+                                    <button
+                                        class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#scrubsSection"
+                                        aria-expanded="false" aria-controls="scrubsSection">
+                                        <span>Scrubs</span> <i class="fas fa-plus float-end"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="scrubsSection" class="collapse" aria-labelledby="scrubsHeader"
+                                data-bs-parent="#footerAccordion">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><a href="#">Scrub Tops</a></li>
+                                        <li><a href="#">Scrub Pants</a></li>
+                                        <li><a href="#">Scrub Sets</a></li>
+                                        <li><a href="#">Scrub Set Builder</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Colors Section -->
+                        <div class="custom-card">
+                            <div class="card-header" id="colorsHeader">
+                                <h5 class="m-0">
+                                    <button
+                                        class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#colorsSection"
+                                        aria-expanded="false" aria-controls="colorsSection">
+                                        <span>Colors</span> <i class="fas fa-plus float-end"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="colorsSection" class="collapse" aria-labelledby="colorsHeader"
+                                data-bs-parent="#footerAccordion">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><a href="#">Navy Blue</a></li>
+                                        <li><a href="#">Black</a></li>
+                                        <li><a href="#">Ceil Blue</a></li>
+                                        <li><a href="#">Wine</a></li>
+                                        <li><a href="#">Green</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trending Section -->
+                        <div class="custom-card">
+                            <div class="card-header" id="trendingHeader">
+                                <h5 class="m-0">
+                                    <button
+                                        class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#trendingSection"
+                                        aria-expanded="false" aria-controls="trendingSection">
+                                        <span>Trending</span> <i class="fas fa-plus float-end"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="trendingSection" class="collapse" aria-labelledby="trendingHeader"
+                                data-bs-parent="#footerAccordion">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><a href="#">Best Sellers</a></li>
+                                        <li><a href="#">New Arrivals</a></li>
+                                        <li><a href="#">Limited Editions</a></li>
+                                        <li><a href="#">Staff Favorites</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="custom-card">
+                            <div class="card-header">
+                                <h5 class="m-0">
+                                    <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        href="">
+                                        Assets
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="custom-card">
+                            <div class="card-header">
+                                <h5 class="m-0">
+                                    <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        href="">
+                                        Shop
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="custom-card">
+                            <div class="card-header">
+                                <h5 class="m-0">
+                                    <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        href="">
+                                        Trending
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
-            </form>
+                <ul class="navbar-nav dropdown d-none d-md-flex text-start">
+                    <!-- Men Trigger and Full-Screen Dropdown -->
+                    <li class="nav-item men-trigger">
+                        <a class="nav-link" href="#">Men</a>
+                        <!-- Full-Screen Dropdown (Styled as Modal) -->
+                        <div class="men-dropdown full-screen-dropdown">
+                            <div class="container-fluid">
+                                <div class="row text-center py-4">
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Tops</a>
+                                        <a href="#" class="dropdown-item">Pants</a>
+                                        <a href="#" class="dropdown-item">Scrubs</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Jackets</a>
+                                        <a href="#" class="dropdown-item">Shoes</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Accessories</a>
+                                        <a href="#" class="dropdown-item">Hats</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Sale</a>
+                                        <a href="#" class="dropdown-item">New Arrivals</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
-            <button id="sidebarToggleTop" type="button" data-bs-toggle="modal" data-bs-target="#nav-menu" class="btn border rounded-0 p-2 mx-right d-md-none mr-3 d-md-none collapsed fw-bold fs-6">
-                <i class="fa fa-bars"> MENU</i>
-            </button>
-        </div>
-       
-    </nav>
+                    <!-- Women Trigger and Full-Screen Dropdown -->
+                    <li class="nav-item women-trigger">
+                        <a class="nav-link" href="#">Women</a>
+                        <!-- Full-Screen Dropdown (Styled as Modal) -->
+                        <div class="women-dropdown full-screen-dropdown">
+                            <div class="container-fluid">
+                                <div class="row text-center py-4">
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Tops</a>
+                                        <a href="#" class="dropdown-item">Pants</a>
+                                        <a href="#" class="dropdown-item">Scrubs</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Jackets</a>
+                                        <a href="#" class="dropdown-item">Shoes</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Accessories</a>
+                                        <a href="#" class="dropdown-item">Hats</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#" class="dropdown-item">Sale</a>
+                                        <a href="#" class="dropdown-item">New Arrivals</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
-    <section id="caTnaV" class="categoriesNav navbar-wrapper hidden-xs" style="">
-        
-        <div class="container">
-            <nav id="categories-outer" class="categories navbar-collapse collapse justify-content-center">
-    
-    
-    
-                <ul id="categories" class="nav navbar-nav">
-                    <li class="">
-                        <a href="Gaming_c_19.html">Gaming</a>
-    
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Accessories</a>
                     </li>
-                    <li class="">
-                        <a href="PCs_c_12.html">PCs</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Laptops_c_11.html">Laptops</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Hardware_c_13.html">Hardware</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Software_c_14.html">Software</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Networking_c_15.html">Networking</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Audio_c_16.html">Audio</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Video_c_17.html">Video</a>
-    
-                    </li>
-                    <li class="">
-                        <a href="Printers_c_18.html">Printers</a>
-    
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Consultations</a>
                     </li>
                 </ul>
-            </nav>
-        </div>
-    </section>
-    <!--
-    <section class="py-4 text-center navbar mt-0" id="sectionHeader">
-        <div class="container">
-            <div class="row py-md-3 ">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-bold">CONNECT AND EARN</h1>
-                <p>
-                    We are online/Network Marketing Community build to provide people with opportunity
-                </p>
-            </div>
-            </div>
-        </div>
-    </section>-->
 
-    <div class="container-fluid mt-0 p-0" style="border-bottom: 10px solid var(--main-blue);">
-        <img src="img/h1.jpg" alt="" width="100%" style="object-fit: fill;">
-    </div>
-            
-</section>
+
+
+
+            </div>
+
+            <!-- Search Icon and Form -->
+            <div class="nav-item dropdown position-relative d-none d-md-block">
+                <!-- Right Section: Search, Cart, and User Icons -->
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </li>
+
+                    <!-- Search Button Trigger -->
+                    <!-- Search Button Trigger -->
+                    <li>
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal" role="button">
+                            <i class="fas fa-search"></i>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+</header>
