@@ -1,6 +1,6 @@
 import db from '../../models/index.cjs'; // Adjust the path as necessary
 import cloudinary from '../../config/cloudinary.js';
-import {getPublicIdFromUrl} from '../../utils/utils.js'
+import {getPublicIdFromUrl} from '../../utils/utils.js';
 
 // Get all products with their categories
 export const getAllProducts = async (req, res) => {
