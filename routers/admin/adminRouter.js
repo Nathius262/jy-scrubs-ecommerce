@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import upload from '../../config/multerConfig.js';
 
 import { adminAuthMiddleware } from '../../middlewares/authMiddleware.js';
 
@@ -64,11 +65,17 @@ router.route('/role/:id')
 
 router.route('/product')
     .get(getAllProducts)
-    .post(createProduct);
+    .post(upload.fields([
+            {name: 'images', maxCount:100}
+        ]), createProduct
+    );
 
 router.route('/product/:id')
     .get(getProductById)
-    .put(updateProduct)
+    .put(upload.fields([
+            {name: 'images', maxCount:100}
+        ]), updateProduct
+    )
     .delete(deleteProduct);
 
 //////////////////////
