@@ -18,9 +18,24 @@ const hbs = handlebars.create({
       const words = text.split(' ');
       return words.slice(0, wordCount).join(' ') + (words.length > wordCount ? '...' : '');
     },
-    
-    hasRole: function (rolesArray, roleId) {
-      return rolesArray.includes(roleId);
+    add: (a, b) => a + b,
+    subtract: (a, b) => a - b,
+    range: (start, end) => {
+      let result = [];
+      for (let i = start; i <= end; i++) {
+        result.push(i);
+      }
+      return result;
+    },
+    eq: (a, b) => a === b,
+    gt: (a, b) => a > b,
+    lt: (a, b) => a < b,
+    hasRoleByName: function (roles, roleName, options) {
+      if (roles && roles.some(role => role.role_name === roleName)) {
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
     }
   }
 });

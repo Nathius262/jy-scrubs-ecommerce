@@ -6,7 +6,8 @@ module.exports = {
     password: null, // SQLite doesn't require a password
     database: 'db.sqlite', // SQLite file name
     storage: './db.sqlite', // Path to SQLite file
-    dialect: 'sqlite'
+    dialect: 'sqlite',
+    logging:false
     
   },
   test: {
