@@ -1,18 +1,23 @@
 import { Router } from 'express';
-import upload from '../../config/multerConfig.js';
+import upload from '../../config/multer.js';
 
 import { adminAuthMiddleware } from '../../middlewares/authMiddleware.js';
+import {renderloginAdmin, loginAdmin} from '../../controllers/authController.js'
+import {renderAdminDashboard} from '../../controllers/admin/rootController.js';
+import  * as user from '../../controllers/admin/userController.js';
+import * as role from '../../controllers/admin/roleController.js';
+import * as product from "../../controllers/admin/productController.js";
 
-import {loginAdmin, renderloginAdmin} from '../../controllers/authController.js'
-
-import {getUserById, getAllUsers, createUser, updateUser, deleteUser} from "../../controllers/admin/userController.js"
-import {getAllRoles, getRoleById, createRole, updateRole, deleteRole} from "../../controllers/admin/roleController.js"
-import {getProductById, createProduct, updateProduct, deleteProduct, getAllProducts} from '../../controllers/admin/productController.js'
-import {getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory} from '../../controllers/admin/categoryController.js'
-import {getAllCarts, getCartById, createCart, updateCart, deleteCart} from '../../controllers/admin/cartController.js'
-import {getAllOrders, getOrderById, createOrder, updateOrder, deleteOrder} from '../../controllers/admin/orderController.js'
 
 const router = Router()
+
+//////////////////////
+//////////////////////
+//ROOT ADMIN ROUTER //
+//////////////////////
+//////////////////////
+router.get('/', renderAdminDashboard)
+
 
 //////////////////////
 //////////////////////
@@ -34,29 +39,30 @@ router.use(adminAuthMiddleware)
 //////////////////////
 
 router.route('/user')
-    .get(getAllUsers)
-    .post(createUser);
+    .get(user.getAllUsers)
+    .post(user.createUser);
 
 router.route('/user/:id')
-    .get(getUserById)
-    .put(updateUser)
-    .delete(deleteUser);
+    .get(user.getUserById)
+    .put(user.updateUserById)
+    .delete(user.deleteUser);
 
 //////////////////////
 //////////////////////
 //// ROLE ROUTER /////
 //////////////////////
 //////////////////////
+
 router.route('/role')
-    .get(getAllRoles)
-    .post(createRole);
+    .get(role.getAllRoles)
+    .post(role.createRole);
 
+router.get('/role/create', role.renderRoleForm);
+    
 router.route('/role/:id')
-    .get(getRoleById)
-    .put(updateRole)
-    .delete(deleteRole);
-
-
+    .get(role.getRoleById)
+    .put(role.updateRole)
+    .delete(role.deleteRole);
 //////////////////////
 //////////////////////
 //// PRODUCT ROUTER //
@@ -64,19 +70,23 @@ router.route('/role/:id')
 //////////////////////
 
 router.route('/product')
-    .get(getAllProducts)
+    .get(product.getAllProducts)
     .post(upload.fields([
             {name: 'images', maxCount:100}
-        ]), createProduct
+        ]), product.createProduct
     );
 
-router.route('/product/:id')
-    .get(getProductById)
+router.get('/product/create', product.renderCreateProductForm);
+
+
+router.route('/product/id')
+    .get(product.getProductById)
     .put(upload.fields([
             {name: 'images', maxCount:100}
-        ]), updateProduct
+        ]), product.updateProduct
     )
-    .delete(deleteProduct);
+    .delete(product.deleteProduct);
+/*
 
 //////////////////////
 //////////////////////
@@ -87,10 +97,6 @@ router.route('/category')
     .get(getAllCategories)
     .post(createCategory);
 
-router.route('/category/:id')
-    .get(getCategoryById)
-    .put(updateCategory)
-    .delete(deleteCategory);
 
 //////////////////////
 //////////////////////
@@ -100,11 +106,6 @@ router.route('/category/:id')
 router.route('/order')
     .get(getAllOrders)
     .post(createOrder);
-
-router.route('/order/:id')
-    .get(getOrderById)
-    .put(updateOrder)
-    .delete(deleteOrder);
 
 
 //////////////////////
@@ -116,10 +117,5 @@ router.route('/cart')
     .get(getAllCarts)
     .post(createCart);
 
-router.route('/cart/:id')
-    .get(getCartById)
-    .put(updateCart)
-    .delete(deleteCart);
-
-
+*/
 export default router;
