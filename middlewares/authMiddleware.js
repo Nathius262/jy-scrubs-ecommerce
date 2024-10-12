@@ -18,6 +18,7 @@ export const adminAuthMiddleware = (req, res, next) => {
     req.user = verified; // Attach the user data to the request
     next();
   } catch (error) {
-    return res.status(400).json({ message: 'Invalid Token' });
+    
+    return res.redirect('/admin/login') //res.status(400).json({ message: 'Invalid Token' });
   }
 };
