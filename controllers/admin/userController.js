@@ -1,134 +1,68 @@
-import db from '../../models/index.cjs'; // Adjust the path as necessary
-import bcrypt from 'bcrypt';
+import { fetchUserById, fetchAllUsers, createNewUser, updateUserAndRoles, deleteUserById } from '../../helpers/userHelper.js';
 
-// Get all users with their roles
+// Get all users (Admin HTML rendering)
 export const getAllUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
   try {
-    const users = await db.User.findAll({
-      include: {
-        model: db.Role,
-        as: 'roles',
-        through: { attributes: [] }
-      }
-    })
-    res.status(200).json(users);
+    const data = await fetchAllUsers(page, limit);
+    res.render('./admin/user/list', { users: data.users, pagination: { currentPage: data.currentPage, totalPages: data.totalPages, totalItems: data.totalItems } });
   } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).render('errorPage', { error: error.message });
   }
 };
 
-// Get a unique user by ID with their roles
+// Get a user by ID (Admin HTML rendering)
 export const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await db.User.findByPk(id, {
-      include: {
-        model: db.Role,
-        as: 'roles',
-        through: { attributes: [] }
-      }
-    });
+    const user = await fetchUserById(id); // Assuming fetchUserById is a helper function
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).render('errorPage', { message: 'User not found' });
     }
-    res.status(200).json(user);
+    res.render('./admin/user/update', { user });
   } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).render('errorPage', { message: 'Internal server error' });
   }
 };
 
-// Create a new user with the default role of 'User'
+
+// Create a new user (Admin HTML rendering)
 export const createUser = async (req, res) => {
-  const { name, username, email, password, roleIds } = req.body; // Expecting an array of roleIds
-  
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-  
   try {
-    // Find the default 'User' role by its name (or ID, if you prefer using IDs)
-    const userRole = await db.Role.findOne({ where: { name: 'User' } });
-    
-    if (!userRole) {
-      return res.status(500).json({ error: 'Default role "User" not found in the system' });
-    }
-
-    // Create the user
-    const newUser = await db.User.create({ name, username, email, password: hashedPassword });
-
-    // Combine the 'User' role with any roles provided in the request
-    const allRoles = roleIds && roleIds.length > 0 ? [userRole.id, ...roleIds] : [userRole.id];
-
-    // Associate roles with the newly created user
-    await newUser.setRoles(allRoles); // `setRoles` to link the user with the roles
-
-    // Fetch the user with associated roles for response
-    const userWithRoles = await db.User.findByPk(newUser.id, {
-      include: {
-        model: db.Role,
-        as: 'roles',
-        through: { attributes: [] }
-      }
-    });
-
-    res.status(201).json(userWithRoles);
+    const newUser = await createNewUser(req.body);
+    res.redirect('/admin/user'); // Redirect to user list
   } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).render('errorPage', { error: error.message });
   }
 };
 
-// Update a user and their roles
-export const updateUser = async (req, res) => {
+// Update a user (Admin HTML rendering)
+// Controller for updating a user and their roles
+export const updateUserById = async (req, res) => {
   const { id } = req.params;
-  const { name, username, email, roleIds } = req.body; // Include roleIds in the request
-  
+  const { email, username, is_staff, is_admin } = req.body;
+
   try {
-    const user = await db.User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+    // Update the user and their roles
+    const updatedUser = await updateUserAndRoles(id, { email, username, is_staff, is_admin });
 
-    // Update user fields
-    user.name = name || user.name;
-    user.username = username || user.username;
-    user.email = email || user.email;
-    await user.save();
-
-    // Update user roles if provided
-    if (roleIds && roleIds.length > 0) {
-      await user.setRoles(roleIds); // Update roles association
-    }
-
-    // Fetch the updated user with their roles
-    const updatedUser = await db.User.findByPk(id, {
-      include: {
-        model: db.Role,
-        as: 'roles',
-        through: { attributes: [] }
-      }
-    });
-
-    res.status(200).json(updatedUser);
+    // Redirect to the user edit page after updating
+    return res.json({redirectTo:`/admin/user/${id}`});
   } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).render('errorPage', { message: 'Internal server error' });
   }
 };
 
-// Delete a user
+// Delete a user (Admin HTML rendering)
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
+
   try {
-    const user = await db.User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    await user.destroy();
-    res.status(204).send(); // No content
+    await deleteUserById(id);
+    res.redirect('/admin/user'); // Redirect to user list after deletion
   } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).render('errorPage', { error: error.message });
   }
 };

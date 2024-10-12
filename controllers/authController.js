@@ -47,7 +47,7 @@ export const loginAdmin = async (req, res) => {
         
 
         // Create and send JWT token here after successful login...
-        res.status(200).json({ message: 'Login successful'});
+        res.status(200).json({ message: 'Login successful', isAdmin:true});
 
     } catch (error) {
         console.error("Error logging in admin:", error);
