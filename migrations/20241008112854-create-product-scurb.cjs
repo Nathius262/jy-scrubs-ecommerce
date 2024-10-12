@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      categoryId: {
+      scrubId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Scrubs',  // Refers to the Category table

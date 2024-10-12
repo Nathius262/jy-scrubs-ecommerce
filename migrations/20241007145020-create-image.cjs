@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      productId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Products',  // Refers to the Product table
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       url: {
         type: Sequelize.STRING
       },
