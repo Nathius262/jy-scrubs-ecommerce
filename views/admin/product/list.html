@@ -46,7 +46,7 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        {{#each Products}}
+                                        {{#each products}}
                                         <tr>
                                             <th scope="row">{{this.id}}</th>
                                             <td>
@@ -71,9 +71,9 @@
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
                                             <!-- Previous Button -->
-                                            {{#if (gt currentPage 1)}}
+                                            {{#if (gt currentProductPage 1)}}
                                               <li class="page-item">
-                                                <a class="page-link" href="?page={{subtract currentPage 1}}">Previous</a>
+                                                <a class="page-link" href="?page={{subtract currentProductPage 1}}">Previous</a>
                                               </li>
                                             {{else}}
                                               <li class="page-item disabled">
@@ -82,16 +82,16 @@
                                             {{/if}}
 
                                             <!-- Page Numbers -->
-                                            {{#each (range 1 totalPages)}}
-                                              <li class="page-item {{#if (eq this ../currentPage)}}active{{/if}}">
+                                            {{#each (range 1 totalProductPages)}}
+                                              <li class="page-item {{#if (eq this ../currentProductPage)}}active{{/if}}">
                                                 <a class="page-link" href="?page={{this}}">{{this}}</a>
                                               </li>
                                             {{/each}}
 
                                             <!-- Next Button -->
-                                            {{#if (lt currentPage totalPages)}}
+                                            {{#if (lt currentProductPage totalProductPages)}}
                                               <li class="page-item">
-                                                <a class="page-link" href="?page={{add currentPage 1}}">Next</a>
+                                                <a class="page-link" href="?page={{add currentProductPage 1}}">Next</a>
                                               </li>
                                             {{else}}
                                               <li class="page-item disabled">
