@@ -1,6 +1,7 @@
 import handlebars from 'express-handlebars';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { notEqual } from 'assert';
 
 
 // Derive the equivalent of __dirname
@@ -28,6 +29,7 @@ const hbs = handlebars.create({
       return result;
     },
     eq: (a, b) => a === b,
+    notEqual: (a, b) => a !== b,
     gt: (a, b) => a > b,
     lt: (a, b) => a < b,
     hasRoleByName: function (roles, roleName, options) {
