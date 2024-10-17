@@ -7,16 +7,14 @@ import {renderAdminDashboard} from '../../controllers/admin/rootController.js';
 import  * as user from '../../controllers/admin/userController.js';
 import * as role from '../../controllers/admin/roleController.js';
 import * as product from "../../controllers/admin/productController.js";
+import * as collection from '../../controllers/admin/collectionController.js';
+import * as category from '../../controllers/admin/categoryController.js';
+import * as size from '../../controllers/admin/sizeController.js';
+import * as color from '../../controllers/admin/colorController.js';
+import * as scurb from '../../controllers/admin/scurbsController.js';
 
 
 const router = Router()
-
-//////////////////////
-//////////////////////
-//ROOT ADMIN ROUTER //
-//////////////////////
-//////////////////////
-router.get('/', renderAdminDashboard)
 
 
 //////////////////////
@@ -30,6 +28,14 @@ router.route('/login')
     .post(loginAdmin);
 
 router.use(adminAuthMiddleware)
+
+
+//////////////////////
+//////////////////////
+//ROOT ADMIN ROUTER //
+//////////////////////
+//////////////////////
+router.get('/', renderAdminDashboard)
 
 
 //////////////////////
@@ -71,22 +77,20 @@ router.route('/role/:id')
 
 router.route('/product')
     .get(product.getAllProducts)
-    .post(upload.fields([
-            {name: 'images', maxCount:100}
-        ]), product.createProduct
-    );
+    .post(upload.array('images', 5), product.createProduct);
 
 router.get('/product/create', product.renderCreateProductForm);
 
 
-router.route('/product/id')
+router.route('/product/:id')
     .get(product.getProductById)
-    .put(upload.fields([
-            {name: 'images', maxCount:100}
-        ]), product.updateProduct
+    .put(upload.array('images', 5), product.updateProduct
     )
     .delete(product.deleteProduct);
-/*
+
+router.post('/upload/:productId', upload.array('images', 5), product.uploadImages);
+router.delete('/product/delete-image/:id', product.deleteImage)
+
 
 //////////////////////
 //////////////////////
@@ -94,10 +98,30 @@ router.route('/product/id')
 //////////////////////
 //////////////////////
 router.route('/category')
-    .get(getAllCategories)
-    .post(createCategory);
+    .get(category.getAllCategories)
+    .post(category.createCategoryController);
+router.get('/category/create', category.renderCategoryForm);
 
+router.route('/collection')
+    .get(collection.getAllCollections)
+    .post(collection.createCollectionController);
+router.get('/collection/create', collection.renderCollectionForm);
 
+router.route('/color')
+    .get(color.getAllColors)
+    .post(color.createColorController);
+router.get('/color/create', color.renderColorForm);
+
+router.route('/size')
+    .get(size.getAllSize)
+    .post(size.createSizeController);
+router.get('/size/create', size.renderSizeForm);
+
+router.route('/scurb')
+    .get(scurb.getAllScurbs)
+    .post(scurb.createScrubController);
+router.get('/scurb/create', scurb.renderScurbForm);
+/*
 //////////////////////
 //////////////////////
 /// ORDER ROUTER /////
