@@ -18,3 +18,9 @@ export const getAllCategories = async (page = 1, limit = 10) => {
     throw error;
   }
 };
+
+// Create a new category
+export async function createCategory({name, description}) {
+  console.log({name, description})
+  return await db.Category.create({name, description});
+}

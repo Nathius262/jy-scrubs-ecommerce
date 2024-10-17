@@ -18,3 +18,9 @@ export const getAllColors = async (page = 1, limit = 10) => {
     throw error;
   }
 };
+
+
+// Create a new color
+export async function createColor(data) {
+  return await db.Color.create(data);
+}

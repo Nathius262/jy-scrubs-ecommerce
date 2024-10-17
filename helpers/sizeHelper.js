@@ -18,3 +18,9 @@ export const getAllSizes = async (page = 1, limit = 10) => {
     throw error;
   }
 };
+
+
+// Create a new size
+export async function createSize(data) {
+  return await db.Size.create(data);
+}

@@ -20,4 +20,6 @@ export const getAllCollections = async (page = 1, limit = 10) => {
   }
 };
 
-// Other CRUD operations for collections (Create, Update, Delete) can be similar to this
+export async function createCollection(data) {
+  return await db.Collection.create(data);
+}
