@@ -1,65 +1,63 @@
 import multer from 'multer';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import cloudinary from './cloudinary.js';
-import { v2 as cloudinaryV2 } from 'cloudinary'; // Use Cloudinary v2 SDK for better clarity
-import fs from 'fs';
-import path from 'path';
 
-// Configure Multer to store files temporarily in memory or disk
-const storage = multer.memoryStorage(); // Can use diskStorage if you prefer saving to disk first
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 80 * 1024 * 1024 } // Limit to 80MB
-});
-
-// Function to upload a file to Cloudinary
-const uploadToCloudinary = async (file, folder, resourceType) => {
+// Function to check if a file exists in Cloudinary
+const fileExists = async (folder, filename) => {
   try {
-    // Upload the file buffer to Cloudinary
-    const result = await cloudinaryV2.uploader.upload_stream(
-      {
-        folder: folder,
-        resource_type: resourceType,
-      },
-      (error, result) => {
-        if (error) throw new Error(error);
-        return result;
-      }
-    );
-
-    return result;
+    const result = await cloudinary.api.resources({
+      type: 'upload',
+      prefix: `${folder}/${filename}`
+    });
+    return result.resources.length > 0;
   } catch (err) {
-    console.error('Error uploading to Cloudinary:', err);
-    throw err;
+    console.error('Error checking file existence in Cloudinary:', err);
+    return false;
   }
 };
 
-// Middleware to handle file uploads
-export const handleFileUpload = async (req, res, next) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
+// Configure Multer to use Cloudinary storage with dynamic folder creation and unique filename
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.toLocaleString('default', { month: 'long' }); // Full month name, e.g., "June"
 
-    // Get the section (or folder) from the request or default to 'products'
-    const section = req.section || 'products';
-    const folder = `${section}/${year}/${month}`;
-    const resourceType = req.file.mimetype.startsWith('image') ? 'image' : 'auto';
+    // Get the section (or folder) from the request
+    const section = req.section || 'products'; // Default to 'sermons' if section is not set
 
-    // Upload the file buffer to Cloudinary
-    const uploadResult = await uploadToCloudinary(req.file, folder, resourceType);
+    let folderName = `${section}/${year}/${month}`; // Dynamic folder path
+    let resourceType = 'auto'; // Default resource type, can be auto, image, raw, or video based on file type
+    let publicId = file.originalname.split('.')[0]; // Use the original name without extension
 
-    // You can now store the Cloudinary upload result URL (uploadResult.url) to your database
+    // Check if the file already exists in the folder
+    const exists = await fileExists(folderName, publicId);
 
-    res.status(200).json({ message: 'File uploaded successfully', url: uploadResult.secure_url });
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).json({ message: 'File upload failed', error });
-  }
-};
+    if (exists) {
+      // If the file exists, append a timestamp to make it unique
+      publicId = `${publicId}-${Date.now()}`;
+    }
 
+    if (file.mimetype.startsWith('audio')) {
+      resourceType = 'video'; // Cloudinary treats audio files as video
+    } else if (file.mimetype.startsWith('image')) {
+      resourceType = 'image';
+    } else if (['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'].includes(file.mimetype)) {
+      resourceType = 'raw';
+    }
+
+    return {
+      folder: folderName,
+      resource_type: resourceType,
+      public_id: publicId, // Use the determined unique publicId
+    };
+  },
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 80 * 1024 * 1024 } // Limit to 80MB
+});
 export default upload;

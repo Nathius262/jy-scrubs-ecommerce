@@ -36,8 +36,10 @@ const hbs = handlebars.create({
       } else {
         return options.inverse(this);
       }
-    }
-  }
+    },
+    has: function(set, value) {
+      return set.has(value);
+    }}
 });
 
 

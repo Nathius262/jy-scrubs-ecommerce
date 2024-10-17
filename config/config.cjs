@@ -7,7 +7,7 @@ module.exports = {
     database: 'db.sqlite', // SQLite file name
     storage: './db.sqlite', // Path to SQLite file
     dialect: 'sqlite',
-    logging:false
+    //logging: console.log,
     
   },
   test: {
