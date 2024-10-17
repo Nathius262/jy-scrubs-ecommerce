@@ -21,4 +21,23 @@ export const getAllCollections = async (req, res) => {
   }
 };
 
-// You can similarly implement controllers for categories, colors, sizes, and scrubs
+// Controller to create a new collection
+export async function createCollectionController(req, res) {
+  try {
+    const data = req.body;
+    const newCollection = await collectionHelper.createCollection(data);
+    return res.status(201).json({ message: 'Collection created successfully', collection: newCollection, redirectTo:"/admin/collection/create" });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: 'Failed to create collection', error });
+  }
+}
+
+
+export const renderCollectionForm = async (req, res) => {
+  try {
+    res.render('./admin/category/create_collection')
+  } catch (error) {
+    res.send(500).json("Internal server error", error)
+  }
+}
