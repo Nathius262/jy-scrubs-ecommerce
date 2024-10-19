@@ -212,9 +212,7 @@ export const updateProduct = async (productId, productData) => {
       await transaction.rollback();
       throw error;
     }
-  };
-  
-  
+};
 
 
 export const deleteProduct = async (id) => {
@@ -234,3 +232,119 @@ export const deleteProduct = async (id) => {
         throw error;
     }
 };
+
+// helpers/productHelper.js
+
+export const getFilteredProducts = async (category) => {
+    try {
+      const categoryId = category;
+      console.log(categoryId);
+  
+      // Fetch products filtered by the category
+      const products = await db.Product.findAll({
+        include: [
+          {
+            model: db.Category,
+            as: 'categories',
+            through: { attributes: [] },
+          },
+          {
+            model: db.Image,
+            as: 'images',
+            required: false,
+          },
+          {
+            model: db.Color,
+            as: 'colors',
+            through: { attributes: [] },
+          },
+        ]
+      });
+      
+      const mappedProducts = products.map(product => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        stock: product.stock,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+        
+        // Flatten the categories array
+        categories: product.categories.map(category => ({
+          id: category.id,
+          name: category.name,
+          description: category.description,
+          createdAt: category.createdAt,
+          updatedAt: category.updatedAt,
+        })),
+      
+        // Flatten the images array
+        images: product.images.map(image => ({
+          id: image.id,
+          url: image.url,
+          alt_text: image.alt_text,
+          is_primary: image.is_primary,
+          createdAt: image.createdAt,
+          updatedAt: image.updatedAt,
+          productId: image.productId,
+        })),
+      
+        // Flatten the colors array
+        colors: product.colors.map(color => ({
+          id: color.id,
+          name: color.name,
+          hex_code: color.hex_code,
+          createdAt: color.createdAt,
+          updatedAt: color.updatedAt,
+        })),
+      }));
+      
+      console.log('mappedProducts', mappedProducts);
+      
+      
+  
+      // Fetch all available filters (colors, sizes, collections, scrubs) without filtering by category
+      const colors = await db.Color.findAll();
+  
+      const sizes = await db.Size.findAll();
+  
+      const collections = await db.Collection.findAll({
+        include: [
+          {
+            model: db.Product,
+            as: 'products',
+            include: [
+              {
+                model: db.Category,
+                as: 'categories',
+                where: { name: categoryId },
+              },
+              {
+                model: db.Image,
+                as: 'images',
+                where: { is_primary: true },
+                required: false, // Ensure that it still fetches products even without images
+              },
+            ],
+          },
+        ],
+      });
+      
+      
+  
+      const scrubs = await db.Scrub.findAll();
+  
+      return {
+        products: mappedProducts,
+        colors: colors.map(product => product.get({ plain: true })),
+        sizes: sizes.map(product => product.get({ plain: true })),
+        collections: collections.map(product => product.get({ plain: true })),
+        scrubs: scrubs.map(product => product.get({ plain: true })),
+      };
+    } catch (error) {
+      console.error('Error fetching filtered products:', error);
+      throw error;
+    }
+  };
+  

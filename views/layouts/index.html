@@ -1,5 +1,5 @@
- <!-- Hero Banner -->
- <section class="hero-banner position-relative ">
+<!-- Hero Banner -->
+<section class="hero-banner position-relative ">
     <!-- Video Background -->
     <div class="video-container">
 
@@ -8,7 +8,7 @@
             Your browser does not support the video tag.
         </video>
     </div>
-    
+
 
     <!-- Content Overlay -->
     <div class="container position-relative text-white">
@@ -23,42 +23,18 @@
 </section>
 
 
-
-
 <!-- Shop by Category Section -->
 <section class="shop-category py-5">
     <div class="container">
         <h2 class="text-center text-md-start mb-4">Shop by Category</h2>
         <div class="row justify-content-center justify-content-sm-start">
+            {{#each scrubs}}
             <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
                 <div class="w-100 category-btn">
-                    <a href="#">Scrub Tops</a>
+                    <a href="?category={{this.id}}">{{this.name}}</a>
                 </div>
             </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
-                <div class="w-100 category-btn">
-                    <a href="#">Scrub Sets</a>
-                </div>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
-                <div class="w-100 category-btn">
-                    <a href="#">Lab Coats</a>
-                </div>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
-                <div class="w-100 category-btn">
-                    <a href="#">Accessories</a>
-                </div>
-            </div>
-
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
-                <div class="w-100 category-btn">
-                    <a href="#">Footwear</a>
-                </div>
-            </div>
+            {{/each}}
         </div>
     </div>
 </section>
@@ -66,7 +42,7 @@
 <!-- Shop by Color Section -->
 <section class="shop-color py-5">
     <div class="container overflow-hidden">
-        <div class="d-sm-flex  justify-content-between align-items-center">
+        <div class="d-sm-flex justify-content-between align-items-center">
             <h2>Shop by Color</h2>
             <div class="my-2">
                 <i id="prev-btn" class="fas bg-secondary rounded-5 p-2 fa-arrow-left"></i>
@@ -74,56 +50,12 @@
             </div>
         </div>
         <div class="color-row d-flex text-start justify-content-start">
+            {{#each colors}}
             <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/ShopByColor-Clay-Desktop.jpg?auto=format"
-                    alt="Clay" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Clay</h5>
+                <img src="{{this.imageUrl}}" alt="{{this.name}}" class="img-fluid">
+                <h5 class="mt-2 fs-6 fw-light">{{this.name}}</h5>
             </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Olive.jpg?auto=format"
-                    alt="Olive" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Olive</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_MidnightNavy.jpg?auto=format"
-                    alt="Navy" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Navy</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Black.jpg?auto=format"
-                    alt="Black" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Black</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_CarbonGray.jpg?auto=format"
-                    alt="Grey" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Grey</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/ShopByColor-Clay-Desktop.jpg?auto=format"
-                    alt="Clay" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Clay</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Olive.jpg?auto=format"
-                    alt="Olive" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Olive</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_MidnightNavy.jpg?auto=format"
-                    alt="Navy" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Navy</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_Black.jpg?auto=format"
-                    alt="Black" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Black</h5>
-            </div>
-            <div class="color-card">
-                <img src="https://s3jaanuu.imgix.net/images/shop_by_color/Mens/DT_Mens_HP_ShopByColor_CarbonGray.jpg?auto=format"
-                    alt="Grey" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">Grey</h5>
-            </div>
+            {{/each}}
         </div>
     </div>
 </section>
@@ -131,51 +63,33 @@
 <!-- Featured Items Section -->
 <section class="featured-items py-5">
     <div class="container">
-
         <div class="row">
+            {{#each collections}}
+            <!-- Check if the collection has a product to display -->
+            {{#if this.products.[0]}}
             <div class="col-md-6 mb-4">
                 <div class="card position-relative">
-                    <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/NewArrivals-2-M-Desktop.jpg?auto=format"
-                        class="card-img" alt="Item 1">
+                    <!-- Access the product's primary image -->
+                    <img src="{{this.products.[0].images.[0].url}}" class="card-img" alt="{{this.products.[0].name}}">
+
                     <div class="card-overlay">
-                        <h5 class="card-title">Featured Scrub</h5>
-                        <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
+                        <!-- Display the collection name -->
+                        <h5 class="card-title">{{this.name}}</h5>
+
+                        <!-- You can also display the product name if needed -->
+                        <p>{{this.products.[0].name}}</p>
+
+                        <!-- Add a link to the product's page (assuming you have a route) -->
+                        <a href="/product/{{this.products.[0].id}}" class="btn btn-light rounded-0 px-4">Shop Now</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card position-relative">
-                    <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/ScrubSets-M-Desktop.jpg?auto=format"
-                        class="card-img" alt="Item 2">
-                    <div class="card-overlay">
-                        <h5 class="card-title">Featured Scrub</h5>
-                        <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card position-relative">
-                    <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/BestSellers-M-Desktop.jpg?auto=format"
-                        class="card-img" alt="Item 3">
-                    <div class="card-overlay">
-                        <h5 class="card-title">Featured Scrub</h5>
-                        <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card position-relative">
-                    <img src="https://s3jaanuu.imgix.net/bts_launch_assets/homepage/men/desktop/Loyalty_Program_Desktop_M.jpg?auto=format"
-                        class="card-img" alt="Item 4">
-                    <div class="card-overlay">
-                        <h5 class="card-title">Featured Scrub</h5>
-                        <a href="#" class="btn btn-light rounded-0 px-4">Shop Now</a>
-                    </div>
-                </div>
-            </div>
+            {{/if}}
+            {{/each}}
         </div>
     </div>
 </section>
+
 
 <!-- BEST SELLERS -->
 <section class="py-5" style="color:var(--white); background-color:var(--pink);">
@@ -184,16 +98,23 @@
             <!-- Text Section -->
             <div class="col-md-6 text-center mb-4 mb-md-0">
                 <h2 class="text-center h1 fw-bold">BEST SELLERS</h2>
-                <p class="fs-6">Your favorite styles in core colors, here all year round. If majority rules, so do these.</p>
+                <p class="fs-6">Your favorite styles in core colors, here all year round.</p>
                 <div class="d-inline-flex justify-content-between">
-                    <a class="mx-2 underline fw-bold" style="text-decoration: underline; color:var(--white)" href="#">SHOP WOMEN</a>
-                    <a class="mx-2 underline fw-bold" style="text-decoration: underline; color:var(--white)" href="#">SHOP MEN</a>
+                    <a class="mx-2 underline fw-bold" style="color:var(--white);" href="?category=women">SHOP WOMEN</a>
+                    <a class="mx-2 underline fw-bold" style="color:var(--white);" href="?category=men">SHOP MEN</a>
                 </div>
             </div>
-            
+
             <!-- Image Section -->
             <div class="col-md-6">
-                <img class="img-fluid" style="object-fit: cover; width: 100%; height: auto;" src="https://www.wearfigs.com/i/contentful/5j6wpslh72e4/5SP5Xx2Ifb3UZJmmlDkJZI/57adb3d89df25063ab05c4ea6001343f/Launch_Modules_CORE_BEST_SELLERS_DESKTOP_U.jpg?fm=webp&w=720" alt="best sellers">
+                {{#each collections}}
+                {{#if @first}}
+                {{#each this.products}}
+                <img class="img-fluid" src="{{this.images.[0].url}}" alt="{{this.name}}">
+                {{/each}}
+
+                {{/if}}
+                {{/each}}
             </div>
         </div>
     </div>
@@ -210,156 +131,95 @@
             </div>
         </div>
         <div class="core-row d-flex">
-            <!-- Product 1 -->
+            {{#each products}}
             <div class="core-item">
                 <div class="core-img-wrapper position-relative">
-                    <img src="https://via.placeholder.com/300x400?text=Product+1" alt="Product 1"
-                        class="core-img img-fluid">
-                    <img src="https://via.placeholder.com/300x400?text=Product+1+Alt" alt="Product 1 Alt"
+                    <!-- Check if any image is marked as primary -->
+                    {{#each this.images}}
+                    {{#if this.is_primary}}
+                    <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                    {{/if}}
+                    {{/each}}
+
+                    <!-- If no primary image, use the first image as default -->
+                    {{#unless (anyImageIsPrimary this.images)}}
+                    {{#each this.images}}
+                    {{#if @first}}
+                    <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                    {{/if}}
+                    {{/each}}
+                    {{/unless}}
+
+                    <!-- Loop through images for hover, displaying those that are not primary -->
+                    {{#each this.images}}
+                    {{#unless this.is_primary}}
+                    <img src="{{this.url}}" alt="{{this.alt_text}} Alt"
                         class="core-img-hover img-fluid position-absolute">
+                    {{/unless}}
+                    {{/each}}
+
+
                 </div>
-                <h5 class="mt-2 fs-6 fw-light">Product Title 1</h5>
-                <p class="price">$40.00</p>
+                <h5 class="mt-2 fs-6 fw-light">{{this.name}}</h5>
+                <p class="price">${{this.price}}</p>
                 <div class="colors d-flex align-items-center">
-                    <div class="color-box bg-primary"></div>
-                    <div class="color-box bg-secondary"></div>
-                    <div class="color-box bg-dark"></div>
+                    {{#each this.colors}}
+                    <div class="color-box" style="background-color: {{this.hex_code}};"></div>
+                    {{/each}}
                     <i class="fas fa-plus ms-2"></i>
                 </div>
             </div>
-            <!-- Product 2 -->
-            <div class="core-item">
-                <div class="core-img-wrapper position-relative">
-                    <img src="https://via.placeholder.com/300x400?text=Product+2" alt="Product 2"
-                        class="core-img img-fluid">
-                    <img src="https://via.placeholder.com/300x400?text=Product+2+Alt" alt="Product 2 Alt"
-                        class="core-img-hover img-fluid position-absolute">
-                </div>
-                <h5 class="mt-2 fs-6 fw-light">Product Title 2</h5>
-                <p class="price">$45.00</p>
-                <div class="colors d-flex align-items-center">
-                    <div class="color-box bg-success"></div>
-                    <div class="color-box bg-info"></div>
-                    <div class="color-box bg-warning"></div>
-                    <i class="fas fa-plus ms-2"></i>
-                </div>
-            </div>
-            <!-- Product 3 -->
-            <div class="core-item">
-                <div class="core-img-wrapper position-relative">
-                    <img src="https://via.placeholder.com/300x400?text=Product+3" alt="Product 3"
-                        class="core-img img-fluid">
-                    <img src="https://via.placeholder.com/300x400?text=Product+3+Alt" alt="Product 3 Alt"
-                        class="core-img-hover img-fluid position-absolute">
-                </div>
-                <h6 class="mt-2 fs-6 fw-light">Product Title 3</h6>
-                <p class="price">$50.00</p>
-                <div class="colors d-flex align-items-center">
-                    <div class="color-box bg-danger"></div>
-                    <div class="color-box bg-primary"></div>
-                    <div class="color-box bg-light"></div>
-                    <i class="color-box bg-light fas fa-plus ms-2"></i>
-                </div>
-            </div>
+            {{/each}}
         </div>
     </div>
 </section>
-
-<section class="product-collection py-5 position-relative">
-    <div class="container overflow-hidden">
-        <div class="d-sm-flex justify-content-between align-items-center">
-            <h2>Men's Best Sellers</h2>
-        </div>
-
-        <div class="product-row d-flex" id="productRow">
-            <!-- Product 1 -->
-            <div class="product-item">
-                <div class="product-img-wrapper position-relative">
-                    <img src="https://www.wearfigs.com/i/shopify/s/files/1/0139/8942/files/Q2_2024_6_BONSAI_LEON_COREY_936.jpg?v=1720027298&width=360" alt="Product 1"
-                        class="product-img img-fluid">
-                </div>
-                <h5 class="mt-2 fs-6 fw-light">Product Title 1</h5>
-                <p class="price">$40.00</p>
-            </div>
-            <!-- Product 2 -->
-            <div class="product-item">
-                <div class="product-img-wrapper position-relative">
-                    <img src="https://www.wearfigs.com/i/shopify/s/files/1/0139/8942/products/Mens-Chisec-Moss-M-1.jpg?v=1664920818&width=360" alt="Product 2"
-                        class="product-img img-fluid">
-                </div>
-                <h5 class="mt-2 fs-6 fw-light">Product Title 2</h5>
-                <p class="price">$45.00</p>
-            </div>
-            <!-- Product 3 -->
-            <div class="product-item">
-                <div class="product-img-wrapper position-relative">
-                    <img src="https://www.wearfigs.com/i/shopify/s/files/1/0139/8942/files/Q3_2023_08_NAVY_CAIRO_M_DAVEY_21669.jpg?v=1695923228&width=360" alt="Product 3"
-                        class="product-img img-fluid">
-                </div>
-                <h6 class="mt-2 fs-6 fw-light">Product Title 3</h6>
-                <p class="price">$50.00</p>
-            </div>
-            <!-- More items will be loaded here -->
-        </div>
-
-        <!-- Load More Button (>) -->
-        <button id="loadMoreBtn" class="arrow-btn right-arrow position-absolute" style="right: 0;">
-            &gt;
-        </button>
-        <!-- Load Previous Button (<) -->
-        <button id="loadPreviousBtn" class="arrow-btn left-arrow position-absolute" style="left: 0; display: none;">
-            &lt;
-        </button>
-    </div>
-</section>
-
-
-
 <!-- Guarantee, Shipping, Store Section -->
 <section class="info-section py-5">
-<div class="container">
-    <hr>
+    <div class="container">
+        <hr>
 
-    <div class="row text-center mt-5">
-        <!-- Column 1: 90-Day Guarantee -->
-        <div class="col-md-4 d-flex align-items-center justify-content-center">
-            <i class="fas fa-undo-alt fa-3x me-3"></i>
-            <div>
-                <h5>90-Day Guarantee</h5>
-                <p>We believe in lasting quality. If our products aren’t meeting your standards, send them back within 90 days and receive a full refund.</p>
+        <div class="row text-center mt-5">
+            <!-- Column 1: 90-Day Guarantee -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-undo-alt fa-3x me-3"></i>
+                <div>
+                    <h5>90-Day Guarantee</h5>
+                    <p>We believe in lasting quality. If our products aren’t meeting your standards, send them back
+                        within 90 days and receive a full refund.</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Column 2: Free Shipping -->
-        <div class="col-md-4 d-flex align-items-center justify-content-center">
-            <i class="fas fa-shipping-fast fa-3x me-3"></i>
-            <div>
-                <h5>Free Shipping</h5>
-                <p>Enjoy free shipping on U.S. orders of $50 or more.</p>
+            <!-- Column 2: Free Shipping -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-shipping-fast fa-3x me-3"></i>
+                <div>
+                    <h5>Free Shipping</h5>
+                    <p>Enjoy free shipping on U.S. orders of $50 or more.</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Column 3: Find a Store -->
-        <div class="col-md-4 d-flex align-items-center justify-content-center">
-            <i class="fas fa-map-marker-alt fa-3x me-3"></i>
-            <div>
-                <h5>Find a Store</h5>
-                <p>Our products are located in 95+ stores across the U.S.</p>
+            <!-- Column 3: Find a Store -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-map-marker-alt fa-3x me-3"></i>
+                <div>
+                    <h5>Find a Store</h5>
+                    <p>Our products are located in 95+ stores across the U.S.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </section>
 
 <!-- Reimagine Greatness Section -->
 <section class="greatness-section">
-<div class="overlay">
-    <div class="container row">
-        <div class="col-sm-6">
-            <h2>Through every obstacle in life, we discover our purpose and unlock that greatness we didn’t even know was there.</h2>
-            <h6>Reimagine Greatness</h6>
+    <div class="overlay">
+        <div class="container row">
+            <div class="col-sm-6">
+                <h2>Through every obstacle in life, we discover our purpose and unlock that greatness we didn’t even
+                    know was there.</h2>
+                <h6>Reimagine Greatness</h6>
+            </div>
+
         </div>
-        
     </div>
-</div>
 </section>

@@ -34,4 +34,4 @@ module.exports = {
     },
     logging: false //console.log,    // Disable logging in production for performance
   }
-};
+}; 

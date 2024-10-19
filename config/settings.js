@@ -29,6 +29,9 @@ const hbs = handlebars.create({
       return result;
     },
     eq: (a, b) => a === b,
+    anyImageIsPrimary: function(images) {
+      return images.some(image => image.is_primary);
+    },
     notEqual: (a, b) => a !== b,
     gt: (a, b) => a > b,
     lt: (a, b) => a < b,
@@ -41,7 +44,16 @@ const hbs = handlebars.create({
     },
     has: function(set, value) {
       return set.has(value);
-    }}
+    }},
+    set: function (varName, varValue, options) {
+      if (!options.data.root) {
+        options.data.root = {};
+      }
+      options.data.root[varName] = varValue;
+    },
+    not: function(value) {
+      return !value;
+    }
 });
 
 

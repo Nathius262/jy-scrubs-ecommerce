@@ -292,11 +292,20 @@ nav h2{
 
 .core-img-wrapper {
     position: relative;
-    overflow: hidden;
-}
+    width: 100%; /* Make the wrapper responsive */
+    height: 300px; /* Set a fixed height for the images */
+    overflow: hidden; /* Ensure images don't overflow */
+  }
 
 .core-img {
     transition: opacity 0.3s ease;
+}
+
+.core-img, 
+.core-img-hover {
+  width: 100%; /* Full width of the container */
+  height: 100%; /* Ensure the height fills the wrapper */
+  object-fit: cover; /* Maintain aspect ratio and crop if necessary */
 }
 
 .core-img-hover {
