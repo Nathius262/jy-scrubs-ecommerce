@@ -1,0 +1,340 @@
+<!-- Hero Banner -->
+<section class="hero-banner position-relative ">
+    <!-- Video Background -->
+    <div class="video-container">
+
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="vid/women.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+
+    <!-- Content Overlay -->
+    <div class="container position-relative text-white">
+        <div class="row align-items-center justify-content-center text-center mb-3">
+            <div class="col-12 mb-4">
+                <h1 class="display-4">Men's Scrubs Collection</h1>
+                <p>Explore our premium collection of scrubs designed for comfort and durability.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Product Page with Pagination -->
+<section class="product-page py-5">
+    <div class="container">
+
+        <!-- Product Grid -->
+        <!-- Core Collection Section -->
+        <section class="core-collection py-5">
+            <div class="container overflow-hidden">
+                <div class="d-sm-flex justify-content-center align-items-center my-4">
+                    <h6 class="mx-2 fw-bold {{#if (eq selectedCategory 'women')}}underline{{/if}}">WOMEN</h6>
+                    <h6 class="mx-2 fw-bold {{#if (eq selectedCategory 'men')}}underline{{/if}}">MEN</h6>
+                </div>
+
+                <div class="d-md-flex justify-content-between align-items-center">
+                    
+                    <div class="my-5 text-muted d-flex mx-start">
+                        <!--COLOR-->
+                        <div class="dropdown me-4">
+                            <div class="dropdown-toggle fw-bold fs-6" type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            COLOR
+                            </div>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <div class="row p-2">
+                                    {{#each colors}}
+                                        <div class="col-md-6">
+                                            <input type="radio" name="color" value="{{this.name}}"> {{this.name}}
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--SIZE-->
+                        <div class="dropdown me-4">
+                            <div class="dropdown-toggle fw-bold fs-6" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            SIZE
+                            </div>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <div class="row p-2">
+                                    {{#each sizes}}
+                                        <div class="col-md-6">
+                                            <input type="radio" name="size" value="{{this.name}}"> {{this.name}}
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--SCURBS-->
+                        <div class="dropdown me-4">
+                            <div class="dropdown-toggle fw-bold fs-6" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            SCURBS
+                            </div>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                <div class="row p-2">
+                                    {{#each scrubs}}
+                                        <div class="col-md-6">
+                                            <input type="radio" name="scurb" value="{{this.name}}"> {{this.name}}
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--COLLECTION-->
+                        <div class="dropdown me-4">
+                            <div class="dropdown-toggle fw-bold fs-6" type="button" id="dropdownMenu4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            COLLECTION
+                            </div>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                                <div class="row p-2">
+                                    {{#each collections}}
+                                        <div class="col-md-6">
+                                            <input type="radio" name="collection" value="{{this.name}}"> {{this.name}}
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button id="clear-filters" class="btn btn-dark border-buttom fw-bold px-3 py-1">Clear All Filters</button>
+                        </div>
+                    </div>
+
+                    
+
+                    <span style="justify-self: flex-end;">Page {{currentProductPage}} of {{totalProductPages}}</span>
+
+                </div>
+                
+                <div class="core-row d-flex">
+                    {{#each products}}
+                    <div class="core-item">
+                        <div class="core-img-wrapper position-relative">
+                            <!-- Check if any image is marked as primary -->
+                            {{#each this.images}}
+                            {{#if this.is_primary}}
+                            <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                            {{/if}}
+                            {{/each}}
+
+                            <!-- If no primary image, use the first image as default -->
+                            {{#unless (anyImageIsPrimary this.images)}}
+                            {{#each this.images}}
+                            {{#if @first}}
+                            <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                            {{/if}}
+                            {{/each}}
+                            {{/unless}}
+
+                            <!-- Loop through images for hover, displaying those that are not primary -->
+                            {{#each this.images}}
+                            {{#unless this.is_primary}}
+                            <img src="{{this.url}}" alt="{{this.alt_text}} Alt"
+                                class="core-img-hover img-fluid position-absolute">
+                            {{/unless}}
+                            {{/each}}
+
+
+                        </div>
+                        <h5 class="mt-2 fs-6 fw-light">{{this.name}}</h5>
+                        <p class="price">${{this.price}}</p>
+                        <div class="colors d-flex align-items-center">
+                            {{#each this.colors}}
+                            <div class="color-box" style="background-color: {{this.hex_code}};"></div>
+                            {{/each}}
+                            <i class="fas fa-plus ms-2"></i>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- Pagination Controls -->
+        <div class="d-flex mt-5 justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <!-- Previous Button -->
+                    {{#if (gt currentProductPage 1)}}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{subtract currentProductPage 1}}">Previous</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    {{/if}}
+
+                    <!-- Page Numbers -->
+                    {{#each (range 1 totalProductPages)}}
+                    <li class="page-item {{#if (eq this ../currentProductPage)}}active{{/if}}">
+                        <a class="page-link" href="?page={{this}}">{{this}}</a>
+                    </li>
+                    {{/each}}
+
+                    <!-- Next Button -->
+                    {{#if (lt currentProductPage totalProductPages)}}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{add currentProductPage 1}}">Next</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item disabled">
+                        <a class="page-link">Next</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+
+<!-- Guarantee, Shipping, Store Section -->
+<section class="info-section py-5">
+    <div class="container">
+        <hr>
+
+        <div class="row text-center mt-5">
+            <!-- Column 1: 90-Day Guarantee -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-undo-alt fa-3x me-3"></i>
+                <div>
+                    <h5>90-Day Guarantee</h5>
+                    <p>We believe in lasting quality. If our products aren’t meeting your standards, send them back
+                        within 90 days and receive a full refund.</p>
+                </div>
+            </div>
+
+            <!-- Column 2: Free Shipping -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-shipping-fast fa-3x me-3"></i>
+                <div>
+                    <h5>Free Shipping</h5>
+                    <p>Enjoy free shipping on U.S. orders of $50 or more.</p>
+                </div>
+            </div>
+
+            <!-- Column 3: Find a Store -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-map-marker-alt fa-3x me-3"></i>
+                <div>
+                    <h5>Find a Store</h5>
+                    <p>Our products are located in 95+ stores across the U.S.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to get the current value of a query parameter
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Function to update the URL query parameters while keeping existing ones intact
+    function updateQueryParam(param, value) {
+        const url = new URL(window.location.href);  // Get the current URL
+        if (value) {
+            // If a value is provided, set or update the query parameter
+            url.searchParams.set(param, value);
+        } else {
+            // If no value, remove the query parameter (not applicable here but useful for resetting filters)
+            url.searchParams.delete(param);
+        }
+        window.location.href = url.href;  // Reload the page with the updated URL
+    }
+
+    // Function to pre-select the radio buttons based on the current URL query
+    function preSelectRadioButtons() {
+        const selectedColor = getQueryParam('color');
+        const selectedSize = getQueryParam('size');
+        const selectedScrub = getQueryParam('scurb');
+        const selectedCollection = getQueryParam('collection');
+
+        // Pre-select color radio button
+        if (selectedColor) {
+            const colorRadio = document.querySelector(`input[name="color"][value="${selectedColor}"]`);
+            if (colorRadio) colorRadio.checked = true;
+        }
+
+        // Pre-select size radio button
+        if (selectedSize) {
+            const sizeRadio = document.querySelector(`input[name="size"][value="${selectedSize}"]`);
+            if (sizeRadio) sizeRadio.checked = true;
+        }
+
+        // Pre-select scrub radio button
+        if (selectedScrub) {
+            const scrubRadio = document.querySelector(`input[name="scurb"][value="${selectedScrub}"]`);
+            if (scrubRadio) scrubRadio.checked = true;
+        }
+
+        // Pre-select collection radio button
+        if (selectedCollection) {
+            const collectionRadio = document.querySelector(`input[name="collection"][value="${selectedCollection}"]`);
+            if (collectionRadio) collectionRadio.checked = true;
+        }
+    }
+
+    // Add event listeners to radio buttons
+    function addRadioListeners() {
+        // Add event listeners to color radio buttons
+        document.querySelectorAll('input[name="color"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                updateQueryParam('color', this.value);  // Update URL with selected color
+            });
+        });
+
+        // Add event listeners to size radio buttons
+        document.querySelectorAll('input[name="size"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                updateQueryParam('size', this.value);  // Update URL with selected size
+            });
+        });
+
+        // Add event listeners to scrub radio buttons
+        document.querySelectorAll('input[name="scurb"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                updateQueryParam('scurb', this.value);  // Update URL with selected scrub
+            });
+        });
+
+        // Add event listeners to collection radio buttons
+        document.querySelectorAll('input[name="collection"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                updateQueryParam('collection', this.value);  // Update URL with selected collection
+            });
+        });
+    }
+    // Function to clear all query parameters
+    function clearAllFilters() {
+        const url = new URL(window.location.href);
+
+        // Remove all query parameters at once
+        url.search = '';  // This clears the entire query string (all parameters)
+
+        // Reload the page with the cleared URL
+        window.location.href = url.href;
+    }
+
+    // On page load, pre-select radio buttons and add listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        preSelectRadioButtons();  // Pre-select based on current URL
+        addRadioListeners();  // Add event listeners for future changes
+
+        document.getElementById('clear-filters').addEventListener('click', function() {
+            clearAllFilters();  // Call the function to clear filters
+        });
+    });
+</script>

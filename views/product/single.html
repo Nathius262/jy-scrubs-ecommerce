@@ -1,0 +1,123 @@
+<!-- Product Page with Pagination -->
+<section class="product-page py-5 mt-5">
+    <div class="container-fluid-md">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-2 col-3 ps-sm-5 d-none d-md-block">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class=" position-relative" style="height: 100px;">
+                                    <!-- Loop through images for hover, displaying those that are not primary -->
+                                    {{#each product.images}}
+                                    {{#unless product.is_primary}}
+                                    <img src="{{this.url}}" alt="{{this.alt_text}} Alt"
+                                        class="img-fluid mb-3">
+                                    {{/unless}}
+                                    {{/each}}
+        
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="container position-relative" >
+                            <!-- Check if any image is marked as primary -->
+                            {{#each product.images}}
+                            {{#if this.is_primary}}
+                            <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                            {{/if}}
+                            {{/each}}
+
+                            <!-- If no primary image, use the first image as default -->
+                            {{#unless (anyImageIsPrimary product.images)}}
+                            {{#each product.images}}
+                            {{#if @first}}
+                            <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                            {{/if}}
+                            {{/each}}
+                            {{/unless}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 fs-4 ps-md-5 container ms-3 ms-md-0">
+                <h5 class="mt-2 fs-2 fw-bold">{{product.name}}</h5>
+                <p class="price fs-4 my-4">${{product.price}}</p>
+                <div class="colors d-flex align-items-center">
+                    {{#each product.colors}}
+                    <div class="color-box rounded-5" style="background-color: {{this.hex_code}}; width:30px; height:30px;"></div>
+                    {{/each}}
+                </div>
+
+                <div class="colors d-flex align-items-center my-4">
+                    {{#each product.sizes}}
+                    <a class="btn btn-outline-dark me-1" style="">{{this.name}}</a>
+                    {{/each}}
+                </div>
+
+                <div class="col my-4 container ps-0">
+                    <button class="btn btn-dark w-100">Add to Bag</button>
+                </div>
+                <hr>
+                <div>
+                    <p class="fs-6">
+                        {{product.description}}
+                    </p>
+                </div>
+                <hr>
+                <div>
+                    <h6>
+                        SHOP MORE
+                    </h6>
+                    <p class="fs-6 d-sm-flex my-3">
+                        {{#each product.scrubs}}
+                        <a href="" class="btn btn-outline-dark p-1 rounded-4 ms-2">{{this.name}}</a>
+                        {{/each}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Guarantee, Shipping, Store Section -->
+<section class="info-section py-5">
+    <div class="container">
+        <hr>
+
+        <div class="row text-center mt-5">
+            <!-- Column 1: 90-Day Guarantee -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-undo-alt fa-3x me-3"></i>
+                <div>
+                    <h5>90-Day Guarantee</h5>
+                    <p>We believe in lasting quality. If our products aren’t meeting your standards, send them back
+                        within 90 days and receive a full refund.</p>
+                </div>
+            </div>
+
+            <!-- Column 2: Free Shipping -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-shipping-fast fa-3x me-3"></i>
+                <div>
+                    <h5>Free Shipping</h5>
+                    <p>Enjoy free shipping on U.S. orders of $50 or more.</p>
+                </div>
+            </div>
+
+            <!-- Column 3: Find a Store -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <i class="fas fa-map-marker-alt fa-3x me-3"></i>
+                <div>
+                    <h5>Find a Store</h5>
+                    <p>Our products are located in 95+ stores across the U.S.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
