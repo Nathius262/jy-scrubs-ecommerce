@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import upload from '../../config/multer.js';
+import setSection from "../../middlewares/uploadLocation.js";
+
 
 import { adminAuthMiddleware } from '../../middlewares/authMiddleware.js';
 import {renderloginAdmin, loginAdmin} from '../../controllers/authController.js'
@@ -107,10 +109,22 @@ router.route('/collection')
     .post(collection.createCollectionController);
 router.get('/collection/create', collection.renderCollectionForm);
 
+//COLOR ROUTE
 router.route('/color')
     .get(color.getAllColors)
-    .post(color.createColorController);
+    .post(setSection('product_color'), upload.fields([
+        {name: 'image_url', maxCount:1}
+    ]),color.createColorController);
+
 router.get('/color/create', color.renderColorForm);
+
+router.route('/color/:id')
+    .get(color.renderColorUpdateForm)
+    .put(setSection('product_color'), upload.fields([
+        {name: 'image_url', maxCount:1}
+    ]),color.updateColor)
+    .delete(color.deleteColor);
+    
 
 router.route('/size')
     .get(size.getAllSize)
