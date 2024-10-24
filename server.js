@@ -21,6 +21,7 @@ import adminSeeder  from './seeders/admin-seeder.cjs';
 //route import
 import adminRouter from './routers/admin/adminRouter.js';
 import rootRouter from './routers/rootRouter.js';
+import productRouter from './routers/productRouter.js'
 //import apiRouter from './routers/api/router.js';
 
 
@@ -52,6 +53,7 @@ app.use(staticFiles);
 app.use('/', rootRouter);
 app.use('/admin/', adminRouter);
 //app.use('/api/', apiRouter);
+app.use('/product/', productRouter);
 
 
 //middlewares\

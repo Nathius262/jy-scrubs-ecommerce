@@ -12,6 +12,8 @@ const app = express();
 
 // Serve static files (CSS, JS, images)
 app.use('', express.static(path.join(__dirname, '..', 'public')));
+
+//admin
 app.use('/admin/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/user/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/role/', express.static(path.join(__dirname, '..', 'public')));
@@ -21,5 +23,8 @@ app.use('/admin/size/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/color/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/category/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/collection/', express.static(path.join(__dirname, '..', 'public')));
+
+//amin
+app.use('/product/', express.static(path.join(__dirname, '..', 'public')));
 
 export default app;
