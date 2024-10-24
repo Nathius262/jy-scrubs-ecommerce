@@ -8,7 +8,7 @@ export const getAllColors = async (req, res) => {
   try {
     const { colors, totalItems, totalPages, currentPage } = await colorHelper.getAllColors(page, limit);
 
-    res.render('./admin/color/list', {
+    res.render('./admin/category/list_color', {
       colors,
       currentPage,
       totalPages,
@@ -26,6 +26,16 @@ export const getAllColors = async (req, res) => {
 export async function createColorController(req, res) {
   try {
     const data = req.body;
+    if (req.files && Array.isArray(req.files)) {
+      // Handle multiple files uploaded
+      data.images = req.files.map(file => file.path);  // Extract Cloudinary URLs
+    } else if (req.file) {
+      // Handle a single file uploaded (in case multer handles single file upload differently)
+      data.images = req.file.path;  // Wrap it in an array for consistency
+    } else {
+      data.images = '';  // No files uploaded
+    }
+    
     const newColor = await colorHelper.createColor(data);
     return res.status(201).json({ message: 'Color created successfully', color: newColor, redirectTo:"/admin/color/create" });
   } catch (error) {
@@ -34,9 +44,57 @@ export async function createColorController(req, res) {
   }
 }
 
+export const updateColor = async (req, res) => {
+  try {
+    const colorId = req.params.id;
+    const colorData = req.body;
+
+    const image_url = req.files?.['image_url'] ? req.files['image_url'][0].path : "";
+    colorData.image_url = image_url
+
+
+    console.log(colorData)
+
+    // Call the updateColor helper function
+    const updatedcolor = await colorHelper.updateColor(colorId, colorData);
+
+    // Redirect or send a response after successful update
+    res.status(200).json({ message: 'Color updated successfully', redirectTo: `/admin/color/${colorId}` });
+
+  } catch (error) {
+    console.error('Error updating color:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const deleteColor = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await colorHelper.deleteColor(id);
+    if (!result) {
+      return res.status(404).json({ error: 'Color not found' });
+    }
+    res.status(204).json({ message: `Color ${id} deleted successfully`, redirectTo: "/admin/color" });
+  } catch (error) {
+    console.error('Error deleting color:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 export const renderColorForm = async (req, res) => {
   try {
     res.render('./admin/category/create_color')
+  } catch (error) {
+    res.send(500).json("Internal server error", error)
+  }
+}
+
+export const renderColorUpdateForm = async (req, res) => {
+
+  const id = req.params.id
+  try {
+    const color = await colorHelper.getColorById(id)
+    res.render('./admin/category/update_color', {color})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }
