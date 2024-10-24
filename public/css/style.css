@@ -30,7 +30,8 @@ nav h2{
 }
 
 .navbar-nav .nav-link:hover {
-    text-decoration: underline;
+    border-bottom: 2.5px solid black;
+    padding-bottom: 2px;
 }
 /* Show search form when hovered */
 .nav-item.dropdown:hover .search-dropdown {
@@ -59,8 +60,16 @@ nav h2{
 }
 
 .border-bottom{
-    border-bottom: 1px solid black;
+    border-bottom: 2.5px solid black;
+    padding-bottom: 4px;
+    transition: border-bottom .4s linear;
 }
+.underline {
+    border-bottom: 2.5px solid black;
+    padding-bottom: 4px;
+    transition: border-bottom .4s linear;
+}
+
 
 /* Cart, User, and Search Icons */
 .navbar-nav .nav-link i {
@@ -137,11 +146,6 @@ nav h2{
 /* Show dropdown on hover */
 .nav-item:hover .dropdown-menu {
     display: block;
-}
-
-/* Underline effect on hover */
-.nav-link:hover {
-    text-decoration: underline;
 }
 
 /* Align dropdown content to center */
