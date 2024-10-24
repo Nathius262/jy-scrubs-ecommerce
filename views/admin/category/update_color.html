@@ -40,10 +40,10 @@
                 <h6 class="m-0 font-weight-bold text-primary">Create Color</h6>
               </div>
               <div class="card-body">
-                <form id="create-new-user" class="user needs-validation" action="/admin/color" method="POST"
+                <form id="update-media" class="user needs-validation" action="/admin/color/{{color.id}}" method="POST"
                   enctype="multipart/form-data" novalidate>
                   <div class="form-group">
-                    <input type="text" name="name" class="form-control form-control-user" id="exampleInputEmail"
+                    <input type="text" name="name" value="{{color.name}}" class="form-control form-control-user" id="exampleInputEmail"
                       aria-describedby="emailHelp" placeholder="Enter Color Name..." required>
                     <div class="invalid-feedback">
                       Name is required
@@ -52,7 +52,7 @@
 
                   <div class="form-group d-flex align-items-start">
                     <label for="#exampleInputColor">Choose Color: </label>
-                    <input type="color" name="hex_code" class="mx-2" id="exampleInputColor"
+                    <input type="color" name="hex_code" value="{{color.hex_code}}" class="mx-2" id="exampleInputColor"
                       placeholder="Enter Color Name..." required style="width: 50%;">
                     <div class="invalid-feedback">
                       color code is required
@@ -61,7 +61,7 @@
 
                   <div class="form-group row d-block">
                     <label for="id_image_file">Image Color</label>
-                    <input name="image_url" type="file" id="id_image_file" accept="image/*" class="form-control" value=""
+                    <input name="image_url" type="file" id="id_image_file" accept="image/*" class="form-control" value="{{color.image_url}}"
                       required>
 
                   </div>
@@ -71,6 +71,9 @@
                   <div class="spinner-border col-12 d-none" id="status" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
+
+                  <progress id="progressBar" value="0" max="100" style="width: 100%; display: none;"></progress>
+                  <hr class="mb-3">
 
                   <button type="submit" id="btn" class="btn btn-primary btn-user btn-block">
                     Create
@@ -96,7 +99,7 @@
 
 
 <!-- Core plugin JavaScript-->
-<script type="module" src="js/user.js"></script>
+<script type="module" src="js/uploader.js"></script>
 
 
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
