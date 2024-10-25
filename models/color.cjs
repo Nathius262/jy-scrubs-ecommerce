@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Color.init({
     name: DataTypes.STRING,
-    hex_code: DataTypes.STRING
+    hex_code: DataTypes.STRING,
+    image_url: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Color',
