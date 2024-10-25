@@ -11,6 +11,7 @@ const removeTrailingSlash = (req, res, next) => {
 
       //main
       '/product/',
+      '/collection/',
     ];
   
     if (req.path !== '/' && req.path.endsWith('/') && !allowTrailingSlash.includes(req.path)) {
