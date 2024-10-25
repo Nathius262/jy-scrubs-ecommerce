@@ -16,7 +16,7 @@
             <div class="col-md-6 mb-4">
                 <h1 class="display-4">Women's Scrubs Collection</h1>
                 <p>Explore our premium collection of scrubs designed for comfort and durability.</p>
-                <a href="#" class="btn btn-light rounded-0 px-3 btn-lg">Shop Now</a>
+                <a href="/collection/?category=women" class="btn btn-light rounded-0 px-3 btn-lg">Shop Now</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
             {{#each scrubs}}
             <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
                 <div class="w-100 category-btn">
-                    <a href="?category={{this.id}}">{{this.name}}</a>
+                    <a href="/collection/?scurb={{this.name}}">{{this.name}}</a>
                 </div>
             </div>
             {{/each}}
@@ -51,10 +51,10 @@
         </div>
         <div class="color-row d-flex text-start justify-content-start">
             {{#each colors}}
-            <div class="color-card">
-                <img src="{{this.imageUrl}}" alt="{{this.name}}" class="img-fluid">
-                <h5 class="mt-2 fs-6 fw-light">{{this.name}}</h5>
-            </div>
+            <a href="/collection/?color={{this.name}}" class="color-card">
+                <img src="{{this.image_url}}" alt="{{this.name}}" class="img-fluid">
+                <h5 class="mt-2 fs-6 fw-light text-dark">{{this.name}}</h5>
+            </a>
             {{/each}}
         </div>
     </div>
@@ -160,8 +160,8 @@
 
 
                 </div>
-                <h5 class="mt-2 fs-6 fw-light">{{this.name}}</h5>
-                <p class="price">${{this.price}}</p>
+                <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                <p class="price fw-bold">${{this.price}}</p>
                 <div class="colors d-flex align-items-center">
                     {{#each this.colors}}
                     <div class="color-box" style="background-color: {{this.hex_code}};"></div>

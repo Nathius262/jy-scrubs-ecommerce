@@ -1,4 +1,10 @@
-<!-- Product Page with Pagination -->
+<style>
+    .colors .active{
+        opacity: .4;
+    }
+</style>
+
+
 <section class="product-page py-5 mt-5">
     <div class="container-fluid-md">
         <div class="row">
@@ -46,40 +52,61 @@
             </div>
             <div class="col-md-4 fs-4 ps-md-5 container ms-3 ms-md-0">
                 <h5 class="mt-2 fs-2 fw-bold">{{product.name}}</h5>
-                <p class="price fs-4 my-4">${{product.price}}</p>
-                <div class="colors d-flex align-items-center">
-                    {{#each product.colors}}
-                    <div class="color-box rounded-5" style="background-color: {{this.hex_code}}; width:30px; height:30px;"></div>
-                    {{/each}}
-                </div>
-
-                <div class="colors d-flex align-items-center my-4">
-                    {{#each product.sizes}}
-                    <a class="btn btn-outline-dark me-1" style="">{{this.name}}</a>
-                    {{/each}}
-                </div>
-
-                <div class="col my-4 container ps-0">
-                    <button class="btn btn-dark w-100">Add to Bag</button>
-                </div>
+                
+                <!-- Price and Stock Section -->
+                <p class="price fs-4 my-4 d-sm-flex justify-content-between me-3">
+                    <span>Price: ${{product.price}}</span> 
+                    <span>Stock: <span id="currentStock">{{product.stock}}</span></span>
+                </p>
                 <hr>
-                <div>
-                    <p class="fs-6">
-                        {{product.description}}
-                    </p>
+            
+                <!-- Quantity Section -->
+                <div class="my-4 d-flex align-items-center">
+                    <div class="fs-6 fw-bold me-3">Quantity</div>
+                    <div class="d-flex align-items-center">
+                        <button id="decreaseQty" class="btn btn-outline-dark me-2">-</button>
+                        <input type="text" id="quantityInput" value="" readonly style="width: 50px; text-align: center;" />
+                        <button id="increaseQty" class="btn btn-outline-dark ms-2">+</button>
+                    </div>
                 </div>
-                <hr>
-                <div>
-                    <h6>
-                        SHOP MORE
-                    </h6>
-                    <p class="fs-6 d-sm-flex my-3">
-                        {{#each product.scrubs}}
-                        <a href="" class="btn btn-outline-dark p-1 rounded-4 ms-2">{{this.name}}</a>
+            
+                <!-- Available Colors Section -->
+                <div class="my-4">
+                    {{#if product.colors}}
+                    <div class="fs-6 fw-bold">Available colors</div>
+                    <div class="colors d-flex align-items-center">
+                        {{#each product.colors}}
+                        <div class="color-box rounded-5 me-2 color-select" data-color-id="{{this.id}}" style="background-color: {{this.hex_code}}; width:30px; height:30px; cursor:pointer;"></div>
                         {{/each}}
-                    </p>
+                    </div>
+                    {{/if}}
+                </div>
+            
+                <!-- Available Sizes Section -->
+                <div class="my-4">
+                    {{#if product.sizes}}
+                    <div class="fs-6 fw-bold">Available Sizes</div>
+                    <div class="sizes d-flex align-items-center my-4">
+                        {{#each product.sizes}}
+                        <a class="btn btn-outline-dark me-1 size-select" data-size-id="{{this.id}}" style="cursor:pointer;">{{this.name}}</a>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                </div>
+            
+                <hr>
+            
+                <!-- Add to Bag Button -->
+                <div class="col my-4 container ps-0">
+                    <button id="addToBagBtn" class="btn btn-dark w-100" disabled>Add to Bag</button>
+                </div>
+            
+                <hr>
+                <div>
+                    <p class="fs-6">{{product.description}}</p>
                 </div>
             </div>
+            
         </div>
     </div>
 </section>
@@ -121,3 +148,109 @@
         </div>
     </div>
 </section>
+
+<script src="/js/cart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let selectedColorId = null;
+        let selectedSizeId = null;
+        const maxStock = {{product.stock}}; // Assuming product stock from server
+        let quantity = maxStock; // Default starting quantity
+    
+        const addToBagBtn = document.getElementById('addToBagBtn');
+        const quantityInput = document.getElementById('quantityInput');
+        const increaseQtyButton = document.getElementById('increaseQty');
+        const decreaseQtyButton = document.getElementById('decreaseQty');
+        const currentStockDisplay = document.getElementById('currentStock');
+    
+        // Ensure initial quantity does not exceed stock
+        function initializeQuantity() {
+            quantity = Math.min(quantity, maxStock); // Set quantity to stock if it's higher
+            quantityInput.value = quantity;
+            updateButtonStates();
+        }
+    
+        // Update button states based on quantity and stock
+        function updateButtonStates() {
+            const cart = getCart();
+            let totalInCart = cart
+                .filter(item => item.productId === {{product.id}})
+                .reduce((sum, item) => sum + item.quantity, 0);
+    
+            const remainingStock = maxStock - totalInCart;
+    
+            increaseQtyButton.disabled = quantity >= remainingStock;
+            decreaseQtyButton.disabled = quantity <= 1;
+            addToBagBtn.disabled = remainingStock === 0 || !(selectedColorId && selectedSizeId && quantity > 0);
+    
+            quantityInput.value = quantity;
+            currentStockDisplay.textContent = remainingStock;
+        }
+    
+        // Set initial state on page load
+        function initializeCartState() {
+            const cart = getCart();
+            cart.filter(item => item.productId === {{product.id}}).forEach(item => {
+                if (!selectedSizeId && !selectedColorId) {
+                    quantity = item.quantity;
+                    selectedColorId = item.colorId;
+                    selectedSizeId = item.sizeId;
+                }
+                document.querySelector(`.color-select[data-color-id="${item.colorId}"]`)?.classList.add('active');
+                document.querySelector(`.size-select[data-size-id="${item.sizeId}"]`)?.classList.add('active');
+            });
+            initializeQuantity();
+        }
+    
+        // Initialize cart state and quantity on load
+        if (maxStock === 0) {
+            addToBagBtn.disabled = true; // Disable Add to Bag if stock is 0 on load
+        } else {
+            initializeCartState();
+        }
+    
+        // Quantity button logic
+        increaseQtyButton.addEventListener('click', function () {
+            if (quantity < maxStock) {
+                quantity++;
+                updateButtonStates();
+            }
+        });
+    
+        decreaseQtyButton.addEventListener('click', function () {
+            if (quantity > 1) {
+                quantity--;
+                updateButtonStates();
+            }
+        });
+    
+        // Update the quantity when color or size is selected
+        document.querySelectorAll('.color-select').forEach(colorBox => {
+            colorBox.addEventListener('click', function () {
+                document.querySelectorAll('.color-select').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+                selectedColorId = this.getAttribute('data-color-id');
+                updateButtonStates();
+            });
+        });
+    
+        document.querySelectorAll('.size-select').forEach(sizeBtn => {
+            sizeBtn.addEventListener('click', function () {
+                document.querySelectorAll('.size-select').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+                selectedSizeId = this.getAttribute('data-size-id');
+                updateButtonStates();
+            });
+        });
+    
+        // Add to Bag button logic
+        addToBagBtn.addEventListener('click', function () {
+            addToCart({{product.id}}, quantity, selectedSizeId, selectedColorId);
+            updateButtonStates();
+        });
+    
+        updateButtonStates();
+    });
+    
+</script>

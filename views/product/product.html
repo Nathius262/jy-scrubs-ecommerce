@@ -143,8 +143,8 @@
 
 
                         </div>
-                        <h5 class="mt-2 fs-6 fw-light">{{this.name}}</h5>
-                        <p class="price">${{this.price}}</p>
+                        <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                        <p class="price fw-bold">${{this.price}}</p>
                         <div class="colors d-flex align-items-center">
                             {{#each this.colors}}
                             <div class="color-box" style="background-color: {{this.hex_code}};"></div>
