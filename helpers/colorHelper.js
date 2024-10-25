@@ -44,15 +44,16 @@ export async function createColor(data) {
   try{
 
     const newColor = await db.Color.create(data);
+    return newColor.get({plain:true});
   }catch (error){
 
   };
-  return newColor.get({plain:true});
 }
 
 export const updateColor = async (colorId, colorData) => {
-  const {
+  let {
     name,
+    hex_code,
     image_url
   } = colorData;
 
@@ -79,20 +80,18 @@ export const updateColor = async (colorId, colorData) => {
       throw new Error('Color not found');
     }
 
-    console.log({
-      newImage: colorData.image_url,
-      oldImage:color.image_url
-    })
-
     // Check if new image is uploaded and delete the old one from Cloudinary
-    if (colorData.image_url && color.image_url) {
+    if (image_url && color.image_url) {
+      console.log("deleting old image")
       await cloudinary.uploader.destroy(getPublicIdFromUrl(color.image_url, { resource_type: 'image' }));
     }
 
-    // Update color basic details
-    const newData = color.update({ name, image_url }, { transaction });
+    if(image_url == ""){
+      image_url = color.image_url
+    }
 
-    console.log(newData)
+    // Update color basic details
+    await color.update({ name, hex_code, image_url }, { transaction });
 
     // Commit the transaction if all operations were successful
     await transaction.commit();

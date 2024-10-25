@@ -45,7 +45,9 @@ export const getAllProducts = async (page, limit) => {
             limit,
             offset,
             distinct: true,
+            order: [['createdAt', 'DESC'], ['updatedAt', 'DESC']],
         });
+
 
         // Return plain objects and pagination information
         return {
@@ -427,6 +429,7 @@ export const getMultipleFilteredProducts = async (filters, page, limit) => {
       limit,  // Limit the number of products per page
       offset,  // Offset to skip products for pagination
       distinct: true,  // Ensure unique products are counted
+      order: [['createdAt', 'DESC'], ['updatedAt', 'DESC']],
     });
 
     // Map the products to the desired format
@@ -494,4 +497,37 @@ export const getMultipleFilteredProducts = async (filters, page, limit) => {
     console.error('Error fetching filtered products:', error);
     throw error;
   }
+};
+
+export const getProductCart = async (cartData) => {
+    try {
+        const products = await Promise.all(cartData.map(async (item) => {
+            const product = await db.Product.findByPk(item.productId, {
+                include: [
+                    { model: db.Color, as: 'colors', through: { attributes: [] } },
+                    { model: db.Size, as: 'sizes', through: { attributes: [] } },
+                    { model: db.Image, as: 'images', required: false, limit: 1 },
+                ],
+            });
+            if (!product) return null;
+
+            // Get the product with the plain object
+            const plainProduct = product.get({ plain: true });
+
+            // Match the color and size with their respective IDs
+            const matchedColor = plainProduct.colors.find(color => color.id == item.colorId);
+            const matchedSize = plainProduct.sizes.find(size => size.id == item.sizeId);
+
+            return {
+                ...plainProduct,
+                quantity: item.quantity,
+                selectedColor: matchedColor,
+                selectedSize: matchedSize,
+            };
+        }));
+
+        return products.filter(product => product !== null); // Filter out any null products
+    } catch (error) {
+        throw error;
+    }
 };
