@@ -26,5 +26,6 @@ app.use('/admin/collection/', express.static(path.join(__dirname, '..', 'public'
 
 //amin
 app.use('/product/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/collection/', express.static(path.join(__dirname, '..', 'public')));
 
 export default app;

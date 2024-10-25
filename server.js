@@ -22,6 +22,8 @@ import adminSeeder  from './seeders/admin-seeder.cjs';
 import adminRouter from './routers/admin/adminRouter.js';
 import rootRouter from './routers/rootRouter.js';
 import productRouter from './routers/productRouter.js'
+import collectionRouter from './routers/collectionRouter.js'
+import cartRouter from './routers/cartRouter.js'
 //import apiRouter from './routers/api/router.js';
 
 
@@ -54,6 +56,8 @@ app.use('/', rootRouter);
 app.use('/admin/', adminRouter);
 //app.use('/api/', apiRouter);
 app.use('/product/', productRouter);
+app.use('/collection/', collectionRouter);
+app.use('/checkout', cartRouter);
 
 
 //middlewares\
