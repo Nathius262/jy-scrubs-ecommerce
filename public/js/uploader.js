@@ -97,17 +97,24 @@ function loadStatus(status){
     let statusEl = document.getElementsByClassName('status')
     let btn = document.getElementById('btn')
     let progressBar = document.getElementById('progressBar')
-    let deleteBtn = document.querySelector('#delete')
 
     if (status) {
         try {
             progressBar.style.display = 'block';
             btn.classList.add('disabled')
-            deleteBtn.classList.add('disabled')
             for (let i of statusEl){
                 i.classList.remove('d-none')
                 console.log("removing")
             } 
+            try {
+                let deleteBtn = document.querySelector('#delete')
+
+                deleteBtn.classList.add('disabled')
+                
+            } catch (error) {
+                
+            }
+            
         } catch (error) {
             
         }
@@ -116,7 +123,13 @@ function loadStatus(status){
     else{
         try {
             btn.classList.remove('disabled')
-            deleteBtn.classList.remove('disabled')
+            try {
+                let deleteBtn = document.querySelector('#delete')
+                deleteBtn.classList.remove('disabled')
+            } catch (error) {
+                
+            }
+            
             progressBar.style.display = 'none';
             for (let i of statusEl){
                 i.classList.add('d-none')
