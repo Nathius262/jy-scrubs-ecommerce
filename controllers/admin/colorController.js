@@ -26,15 +26,8 @@ export const getAllColors = async (req, res) => {
 export async function createColorController(req, res) {
   try {
     const data = req.body;
-    if (req.files && Array.isArray(req.files)) {
-      // Handle multiple files uploaded
-      data.images = req.files.map(file => file.path);  // Extract Cloudinary URLs
-    } else if (req.file) {
-      // Handle a single file uploaded (in case multer handles single file upload differently)
-      data.images = req.file.path;  // Wrap it in an array for consistency
-    } else {
-      data.images = '';  // No files uploaded
-    }
+    const image_url = req.files?.['image_url'] ? req.files['image_url'][0].path : "";
+    data.image_url = image_url
     
     const newColor = await colorHelper.createColor(data);
     return res.status(201).json({ message: 'Color created successfully', color: newColor, redirectTo:"/admin/color/create" });
@@ -53,7 +46,6 @@ export const updateColor = async (req, res) => {
     colorData.image_url = image_url
 
 
-    console.log(colorData)
 
     // Call the updateColor helper function
     const updatedcolor = await colorHelper.updateColor(colorId, colorData);
