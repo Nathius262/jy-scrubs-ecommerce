@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const generateUniqueSlug = require('../helpers/slugHelper.cjs'); // Import the slug helper function
+
 module.exports = (sequelize, DataTypes) => {
   class Size extends Model {
     /**
@@ -19,10 +19,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Size.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    slug: {
+      type: DataTypes.STRING,
+      unique: true,  // Ensures the slug is unique
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Size',
+  });
+  Size.beforeValidate(async (category) => {
+    if (!category.slug) {
+      category.slug = await generateUniqueSlug(category.name, Size);
+    }
+  });
+
+  Size.beforeUpdate(async (product) => {
+    if (product.changed('name')) {
+      product.slug = await generateUniqueSlug(product.name, Size);
+    }
   });
   return Size;
 };

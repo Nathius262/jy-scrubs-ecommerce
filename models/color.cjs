@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const generateUniqueSlug = require('../helpers/slugHelper.cjs'); // Import the slug helper function
+
 module.exports = (sequelize, DataTypes) => {
   class Color extends Model {
     /**
@@ -22,9 +22,27 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     hex_code: DataTypes.STRING,
     image_url: DataTypes.STRING,
+    slug: {
+      type: DataTypes.STRING,
+      unique: true,  // Ensures the slug is unique
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Color',
   });
+
+  Color.beforeValidate(async (category) => {
+    if (!category.slug) {
+      category.slug = await generateUniqueSlug(category.name, Color);
+    }
+  });
+
+  Color.beforeUpdate(async (product) => {
+    if (product.changed('name')) {
+      product.slug = await generateUniqueSlug(product.name, Color);
+    }
+  });
+
   return Color;
 };

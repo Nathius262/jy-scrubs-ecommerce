@@ -1,14 +1,9 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const generateUniqueSlug = require('../helpers/slugHelper.cjs'); // Import the slug helper function
+
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // Many-to-many with Category
       Product.belongsToMany(models.Category, {
@@ -52,14 +47,37 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Product.init({
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL,
-    stock: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Product',
+
+  Product.init(
+    {
+      name: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      price: DataTypes.DECIMAL,
+      stock: DataTypes.INTEGER,
+      slug: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+      }
+    },
+    {
+      sequelize,
+      modelName: 'Product',
+    }
+  );
+
+  // Use generateUniqueSlug from the helper file in hooks
+  Product.beforeValidate(async (category) => {
+    if (!category.slug) {
+      category.slug = await generateUniqueSlug(category.name, Product);
+    }
   });
+
+  Product.beforeUpdate(async (product) => {
+    if (product.changed('name')) {
+      product.slug = await generateUniqueSlug(product.name, Product);
+    }
+  });
+
   return Product;
 };
