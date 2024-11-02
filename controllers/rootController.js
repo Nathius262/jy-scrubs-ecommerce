@@ -1,4 +1,4 @@
-import {getFilteredProducts} from '../helpers/productHelper.js';
+import {getFilteredProducts} from '../helpers/productFilterHelper.js';
 
 
 export const index_view = async (req, res) => {
@@ -8,6 +8,7 @@ export const index_view = async (req, res) => {
 
   try {
     const filteredData = await getFilteredProducts(category, page, limit);
+    //console.log(filteredData)
 
     // Render the page with filtered products, available filters, and pagination info
     return res.render('./layouts/index', {

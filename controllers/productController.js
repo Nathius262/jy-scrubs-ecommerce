@@ -1,5 +1,6 @@
 // Get all products and render the product list
 import * as productHelper from '../helpers/productHelper.js';
+import * as productFilterHelper from '../helpers/productFilterHelper.js';
 import * as categoryHelper from '../helpers/categoryHelper.js';
 import * as colorHelper from '../helpers/colorHelper.js';
 import * as sizeHelper from '../helpers/sizeHelper.js';
@@ -8,10 +9,10 @@ import * as collectionHelper from '../helpers/collectionHelper.js';
 
 
 // Render update product form
-export const getProductById = async (req, res) => {
-  const { id } = req.params;
+export const getProductBySlug = async (req, res) => {
+  const { slug } = req.params;
   try {
-    const product = await productHelper.getProductById(id);  // Fetch product by ID
+    const product = await productHelper.getProductBySlug(slug);  // Fetch product by ID
     const categories = await categoryHelper.getAllCategories();
     const colors = await colorHelper.getAllColors();
     const sizes = await sizeHelper.getAllSizes();
@@ -23,7 +24,8 @@ export const getProductById = async (req, res) => {
     const productCategoryIds = new Set(product.categories.map(category => category.id));
     const productColorIds = new Set(product.colors.map(color => {color.id, color.name}));
     const productSizeIds = new Set(product.sizes.map(size => size.id));
-    const productScurbIds = new Set(product.scrubs.map(scurb => scurb.id));
+    const productScurbIds = new Set(product.scrubs.map(scurb => {scurb.id}));
+    
 
     res.render('./product/single', {
       product,
@@ -57,7 +59,7 @@ export const getAllProducts = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;  // Default to 10 products per page
 
   try {
-    const filteredData = await productHelper.getMultipleFilteredProducts(filters, page, limit);
+    const filteredData = await productFilterHelper.getMultipleFilteredProducts(filters, page, limit);
 
     // Render the page with filtered products, available filters, and pagination info
     return res.render('./product/product', {
