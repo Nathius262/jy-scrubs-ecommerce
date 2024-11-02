@@ -81,6 +81,26 @@ export const getProductById = async (id) => {
     }
 };
 
+export const getProductBySlug = async (slug) => {
+    try {
+        const product = await db.Product.findOne({
+            where: { slug: slug },
+            include: [
+                { model: db.Category, as: 'categories', through: { attributes: [] } },
+                { model: db.Color, as: 'colors', through: { attributes: [] } },
+                { model: db.Size, as: 'sizes', through: { attributes: [] } },
+                { model: db.Collection, as: 'collections', through: { attributes: [] } },
+                { model: db.Scrub, as: 'scrubs', through: { attributes: [] } },
+                { model: db.Image, as: 'images', attributes: ['url', 'id', 'is_primary'] },
+            ],
+        });
+        if (!product) return null;
+        return product.get({ plain: true });
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const createProduct = async (productData) => {
     const { name, description, price, stock, categoryIds, colorIds, sizeIds, collectionIds, scrubIds, images } = productData;
 
@@ -236,269 +256,6 @@ export const deleteProduct = async (id) => {
     }
 };
 
-// helpers/productHelper.js
-
-export const getFilteredProducts = async (category, page, limit) => {
-  try {
-    const offset = (page - 1) * limit;  // Calculate the offset for pagination
-    const categoryId = category;
-
-    // Fetch products filtered by the category with pagination
-    const { rows: products, count: totalProductItems } = await db.Product.findAndCountAll({
-      include: [
-        {
-          model: db.Category,
-          as: 'categories',
-          through: { attributes: [] },
-          where: { name: categoryId },  // Filter by category name
-        },
-        {
-          model: db.Image,
-          as: 'images',
-          required: false,
-        },
-        {
-          model: db.Color,
-          as: 'colors',
-          through: { attributes: [] },
-        },
-      ],
-      limit, // Limit the number of products per page
-      offset, // Offset to skip products for pagination
-      distinct: true,  // Ensure unique products are counted
-    });
-
-    // Map the products to the desired format
-    const mappedProducts = products.map(product => ({
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      stock: product.stock,
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-      categories: product.categories.map(category => ({
-        id: category.id,
-        name: category.name,
-        description: category.description,
-        createdAt: category.createdAt,
-        updatedAt: category.updatedAt,
-      })),
-      images: product.images.map(image => ({
-        id: image.id,
-        url: image.url,
-        alt_text: image.alt_text,
-        is_primary: image.is_primary,
-        createdAt: image.createdAt,
-        updatedAt: image.updatedAt,
-        productId: image.productId,
-      })),
-      colors: product.colors.map(color => ({
-        id: color.id,
-        name: color.name,
-        hex_code: color.hex_code,
-        createdAt: color.createdAt,
-        updatedAt: color.updatedAt,
-      })),
-    }));
-
-    // Fetch all available filters (colors, sizes, collections, scrubs)
-    const colors = await db.Color.findAll();
-    const sizes = await db.Size.findAll();
-    const collections = await db.Collection.findAll({
-      include: [
-        {
-          model: db.Product,
-          as: 'products',
-          include: [
-            {
-              model: db.Category,
-              as: 'categories',
-              where: { name: categoryId },
-            },
-            {
-              model: db.Image,
-              as: 'images',
-              where: { is_primary: true },
-              required: false,
-            },
-          ],
-        },
-      ],
-    });
-    const scrubs = await db.Scrub.findAll();
-
-    // Calculate total pages for pagination
-    const totalProductPages = Math.ceil(totalProductItems / limit);
-
-    return {
-      products: mappedProducts,
-      totalProductItems,
-      totalProductPages,
-      currentProductPage: page,
-      colors: colors.map(color => color.get({ plain: true })),
-      sizes: sizes.map(size => size.get({ plain: true })),
-      collections: collections.map(collection => collection.get({ plain: true })),
-      scrubs: scrubs.map(scrub => scrub.get({ plain: true })),
-    };
-  } catch (error) {
-    console.error('Error fetching filtered products:', error);
-    throw error;
-  }
-};
-
-export const getMultipleFilteredProducts = async (filters, page, limit) => {
-  try {
-    const offset = (page - 1) * limit;  // Calculate the offset for pagination
-    const { category, color, size, scrub, collection } = filters;  // Destructure filters from the query
-    
-    // Build the 'where' conditions dynamically
-    const productWhere = {};
-    const categoryWhere = {};
-    const colorWhere = {};
-    const sizeWhere = {};
-    const collectionWhere = {};
-    const scrubWhere = {};
-
-    // Apply category filter if present
-    if (category) {
-      categoryWhere.name = category;  // Filter by category name
-    }
-
-    // Apply color filter if present
-    if (color) {
-      colorWhere.name = color;  // Filter by color name
-    }
-
-    // Apply size filter if present
-    if (size) {
-      sizeWhere.name = size;  // Filter by size name
-    }
-
-    // Apply collection filter if present
-    if (collection) {
-      collectionWhere.name = collection;  // Filter by collection name
-    }
-
-    // Apply scrub filter if present
-    if (scrub) {
-      scrubWhere.name = scrub;  // Filter by scrub name
-    }
-
-    // Fetch products with filters applied, and pagination
-    const { rows: products, count: totalProductItems } = await db.Product.findAndCountAll({
-      where: productWhere,  // Apply product-specific filters
-      include: [
-        {
-          model: db.Category,
-          as: 'categories',
-          through: { attributes: [] },
-          where: Object.keys(categoryWhere).length ? categoryWhere : null,  // Apply category filter if provided
-        },
-        {
-          model: db.Color,
-          as: 'colors',
-          through: { attributes: [] },
-          where: Object.keys(colorWhere).length ? colorWhere : null,  // Apply color filter if provided
-          //separate: true,
-        },
-        {
-          model: db.Size,
-          as: 'sizes',
-          through: { attributes: [] },
-          where: Object.keys(sizeWhere).length ? sizeWhere : null,  // Apply size filter if provided
-        },
-        {
-          model: db.Collection,
-          as: 'collections',
-          through: { attributes: [] },
-          where: Object.keys(collectionWhere).length ? collectionWhere : null,  // Apply collection filter if provided
-        },
-        {
-          model: db.Scrub,
-          as: 'scrubs',
-          through: { attributes: [] },
-          where: Object.keys(scrubWhere).length ? scrubWhere : null,  // Apply scrub filter if provided
-        },
-        {
-          model: db.Image,
-          as: 'images',
-          required: false,  // Include images even if none are primary
-        },
-      ],
-      limit,  // Limit the number of products per page
-      offset,  // Offset to skip products for pagination
-      distinct: true,  // Ensure unique products are counted
-      order: [['createdAt', 'DESC'], ['updatedAt', 'DESC']],
-    });
-
-    // Map the products to the desired format
-    const mappedProducts = products.map(product => ({
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      stock: product.stock,
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-      categories: product.categories.map(category => ({
-        id: category.id,
-        name: category.name,
-        description: category.description,
-        createdAt: category.createdAt,
-        updatedAt: category.updatedAt,
-      })),
-      images: product.images.map(image => ({
-        id: image.id,
-        url: image.url,
-        alt_text: image.alt_text,
-        is_primary: image.is_primary,
-        productId: image.productId,
-      })),
-      colors: product.colors.map(color => ({
-        id: color.id,
-        name: color.name,
-        hex_code: color.hex_code,
-      })),
-      sizes: product.sizes.map(size => ({
-        id: size.id,
-        name: size.name,
-      })),
-      collections: product.collections.map(collection => ({
-        id: collection.id,
-        name: collection.name,
-      })),
-      scrubs: product.scrubs.map(scrub => ({
-        id: scrub.id,
-        name: scrub.name,
-      })),
-    }));
-
-    // Fetch all available filters (colors, sizes, collections, scrubs)
-    const colors = await db.Color.findAll();
-    const sizes = await db.Size.findAll();
-    const collections = await db.Collection.findAll();
-    const scrubs = await db.Scrub.findAll();
-
-    // Calculate total pages for pagination
-    const totalProductPages = Math.ceil(totalProductItems / limit);
-
-    return {
-      products: mappedProducts,
-      totalProductItems,
-      totalProductPages,
-      currentProductPage: page,
-      colors: colors.map(color => color.get({ plain: true })),
-      sizes: sizes.map(size => size.get({ plain: true })),
-      collections: collections.map(collection => collection.get({ plain: true })),
-      scrubs: scrubs.map(scrub => scrub.get({ plain: true })),
-    };
-  } catch (error) {
-    console.error('Error fetching filtered products:', error);
-    throw error;
-  }
-};
-
 export const getProductCart = async (cartData) => {
     try {
         const products = await Promise.all(cartData.map(async (item) => {
@@ -508,6 +265,7 @@ export const getProductCart = async (cartData) => {
                     { model: db.Size, as: 'sizes', through: { attributes: [] } },
                     { model: db.Image, as: 'images', required: false, limit: 1 },
                 ],
+                
             });
             if (!product) return null;
 
