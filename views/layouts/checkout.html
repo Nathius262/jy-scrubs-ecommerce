@@ -1,54 +1,196 @@
-<!-- checkout.html -->
 <section class="checkout-page py-5 mt-5">
     <div class="container">
         <h2>Your Cart</h2>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Image</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Size</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each products}}
-                    <tr>
-                        <!-- Product Image -->
-                        <td>
-                            {{#each this.images}}
-                            {{#if @first}} <!-- Show only the first image -->
-                            <img src="{{this.url}}" alt="{{../name}}" style="width: 100px; height: auto;" />
-                            {{/if}}
-                            {{/each}}
-                        </td>
 
-                        <!-- Product Title -->
-                        <td>
-                            <h5>{{this.name}}</h5>
-                        </td>
+        <!-- Product Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Product Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Size</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                {{#each products}}
+                <tr class="product-row">
+                    <!-- Product Image -->
+                    <td>
+                        {{#each this.images}}
+                        {{#if @first}}
+                        <img src="{{this.url}}" alt="{{../name}}" style="width: 100px; height: auto;" />
+                        {{/if}}
+                        {{/each}}
+                    </td>
+                    <!-- Product Title -->
+                    <td>
+                        <h5>{{this.name}}</h5>
+                    </td>
+                    <!-- Product Price -->
+                    <td class="product-price" data-price="{{this.price}}">${{this.price}}</td>
+                    <!-- Quantity -->
+                    <td class="product-quantity" data-quantity="{{this.quantity}}">{{this.quantity}}</td>
+                    <!-- Color -->
+                    <td>
+                        <div class="color-box rounded-circle" style="background-color: {{this.selectedColor.hex_code}}; width: 30px; height: 30px;"></div>
+                    </td>
+                    <!-- Size -->
+                    <td>{{this.selectedSize.name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+            <!-- Total Row -->
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end fw-bold">Total Quantity:</td>
+                    <td id="totalQuantity">0</td>
+                    <td colspan="1" class="text-end fw-bold">Total Price:</td>
+                    <td id="totalPrice">$0.00</td>
+                </tr>
+            </tfoot>
+        </table>
 
-                        <!-- Product Price -->
-                        <td>${{this.price}}</td>
+        <label for="currency">Choose your currency:</label>
+        <select id="currency" name="currency">
+            <option value="USD" selected>USD</option>
+            <option value="NGN" selected>NGN</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <!-- Add more currencies as needed -->
+        </select>
 
-                        <!-- Quantity -->
-                        <td>{{this.quantity}}</td>
 
-                        <!-- Color -->
-                        <td>
-                            <div class="color-box rounded-circle" style="background-color: {{this.selectedColor.hex_code}}; width: 30px; height: 30px;"></div>
-                        </td>
+        <!-- Google Pay Button -->
+        <!-- Google Pay Button Container -->
+        <div id="googlePayButtonContainer"></div>
 
-                        <!-- Size -->
-                        <td>{{this.selectedSize.name}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
         <button id="finalizeCheckout" class="btn btn-dark mt-4">Finalize Checkout</button>
     </div>
 </section>
+
+<script>
+    // Function to configure Google Pay with requested fields
+    function getGooglePayPaymentMethod() {
+        return {
+            type: 'CARD',
+            parameters: {
+                allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                allowedCardNetworks: ['AMEX', 'DISCOVER', 'MASTERCARD', 'VISA'],
+                billingAddressRequired: true,
+                billingAddressParameters: {
+                    format: 'FULL',
+                    phoneNumberRequired: true // Set to true to capture phone number
+                }
+            },
+            tokenizationSpecification: {
+                type: 'PAYMENT_GATEWAY',
+                parameters: {
+                    gateway: 'example', // Replace 'example' with your actual payment gateway
+                    gatewayMerchantId: 'exampleMerchantId'
+                }
+            }
+        };
+    }
+
+    // Initialize Google Pay button
+    function onGooglePayLoaded() {
+        initializeGooglePay();
+    }
+
+    function initializeGooglePay() {
+        const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+
+        paymentsClient.isReadyToPay({
+            apiVersion: 2,
+            apiVersionMinor: 0,
+            allowedPaymentMethods: [getGooglePayPaymentMethod()]
+        }).then(response => {
+            if (response.result) {
+                addGooglePayButton(paymentsClient);
+            }
+        }).catch(err => console.error('Error in isReadyToPay:', err));
+    }
+
+    function addGooglePayButton(paymentsClient) {
+        const googlePayButton = paymentsClient.createButton({
+            onClick: onGooglePayButtonClick
+        });
+        const container = document.getElementById('googlePayButtonContainer');
+        if (container) {
+            container.appendChild(googlePayButton);
+        } else {
+            console.error("googlePayButtonContainer not found");
+        }
+    }
+
+    function onGooglePayButtonClick() {
+        const selectedCurrency = document.getElementById('currency').value;
+        const totalPrice = parseFloat(document.getElementById('totalPrice').textContent.replace('$', ''));
+
+        const paymentDataRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0,
+            allowedPaymentMethods: [getGooglePayPaymentMethod()],
+            transactionInfo: {
+                totalPriceStatus: 'FINAL',
+                totalPrice: totalPrice.toFixed(2),
+                currencyCode: selectedCurrency || 'USD'
+            },
+            merchantInfo: {
+                merchantId: 'BCR2DN4T2P2NT52T',
+                merchantName: 'Pixtinfinity'
+            },
+            emailRequired: true, // Request user's email
+            shippingAddressRequired: true, // Request shipping address
+            shippingAddressParameters: {
+                allowedCountryCodes: ['US', 'CA', 'GB', 'NGN'], // Adjust based on your target market
+                phoneNumberRequired: true
+            }
+        };
+
+        const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+        paymentsClient.loadPaymentData(paymentDataRequest).then(processPayment).catch(err => {
+            console.error('Google Pay payment failed:', err);
+        });
+    }
+
+    function processPayment(paymentData) {
+        console.log('Payment success:', paymentData);
+        
+        // Access email, address, and phone from paymentData
+        const email = paymentData.email;
+        const shippingAddress = paymentData.shippingAddress;
+        
+        console.log("User's Email:", email);
+        console.log("User's Address:", shippingAddress);
+    }
+
+    // Initialize total quantity and total price as numbers
+    let totalQuantity = 0;
+    let totalPrice = 0.0;
+
+    // Calculate total quantity and total price
+    document.addEventListener('DOMContentLoaded', function() {
+        const productRows = document.querySelectorAll('.product-row');
+
+        productRows.forEach(row => {
+            const price = parseFloat(row.querySelector('.product-price').dataset.price);
+            const quantity = parseInt(row.querySelector('.product-quantity').dataset.quantity);
+
+            totalQuantity += quantity;
+            totalPrice += price * quantity;
+        });
+
+        // Ensure totalPrice is a number before calling .toFixed()
+        document.getElementById('totalQuantity').innerText = totalQuantity;
+        document.getElementById('totalPrice').innerText = `$${totalPrice.toFixed(2)}`;
+    });
+</script>
+
+<!-- Load Google Pay API Script -->
+
+<!-- Load Google Pay API Script and call onGooglePayLoaded when loaded -->
+<script src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>

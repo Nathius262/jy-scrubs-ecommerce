@@ -105,6 +105,29 @@
                 <div>
                     <p class="fs-6">{{product.description}}</p>
                 </div>
+                <hr>
+                <div class="my-4">
+                    {{#if product.categories}}
+                    <div class="fs-6 fw-bold">Available For Gender</div>
+                    <div class="sizes d-flex align-items-center my-4">
+                        {{#each product.categories}}
+                        <a class="btn btn-outline-dark me-1 " style="cursor:pointer;">{{this.name}}</a>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                </div>
+
+                <hr>
+                <div class="my-4">
+                    {{#if product.scrubs}}
+                    <div class="fs-6 fw-bold">Available Scurbs</div>
+                    <div class="sizes d-flex align-items-center my-4">
+                        {{#each product.scrubs}}
+                        <a class="btn btn-outline-dark me-1 size-select" style="cursor:pointer;">{{this.name}}</a>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                </div>
             </div>
             
         </div>
@@ -149,7 +172,6 @@
     </div>
 </section>
 
-<script src="/js/cart.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -175,7 +197,7 @@
         function updateButtonStates() {
             const cart = getCart();
             let totalInCart = cart
-                .filter(item => item.productId === {{product.id}})
+                .filter(item => item.productId == {{product.id}})
                 .reduce((sum, item) => sum + item.quantity, 0);
     
             const remainingStock = maxStock - totalInCart;
@@ -191,7 +213,7 @@
         // Set initial state on page load
         function initializeCartState() {
             const cart = getCart();
-            cart.filter(item => item.productId === {{product.id}}).forEach(item => {
+            cart.filter(item => item.productId == {{product.id}}).forEach(item => {
                 if (!selectedSizeId && !selectedColorId) {
                     quantity = item.quantity;
                     selectedColorId = item.colorId;

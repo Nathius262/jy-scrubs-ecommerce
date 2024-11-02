@@ -1,6 +1,7 @@
 <!-- Hero Banner -->
 <section class="hero-banner position-relative ">
     <!-- Video Background -->
+    {{#if (eq selectedCategory "women")}}
     <div class="video-container">
 
         <video autoplay muted loop playsinline class="bg-video">
@@ -8,15 +9,24 @@
             Your browser does not support the video tag.
         </video>
     </div>
+    {{/if}}
+
+    {{#if (eq selectedCategory "men")}}
+    <div class="video-container">
+
+        <img class="bg-video" src="img/heading_men.webp" alt="Heading for Men" />
+
+    </div>
+    {{/if}}
 
 
     <!-- Content Overlay -->
-    <div class="container position-relative text-white">
+    <div class="container position-relative text-white" style="z-index: 9999;">
         <div class="row align-items-center mb-3">
             <div class="col-md-6 mb-4">
-                <h1 class="display-4">Women's Scrubs Collection</h1>
+                <h1 style="text-transform: capitalize;" class="display-4">{{selectedCategory}}'s Scrubs Collection</h1>
                 <p>Explore our premium collection of scrubs designed for comfort and durability.</p>
-                <a href="/collection/?category=women" class="btn btn-light rounded-0 px-3 btn-lg">Shop Now</a>
+                <a style="position: relative; z-index:999;" {{#if (eq selectedCategory "women")}} href="/collection/category/women" {{else}}href="/collection/category/men"{{/if}} class="btn btn-light rounded-0 px-3 btn-lg">Shop Now</a>
             </div>
         </div>
     </div>
@@ -31,7 +41,7 @@
             {{#each scrubs}}
             <div class="col-lg-2 col-md-3 col-sm-6 col-12 p-1 my-2">
                 <div class="w-100 category-btn">
-                    <a href="/collection/?scurb={{this.name}}">{{this.name}}</a>
+                    <a href="/collection/scurb/{{this.slug}}">{{this.name}}</a>
                 </div>
             </div>
             {{/each}}
@@ -51,7 +61,7 @@
         </div>
         <div class="color-row d-flex text-start justify-content-start">
             {{#each colors}}
-            <a href="/collection/?color={{this.name}}" class="color-card">
+            <a href="/collection/color/{{this.slug}}" class="color-card">
                 <img src="{{this.image_url}}" alt="{{this.name}}" class="img-fluid">
                 <h5 class="mt-2 fs-6 fw-light text-dark">{{this.name}}</h5>
             </a>
@@ -92,7 +102,7 @@
 
 
 <!-- BEST SELLERS -->
-<section class="py-5" style="color:var(--white); background-color:var(--pink);">
+<section class="py-5" {{#if (eq selectedCategory "men")}} style="color:var(--white); background-color:rgba(36, 36, 36, 0.88);" {{else}} style="color:var(--white); background-color:var(--pink);"{{/if}}>
     <div class="container my-4">
         <div class="row align-items-center justify-content-center">
             <!-- Text Section -->
@@ -110,7 +120,9 @@
                 {{#each collections}}
                 {{#if @first}}
                 {{#each this.products}}
+                {{#if @first}}
                 <img class="img-fluid" src="{{this.images.[0].url}}" alt="{{this.name}}">
+                {{/if}}
                 {{/each}}
 
                 {{/if}}
@@ -160,7 +172,7 @@
 
 
                 </div>
-                <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.slug}}" style="color:var(--black)">{{this.name}}</a></h5>
                 <p class="price fw-bold">${{this.price}}</p>
                 <div class="colors d-flex align-items-center">
                     {{#each this.colors}}
