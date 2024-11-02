@@ -12,6 +12,11 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      slug: {
+        type: Sequelize.DataTypes.STRING, 
+        unique:true, 
+        allowNull:false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -21,6 +21,11 @@ module.exports = {
       stock: {
         type: Sequelize.INTEGER
       },
+      slug: {
+        type: Sequelize.DataTypes.STRING, 
+        unique:true, 
+        allowNull:false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
