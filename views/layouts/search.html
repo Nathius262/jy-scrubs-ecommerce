@@ -1,0 +1,174 @@
+<!-- Hero Banner -->
+<section class="hero-banner position-relative">
+    <div class="container position-relative text-white" style="z-index: 9999;">
+        <div class="row justify-content-center align-items-center mb-3">
+            <div class="col-md-12 mb-4 text-center">
+                <h1 class="display-4">Search Results for "{{searchTerm}}"</h1>
+                <p>Displaying results across products, categories, colors, sizes, and collections.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Results Section -->
+<section class="search-results py-5">
+    <div class="container">
+
+        <!-- Products Section -->
+        {{#if products.length}}
+        <section class="product-results py-5">
+            <h2 class="mb-4">Products</h2>
+            <div class="core-row d-flex">
+                {{#each products}}
+                <div class="core-item">
+                    <div class="core-img-wrapper position-relative">
+                        <!-- Display primary or first image -->
+                        {{#if (anyImageIsPrimary this.images)}}
+                        {{#each this.images}}
+                        {{#if this.is_primary}}
+                        <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                        {{/if}}
+                        {{/each}}
+                        {{else}}
+                        {{#each this.images}}
+                        {{#if @first}}
+                        <img src="{{this.url}}" alt="{{this.alt_text}}" class="core-img img-fluid">
+                        {{/if}}
+                        {{/each}}
+                        {{/if}}
+
+                        <!-- Hover image (non-primary) -->
+                        {{#each this.images}}
+                        {{#unless this.is_primary}}
+                        <img src="{{this.url}}" alt="{{this.alt_text}} Alt" class="core-img-hover img-fluid position-absolute">
+                        {{/unless}}
+                        {{/each}}
+                    </div>
+                    <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                    <p class="price fw-bold">${{this.price}}</p>
+                    <div class="colors d-flex align-items-center">
+                        {{#each this.colors}}
+                        <div class="color-box" style="background-color: {{this.hex_code}};"></div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if}}
+
+        <!-- Categories Section -->
+        {{#if categories.length}}
+        <section class="category-results py-5">
+            <h2 class="mb-4">Categories</h2>
+            <div class="row">
+                {{#each categories}}
+                <div class="col-md-3 mb-4">
+                    <div class="category-item">
+                        <h5 class="fs-6 fw-bold"><a href="/category/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                        <p>{{this.description}}</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if}}
+
+        <!-- Colors Section -->
+        {{#if colors.length}}
+        <section class="color-results py-5">
+            <h2 class="mb-4">Colors</h2>
+            <div class="colors-row d-flex">
+                {{#each colors}}
+                <div class="color-item mx-2 text-center">
+                    <div class="color-box" style="background-color: {{this.hex_code}}; width: 50px; height: 50px; border-radius: 50%;"></div>
+                    <p>{{this.name}}</p>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if}}
+
+        <!-- Sizes Section -->
+        {{#if sizes.length}}
+        <section class="size-results py-5">
+            <h2 class="mb-4">Sizes</h2>
+            <div class="sizes-row d-flex">
+                {{#each sizes}}
+                <div class="size-item mx-3">
+                    <p class="size-box p-2">{{this.name}}</p>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if}}
+
+        <!-- Collections Section -->
+        {{#if collections.length}}
+        <section class="collection-results py-5">
+            <h2 class="mb-4">Collections</h2>
+            <div class="row">
+                {{#each collections}}
+                <div class="col-md-3 mb-4">
+                    <div class="collection-item">
+                        <h5 class="fs-6 fw-bold"><a href="/collection/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if}}
+
+        <!-- Scrubs Section -->
+        {{#if scrubs.length}}
+        <section class="scrub-results py-5">
+            <h2 class="mb-4">Scrubs</h2>
+            <div class="row">
+                {{#each scrubs}}
+                <div class="col-md-3 mb-4">
+                    <div class="scrub-item">
+                        <h5 class="fs-6 fw-bold"><a href="/scrub/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/if}}
+
+        <!-- Pagination Controls -->
+        <div class="d-flex mt-5 justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <!-- Previous Button -->
+                    {{#if (gt currentProductPage 1)}}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{subtract currentProductPage 1}}">Previous</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    {{/if}}
+
+                    <!-- Page Numbers -->
+                    {{#each (range 1 totalProductPages)}}
+                    <li class="page-item {{#if (eq this ../currentProductPage)}}active{{/if}}">
+                        <a class="page-link" href="?page={{this}}">{{this}}</a>
+                    </li>
+                    {{/each}}
+
+                    <!-- Next Button -->
+                    {{#if (lt currentProductPage totalProductPages)}}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{add currentProductPage 1}}">Next</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item disabled">
+                        <a class="page-link">Next</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>

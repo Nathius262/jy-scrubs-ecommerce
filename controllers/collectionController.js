@@ -36,11 +36,12 @@ export const getAllProducts = async (req, res) => {
 
 export const getFilteredProductsBySlug = async (req, res) => {
   try {
+    const genderCategory= req.query.category || 'men';
     const { category, slug } = req.params; // Get category and slug from URL
-    const { page = 1, limit = 10 } = req.query; // Pagination from query string
+    const { page = 1, limit = 10,  } = req.query; // Pagination from query string
 
     // Call the helper function with the URL parameters
-    const filteredData = await productFilterHelper.getFilteredProductsBySlug(category, slug, parseInt(page), parseInt(limit));
+    const filteredData = await productFilterHelper.getFilteredProductsBySlug(genderCategory, category, slug, parseInt(page), parseInt(limit));
 
     // Render the template with the filtered data
     return res.render('./collection/product', { 
@@ -50,7 +51,10 @@ export const getFilteredProductsBySlug = async (req, res) => {
       collections: filteredData.collections,
       scrubs: filteredData.scrubs,
       selectedCategory: category,
+      selectedGender: genderCategory,
       title:category,
+      slug:slug,
+      category:category,
       currentProductPage: filteredData.currentProductPage,
       totalProductPages: filteredData.totalProductPages,
       totalProductItems: filteredData.totalProductItems,

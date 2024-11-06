@@ -1,7 +1,7 @@
 import db from '../models/index.cjs';
 
 
-export const getFilteredProductsBySlug = async (category, slug, page = 1, limit = 10) => {
+export const getFilteredProductsBySlug = async (genderCategory, category, slug, page = 1, limit = 10) => {
     try {
         const offset = (page - 1) * limit;
 
@@ -26,6 +26,12 @@ export const getFilteredProductsBySlug = async (category, slug, page = 1, limit 
         const { rows: products, count: totalProductItems } = await db.Product.findAndCountAll({
             include: [
                 // Include the selected filter model with a condition
+                {
+                    model: db.Category,
+                    as: 'categories',
+                    through: { attributes: [] },
+                    where: { slug: genderCategory },  // Filter by category name
+                },
                 {
                     model: filterConfig.model,
                     as: filterConfig.alias,

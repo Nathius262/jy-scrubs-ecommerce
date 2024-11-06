@@ -24,8 +24,16 @@ app.use('/admin/color/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/category/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/collection/', express.static(path.join(__dirname, '..', 'public')));
 
-//amin
+//main
 app.use('/product/', express.static(path.join(__dirname, '..', 'public')));
+
+//collections 
 app.use('/collection/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/collection/scrub/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/collection/size/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/collection/color/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/collection/category/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/collection/collection/', express.static(path.join(__dirname, '..', 'public')));
+
 
 export default app;
