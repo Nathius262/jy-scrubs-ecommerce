@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
         <div class="container-fluid align-items-center text-align-center">
-            <a class="navbar-brand d-flex align-items-center" href="#">
+            <a class="navbar-brand d-flex align-items-center" href="/">
                 <img src="/img/jy-logo.png" width="100" alt="jy logo">
                 <h2>JY SCRUBS</h2>
             </a>
@@ -21,7 +21,7 @@
             <!-- Main Navigation Links -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <!-- Men Section for Small Screens (Collapsible) -->
-                <div class="custom-accordion mt-4">
+                <div class="custom-accordion mt-4" id="nav-accordion">
                     <div class="accordion d-block d-md-none">
                         <!-- About Section -->
                         <div class="custom-card">
@@ -36,7 +36,7 @@
                                 </h5>
                             </div>
                             <div id="aboutNavSection" class="collapse" aria-labelledby="aboutNavHeader"
-                                data-bs-parent="#footerAccordion">
+                                data-bs-parent="#nav-accordion">
                                 <div class="card-body">
                                     <ul>
                                         <li><a href="#">Our Story</a></li>
@@ -59,13 +59,13 @@
                                 </h5>
                             </div>
                             <div id="scrubsSection" class="collapse" aria-labelledby="scrubsHeader"
-                                data-bs-parent="#footerAccordion">
+                                data-bs-parent="#nav-accordion">
                                 <div class="card-body">
+                                    
                                     <ul>
-                                        <li><a href="#">Scrub Tops</a></li>
-                                        <li><a href="#">Scrub Pants</a></li>
-                                        <li><a href="#">Scrub Sets</a></li>
-                                        <li><a href="#">Scrub Set Builder</a></li>
+                                        {{#each scrubs}}
+                                        <li><a href="/collection/scrub/{{this.slug}}">{{this.name}}</a></li>
+                                        {{/each}}
                                     </ul>
                                 </div>
                             </div>
@@ -84,14 +84,14 @@
                                 </h5>
                             </div>
                             <div id="colorsSection" class="collapse" aria-labelledby="colorsHeader"
-                                data-bs-parent="#footerAccordion">
+                                data-bs-parent="#nav-accordion">
                                 <div class="card-body">
                                     <ul>
-                                        <li><a href="#">Navy Blue</a></li>
-                                        <li><a href="#">Black</a></li>
-                                        <li><a href="#">Ceil Blue</a></li>
-                                        <li><a href="#">Wine</a></li>
-                                        <li><a href="#">Green</a></li>
+                                        <ul>
+                                            {{#each colors}}
+                                            <li><a href="/collection/color/{{this.slug}}">{{this.name}}</a></li>
+                                            {{/each}}
+                                        </ul>
                                     </ul>
                                 </div>
                             </div>
@@ -110,13 +110,37 @@
                                 </h5>
                             </div>
                             <div id="trendingSection" class="collapse" aria-labelledby="trendingHeader"
-                                data-bs-parent="#footerAccordion">
+                                data-bs-parent="#nav-accordion">
                                 <div class="card-body">
                                     <ul>
-                                        <li><a href="#">Best Sellers</a></li>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Limited Editions</a></li>
-                                        <li><a href="#">Staff Favorites</a></li>
+                                        {{#each collections}}
+                                        <li><a href="/collection/collection/{{this.slug}}">{{this.name}}</a></li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Size Section -->
+                        <div class="custom-card">
+                            <div class="card-header" id="sizesHeader">
+                                <h5 class="m-0">
+                                    <button
+                                        class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#sizesSection"
+                                        aria-expanded="false" aria-controls="sizesSection">
+                                        <span>Sizes</span> <i class="fas fa-plus float-end"></i>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="sizesSection" class="collapse" aria-labelledby="sizesHeader"
+                                data-bs-parent="#nav-accordion">
+                                <div class="card-body">
+                                    
+                                    <ul>
+                                        {{#each sizes}}
+                                        <li><a href="/collection/size/{{this.slug}}">{{this.name}}</a></li>
+                                        {{/each}}
                                     </ul>
                                 </div>
                             </div>
@@ -126,63 +150,69 @@
                             <div class="card-header">
                                 <h5 class="m-0">
                                     <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
-                                        href="">
-                                        Assets
+                                        href="/product">
+                                        Products
                                     </a>
                                 </h5>
                             </div>
                         </div>
 
-                        <div class="custom-card">
-                            <div class="card-header">
-                                <h5 class="m-0">
-                                    <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
-                                        href="">
-                                        Shop
-                                    </a>
-                                </h5>
-                            </div>
-                        </div>
-
-                        <div class="custom-card">
-                            <div class="card-header">
-                                <h5 class="m-0">
-                                    <a class="btn w-100 mr-0 mx-0 btn-link collapsed d-flex justify-content-between"
-                                        href="">
-                                        Trending
-                                    </a>
-                                </h5>
-                            </div>
-                        </div>
-
-
+                        
                     </div>
                 </div>
+
+
+
                 <ul class="navbar-nav dropdown d-none d-md-flex text-start">
                     <!-- Men Trigger and Full-Screen Dropdown -->
                     <li class="nav-item men-trigger">
                         <a class="nav-link" href="#">Men</a>
                         <!-- Full-Screen Dropdown (Styled as Modal) -->
                         <div class="men-dropdown full-screen-dropdown">
-                            <div class="container-fluid">
-                                <div class="row text-center py-4">
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Tops</a>
-                                        <a href="#" class="dropdown-item">Pants</a>
-                                        <a href="#" class="dropdown-item">Scrubs</a>
+                            <div class="container">
+                                <div class="row text-start py-4">
+                                    <h4 class="fw-bold text-center mb-4">MEN</h4>
+                                    
+                                    <div class="col-12 my-5">
+                                        <div>
+                                            <h4 class="text-decoration-underline fw-bold">COLORS</h4>
+                                        </div>
+                                        <div class="row mb-4">
+                                            {{#each colors}}                                        
+                                            <div class="col-2">
+                                                <img src="{{this.image_url}}" alt="{{this.name}}" class="img-fluid" width="100">
+
+                                                <a href="/collection/color/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                            </div>
+                                            {{/each}}                                            
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Jackets</a>
-                                        <a href="#" class="dropdown-item">Shoes</a>
+                                    <div class="col-md-4">
+                                        <h4 class="text-decoration-underline fw-bold">SCRUBS</h4>
+
+                                        {{#each scrubs}}
+                                        <a href="/collection/scrub/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                        {{/each}}
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Accessories</a>
-                                        <a href="#" class="dropdown-item">Hats</a>
+
+                                    <div class="col-md-4">
+                                        <div>
+                                            <h4 class="text-decoration-underline fw-bold">COLLECTIONS</h4>
+                                        </div>
+                                        {{#each collections}}
+                                        <a href="/collection/collection/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                        {{/each}}
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Sale</a>
-                                        <a href="#" class="dropdown-item">New Arrivals</a>
+
+                                    <div class="col-md-4">
+                                        <div>
+                                            <h4 class="text-decoration-underline fw-bold">SIZES</h4>
+                                        </div>
+                                        {{#each sizes}}
+                                        <a href="/collection/size/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                        {{/each}}
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -193,25 +223,50 @@
                         <a class="nav-link" href="#">Women</a>
                         <!-- Full-Screen Dropdown (Styled as Modal) -->
                         <div class="women-dropdown full-screen-dropdown">
-                            <div class="container-fluid">
-                                <div class="row text-center py-4">
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Tops</a>
-                                        <a href="#" class="dropdown-item">Pants</a>
-                                        <a href="#" class="dropdown-item">Scrubs</a>
+                            <div class="container">
+                                <div class="row text-start py-4">
+                                    <h4 class="fw-bold text-center mb-4">WOMEN</h4>
+                                    
+                                    <div class="col-12 my-5">
+                                        <div>
+                                            <h4 class="text-decoration-underline fw-bold">COLORS</h4>
+                                        </div>
+                                        <div class="row mb-4">
+                                            {{#each colors}}                                        
+                                            <div class="col-2">
+                                                <img src="{{this.image_url}}" alt="{{this.name}}" class="img-fluid" width="100">
+
+                                                <a href="/collection/color/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                            </div>
+                                            {{/each}}                                            
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Jackets</a>
-                                        <a href="#" class="dropdown-item">Shoes</a>
+                                    <div class="col-md-4">
+                                        <h4 class="text-decoration-underline fw-bold">SCRUBS</h4>
+
+                                        {{#each scrubs}}
+                                        <a href="/collection/scrub/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                        {{/each}}
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Accessories</a>
-                                        <a href="#" class="dropdown-item">Hats</a>
+
+                                    <div class="col-md-4">
+                                        <div>
+                                            <h4 class="text-decoration-underline fw-bold">COLLECTIONS</h4>
+                                        </div>
+                                        {{#each collections}}
+                                        <a href="/collection/collection/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                        {{/each}}
                                     </div>
-                                    <div class="col-md-3">
-                                        <a href="#" class="dropdown-item">Sale</a>
-                                        <a href="#" class="dropdown-item">New Arrivals</a>
+
+                                    <div class="col-md-4">
+                                        <div>
+                                            <h4 class="text-decoration-underline fw-bold">SIZES</h4>
+                                        </div>
+                                        {{#each sizes}}
+                                        <a href="/collection/size/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
+                                        {{/each}}
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -219,10 +274,7 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Accessories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Consultations</a>
+                        <a class="nav-link" href="/product">Accessories</a>
                     </li>
                 </ul>
 
