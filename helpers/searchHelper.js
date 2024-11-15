@@ -4,65 +4,44 @@ import { Op, Sequelize } from 'sequelize';
 export const searchAll = async ({
     searchTerm = '',
     page,
-    limit
+    limit,
 }) => {
     try {
         const offset = (page - 1) * limit;
-
-        // Convert search term to lowercase for case-insensitive search
         const lowerSearchTerm = searchTerm.toLowerCase();
 
-        // Define main search condition for Product name and description using LOWER() and LIKE
-        const productSearchCondition = searchTerm
+        const searchFilter = searchTerm
             ? {
-                [Op.or]: [
-                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), {
-                        [Op.like]: `%${lowerSearchTerm}%`
-                    }),
-                    Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('description')), {
-                        [Op.like]: `%${lowerSearchTerm}%`
-                    }),
-                ],
-            }
+                  [Op.or]: [
+                      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('product.name')), {
+                          [Op.like]: `%${lowerSearchTerm}%`,
+                      }),
+                      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('product.description')), {
+                          [Op.like]: `%${lowerSearchTerm}%`,
+                      }),
+                      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('product.price')), {
+                          [Op.like]: `%${lowerSearchTerm}%`,
+                      }),
+                  ],
+              }
             : {};
-        // Fetch products with related model filtering
+
+        // Search for products
         const { rows: products, count: totalProductItems } = await db.Product.findAndCountAll({
-            where: productSearchCondition,
+            attributes: ['name', 'id', 'slug', 'price', 'description', 'updatedAt'], // Only fetch these attributes
+            where: searchFilter,
             include: [
                 {
                     model: db.Category,
                     as: 'categories',
-                    where: relatedSearchCondition,  // Apply filtering condition here
-                    through: { attributes: [] },
                     required: false,
+                    through: { attributes: [] },
                 },
                 {
                     model: db.Color,
                     as: 'colors',
-                    where: relatedSearchCondition,  // Apply filtering condition here
-                    through: { attributes: [] },
                     required: false,
-                },
-                {
-                    model: db.Size,
-                    as: 'sizes',
-                    where: relatedSearchCondition,  // Apply filtering condition here
                     through: { attributes: [] },
-                    required: false,
-                },
-                {
-                    model: db.Collection,
-                    as: 'collections',
-                    where: relatedSearchCondition,  // Apply filtering condition here
-                    through: { attributes: [] },
-                    required: false,
-                },
-                {
-                    model: db.Scrub,
-                    as: 'scrubs',
-                    where: relatedSearchCondition,  // Apply filtering condition here
-                    through: { attributes: [] },
-                    required: false,
                 },
                 {
                     model: db.Image,
@@ -73,11 +52,41 @@ export const searchAll = async ({
             limit,
             offset,
             distinct: true,
-            order: [['createdAt', 'DESC'], ['updatedAt', 'DESC']],
+            order: [['updatedAt', 'DESC']],
+        });
+
+        // Search for scrubs
+        const scrubs = await db.Scrub.findAll({
+            attributes:['name', 'id', 'slug',],
+            where: searchTerm
+                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('scrub.name')), {
+                      [Op.like]: `%${lowerSearchTerm}%`,
+                  })
+                : {},
+        });
+
+        // Search for colors
+        const colors = await db.Color.findAll({
+            attributes:['name', 'id', 'slug', 'hex_code', 'image_url'],
+            where: searchTerm
+                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('color.name')), {
+                      [Op.like]: `%${lowerSearchTerm}%`,
+                  })
+                : {},
+        });
+
+        // Search for sizes
+        const sizes = await db.Size.findAll({
+            attributes:['name', 'id', 'slug',],
+            where: searchTerm
+                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('size.name')), {
+                      [Op.like]: `%${lowerSearchTerm}%`,
+                  })
+                : {},
         });
 
         // Map products to the desired format
-        const mappedProducts = products.map(product => ({
+        const mappedProducts = products.map((product) => ({
             id: product.id,
             name: product.name,
             description: product.description,
@@ -86,34 +95,42 @@ export const searchAll = async ({
             slug: product.slug,
             createdAt: product.createdAt,
             updatedAt: product.updatedAt,
-            categories: product.categories.map(category => ({
+            categories: product.categories.map((category) => ({
                 id: category.id,
                 name: category.name,
                 description: category.description,
             })),
-            colors: product.colors.map(color => ({
+            colors: product.colors.map((color) => ({
                 id: color.id,
                 name: color.name,
                 hex_code: color.hex_code,
             })),
-            scrubs: product.scrubs.map(scrub => ({
-                id: scrub.id,
-                name: scrub.name,
-            })),
-            collections: product.collections.map(collection => ({
-                id: collection.id,
-                name: collection.name,
-            })),
-            sizes: product.sizes.map(size => ({
-                id: size.id,
-                name: size.name,
-            })),
-            images: product.images.map(image => ({
+            images: product.images.map((image) => ({
                 id: image.id,
                 url: image.url,
                 alt_text: image.alt_text,
                 is_primary: image.is_primary,
             })),
+        }));
+
+        const mappedScrubs = scrubs.map((scrub) => ({
+            id: scrub.id,
+            name: scrub.name,
+            slug: scrub.slug
+        }));
+
+        const mappedSizes = sizes.map((size) => ({
+            id: size.id,
+            name: size.name,
+            slug: size.slug
+        }));
+
+        const mappedColors = colors.map((color) => ({
+            id: color.id,
+            name: color.name,
+            hex_code: color.hex_code,
+            slug: color.slug,
+            image_url:color.image_url
         }));
 
         // Calculate total pages for pagination
@@ -124,6 +141,10 @@ export const searchAll = async ({
             totalProductItems,
             totalProductPages,
             currentProductPage: page,
+            scrubs: mappedScrubs,
+            colors: mappedColors,
+            sizes: mappedSizes,
+            searchTerm:searchTerm
         };
     } catch (error) {
         console.error('Error fetching filtered products:', error);
