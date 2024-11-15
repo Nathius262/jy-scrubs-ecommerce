@@ -12,6 +12,7 @@ import {internalServerError, pageNotFound} from './middlewares/errorHandler.js'
 import staticFiles from "./config/staticFiles.js"
 import hbs from "./config/settings.js"
 import removeTrailingSlash  from './middlewares/normalizer.js';
+import fetchGlobalEntitiesWithCache from './middlewares/fetchGlobalEntitiesWithCache.js';
 import db from './models/index.cjs'
 import { createRequire } from 'module';
 const require = createRequire
@@ -51,6 +52,7 @@ app.use(bodyParser.json())
 //staticfiles
 app.use(staticFiles);
 
+app.use(fetchGlobalEntitiesWithCache);
 
 app.use('/', rootRouter);
 app.use('/admin/', adminRouter);
@@ -59,6 +61,12 @@ app.use('/product/', productRouter);
 app.use('/collection/', collectionRouter);
 app.use('/checkout', cartRouter);
 
+
+app.get('/clear-cache', (req, res) => {
+  cache.globalEntities = null;
+  cache.lastFetched = null;
+  res.send('Cache cleared!');
+});
 
 //middlewares\
 app.use(pageNotFound);
