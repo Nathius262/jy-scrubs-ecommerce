@@ -172,7 +172,7 @@ nav h2{
     overflow: hidden;
     position: relative;
     background-color: #000000db; /* Fallback color */
-    z-index: -2;
+    z-index: 1;
     display: flex;
     align-items: center;
 }
