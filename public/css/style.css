@@ -39,6 +39,14 @@ nav h2{
 }
 
 
+.navbar .custom-accordion a{
+    color: var(--black);
+}
+
+.navbar .custom-accordion ul{
+    padding: 0;
+}
+
 /* Focus state for search input */
 .search-dropdown input:focus {
     border-bottom: 2px solid #007bff; /* Active state color */
