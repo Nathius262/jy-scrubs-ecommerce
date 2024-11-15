@@ -44,7 +44,7 @@
                         {{/unless}}
                         {{/each}}
                     </div>
-                    <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                    <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.slug}}" style="color:var(--black)">{{this.name}}</a></h5>
                     <p class="price fw-bold">${{this.price}}</p>
                     <div class="colors d-flex align-items-center">
                         {{#each this.colors}}
@@ -64,10 +64,10 @@
             <div class="row">
                 {{#each categories}}
                 <div class="col-md-3 mb-4">
-                    <div class="category-item">
+                    <a href="/collection/category/{{this.slug}}" class="text-dark category-item">
                         <h5 class="fs-6 fw-bold"><a href="/category/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
                         <p>{{this.description}}</p>
-                    </div>
+                    </a>
                 </div>
                 {{/each}}
             </div>
@@ -80,10 +80,10 @@
             <h2 class="mb-4">Colors</h2>
             <div class="colors-row d-flex">
                 {{#each colors}}
-                <div class="color-item mx-2 text-center">
-                    <div class="color-box" style="background-color: {{this.hex_code}}; width: 50px; height: 50px; border-radius: 50%;"></div>
+                <a href="/collection/color/{{this.slug}}" class="color-item mx-2 text-center text-dark">
+                    <div class="" style="background-color: {{this.hex_code}}; width: 50px; height: 50px;"></div>
                     <p>{{this.name}}</p>
-                </div>
+                </a>
                 {{/each}}
             </div>
         </section>
@@ -95,9 +95,9 @@
             <h2 class="mb-4">Sizes</h2>
             <div class="sizes-row d-flex">
                 {{#each sizes}}
-                <div class="size-item mx-3">
+                <a href="/collection/size/{{this.slug}}" class="text-dark size-item mx-3">
                     <p class="size-box p-2">{{this.name}}</p>
-                </div>
+                </a>
                 {{/each}}
             </div>
         </section>
@@ -109,11 +109,11 @@
             <h2 class="mb-4">Collections</h2>
             <div class="row">
                 {{#each collections}}
-                <div class="col-md-3 mb-4">
+                <a href="/collection/collection/{{this.slug}}" class="text-dark col-md-3 mb-4">
                     <div class="collection-item">
-                        <h5 class="fs-6 fw-bold"><a href="/collection/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                        <h5 class="fs-6 fw-bold">{{this.name}}</h5>
                     </div>
-                </div>
+                </a>
                 {{/each}}
             </div>
         </section>
@@ -125,11 +125,11 @@
             <h2 class="mb-4">Scrubs</h2>
             <div class="row">
                 {{#each scrubs}}
-                <div class="col-md-3 mb-4">
+                <a href="/collection/scrub/{{this.slug}}" class="text-dark col-md-3 mb-4">
                     <div class="scrub-item">
-                        <h5 class="fs-6 fw-bold"><a href="/scrub/{{this.id}}" style="color:var(--black)">{{this.name}}</a></h5>
+                        <h5 class="fs-6 fw-bold">{{this.name}}</h5>
                     </div>
-                </div>
+                </a>
                 {{/each}}
             </div>
         </section>

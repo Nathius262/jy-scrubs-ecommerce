@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     
                                     <ul>
-                                        {{#each scrubs}}
+                                        {{#each globalEntities.scrubs}}
                                         <li><a href="/collection/scrub/{{this.slug}}">{{this.name}}</a></li>
                                         {{/each}}
                                     </ul>
@@ -88,7 +88,7 @@
                                 <div class="card-body">
                                     <ul>
                                         <ul>
-                                            {{#each colors}}
+                                            {{#each globalEntities.colors}}
                                             <li><a href="/collection/color/{{this.slug}}">{{this.name}}</a></li>
                                             {{/each}}
                                         </ul>
@@ -113,7 +113,7 @@
                                 data-bs-parent="#nav-accordion">
                                 <div class="card-body">
                                     <ul>
-                                        {{#each collections}}
+                                        {{#each globalEntities.collections}}
                                         <li><a href="/collection/collection/{{this.slug}}">{{this.name}}</a></li>
                                         {{/each}}
                                     </ul>
@@ -138,7 +138,7 @@
                                 <div class="card-body">
                                     
                                     <ul>
-                                        {{#each sizes}}
+                                        {{#each globalEntities.sizes}}
                                         <li><a href="/collection/size/{{this.slug}}">{{this.name}}</a></li>
                                         {{/each}}
                                     </ul>
@@ -178,7 +178,7 @@
                                             <h4 class="text-decoration-underline fw-bold">COLORS</h4>
                                         </div>
                                         <div class="row mb-4">
-                                            {{#each colors}}                                        
+                                            {{#each globalEntities.colors}}                                        
                                             <div class="col-2">
                                                 <img src="{{this.image_url}}" alt="{{this.name}}" class="img-fluid" width="100">
 
@@ -190,7 +190,7 @@
                                     <div class="col-md-4">
                                         <h4 class="text-decoration-underline fw-bold">SCRUBS</h4>
 
-                                        {{#each scrubs}}
+                                        {{#each globalEntities.scrubs}}
                                         <a href="/collection/scrub/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
                                         {{/each}}
                                     </div>
@@ -199,7 +199,7 @@
                                         <div>
                                             <h4 class="text-decoration-underline fw-bold">COLLECTIONS</h4>
                                         </div>
-                                        {{#each collections}}
+                                        {{#each globalEntities.collections}}
                                         <a href="/collection/collection/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
                                         {{/each}}
                                     </div>
@@ -208,7 +208,7 @@
                                         <div>
                                             <h4 class="text-decoration-underline fw-bold">SIZES</h4>
                                         </div>
-                                        {{#each sizes}}
+                                        {{#each globalEntities.sizes}}
                                         <a href="/collection/size/{{this.slug}}" class="text-capitalize dropdown-item">{{this.name}}</a>
                                         {{/each}}
                                     </div>
@@ -232,7 +232,7 @@
                                             <h4 class="text-decoration-underline fw-bold">COLORS</h4>
                                         </div>
                                         <div class="row mb-4">
-                                            {{#each colors}}                                        
+                                            {{#each globalEntities.colors}}                                        
                                             <div class="col-2">
                                                 <img src="{{this.image_url}}" alt="{{this.name}}" class="img-fluid" width="100">
 
@@ -244,7 +244,7 @@
                                     <div class="col-md-4">
                                         <h4 class="text-decoration-underline fw-bold">SCRUBS</h4>
 
-                                        {{#each scrubs}}
+                                        {{#each globalEntities.scrubs}}
                                         <a href="/collection/scrub/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
                                         {{/each}}
                                     </div>
@@ -253,7 +253,7 @@
                                         <div>
                                             <h4 class="text-decoration-underline fw-bold">COLLECTIONS</h4>
                                         </div>
-                                        {{#each collections}}
+                                        {{#each globalEntities.collections}}
                                         <a href="/collection/collection/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
                                         {{/each}}
                                     </div>
@@ -262,7 +262,7 @@
                                         <div>
                                             <h4 class="text-decoration-underline fw-bold">SIZES</h4>
                                         </div>
-                                        {{#each sizes}}
+                                        {{#each globalEntities.sizes}}
                                         <a href="/collection/size/{{this.slug}}?category=women" class="text-capitalize dropdown-item">{{this.name}}</a>
                                         {{/each}}
                                     </div>

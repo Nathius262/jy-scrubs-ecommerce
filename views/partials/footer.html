@@ -112,11 +112,11 @@
                     <div class="col-sm-4">
                         <h5>Shop</h5>
                         <ul>
-                            {{#each scrubs}}
+                            {{#each globalEntities.scrubs}}
                             <li><a href="/collection/scrub/{{this.slug}}">{{this.name}}</a></li>
                             {{/each}}
 
-                            {{#each collections}}
+                            {{#each globalEntities.collections}}
                             <li><a href="/collection/collection/{{this.slug}}">{{this.name}}</a></li>
                             {{/each}}
                         </ul>
