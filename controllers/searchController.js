@@ -9,6 +9,6 @@ export const searchProducts = async (req, res) => {
         return res.render('./layouts/search', result);
     } catch (error) {
         console.error('Error searching for products:', error);
-        res.status(500).json({ error: 'An error occurred while searching for products.' });
+        res.status(500).json({ error: `An error occurred while searching for products. ${error}` });
     }
 };
