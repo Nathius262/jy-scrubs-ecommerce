@@ -10,26 +10,28 @@ export const searchAll = async ({
         const offset = (page - 1) * limit;
         const lowerSearchTerm = searchTerm.toLowerCase();
 
-        const searchFilter = searchTerm
-            ? {
-                  [Op.or]: [
-                      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('product.name')), {
-                          [Op.like]: `%${lowerSearchTerm}%`,
-                      }),
-                      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('product.description')), {
-                          [Op.like]: `%${lowerSearchTerm}%`,
-                      }),
-                      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('product.price')), {
-                          [Op.like]: `%${lowerSearchTerm}%`,
-                      }),
-                  ],
-              }
-            : {};
-
         // Search for products
         const { rows: products, count: totalProductItems } = await db.Product.findAndCountAll({
             attributes: ['name', 'id', 'slug', 'price', 'description', 'updatedAt'], // Only fetch these attributes
-            where: searchFilter,
+            where: searchTerm
+                ? {
+                    [Op.or]: [
+                        Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('"Product"."name"')), {
+                            [Op.like]: `%${lowerSearchTerm}%`,
+                        }),
+                        Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('"Product"."description"')), {
+                            [Op.like]: `%${lowerSearchTerm}%`,
+                        }),
+                        Sequelize.where(
+                            Sequelize.fn('LOWER', Sequelize.cast(Sequelize.col('"Product"."price"'), 'TEXT')),
+                            {
+                                [Op.like]: `%${lowerSearchTerm}%`,
+                            }
+                        ),
+                    ],
+                }
+                : {},
+
             include: [
                 {
                     model: db.Category,
@@ -57,31 +59,31 @@ export const searchAll = async ({
 
         // Search for scrubs
         const scrubs = await db.Scrub.findAll({
-            attributes:['name', 'id', 'slug',],
+            attributes: ['name', 'id', 'slug',],
             where: searchTerm
-                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('scrub.name')), {
-                      [Op.like]: `%${lowerSearchTerm}%`,
-                  })
+                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('"Scrub"."name"')), {
+                    [Op.like]: `%${lowerSearchTerm}%`,
+                })
                 : {},
         });
 
         // Search for colors
         const colors = await db.Color.findAll({
-            attributes:['name', 'id', 'slug', 'hex_code', 'image_url'],
+            attributes: ['name', 'id', 'slug', 'hex_code', 'image_url'],
             where: searchTerm
-                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('color.name')), {
-                      [Op.like]: `%${lowerSearchTerm}%`,
-                  })
+                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('"Color"."name"')), {
+                    [Op.like]: `%${lowerSearchTerm}%`,
+                })
                 : {},
         });
 
         // Search for sizes
         const sizes = await db.Size.findAll({
-            attributes:['name', 'id', 'slug',],
+            attributes: ['name', 'id', 'slug',],
             where: searchTerm
-                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('size.name')), {
-                      [Op.like]: `%${lowerSearchTerm}%`,
-                  })
+                ? Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('"Size"."name"')), {
+                    [Op.like]: `%${lowerSearchTerm}%`,
+                })
                 : {},
         });
 
@@ -130,7 +132,7 @@ export const searchAll = async ({
             name: color.name,
             hex_code: color.hex_code,
             slug: color.slug,
-            image_url:color.image_url
+            image_url: color.image_url
         }));
 
         // Calculate total pages for pagination
@@ -144,7 +146,7 @@ export const searchAll = async ({
             scrubs: mappedScrubs,
             colors: mappedColors,
             sizes: mappedSizes,
-            searchTerm:searchTerm
+            searchTerm: searchTerm
         };
     } catch (error) {
         console.error('Error fetching filtered products:', error);
