@@ -53,21 +53,23 @@
             </tfoot>
         </table>
 
-        <label for="currency">Choose your currency:</label>
-        <select id="currency" name="currency">
-            <option value="USD" selected>USD</option>
-            <option value="NGN" selected>NGN</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-            <!-- Add more currencies as needed -->
-        </select>
+         <!-- Add mor<div class="form-group">
+            <label for="currency" >Choose your currency:</label>
+            <select class="form-control" id="currency" name="currency">
+                <option value="USD" selected>USD</option>
+                <option value="NGN" selected>NGN</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+               e currencies as needed 
+            </select>
+        </div>-->
 
 
         <!-- Google Pay Button -->
         <!-- Google Pay Button Container -->
-        <div id="googlePayButtonContainer"></div>
+        <div style="transition: .5s display ease-in;" class="d-none"  id="googlePayButtonContainer"></div>
 
-        <button id="finalizeCheckout" class="btn btn-dark mt-4">Finalize Checkout</button>
+        <button style="transition: .5s display ease-out;" id="finalizeCheckout" class="btn btn-dark mt-4">Finalize Checkout</button>
     </div>
 </section>
 
@@ -88,9 +90,15 @@
             tokenizationSpecification: {
                 type: 'PAYMENT_GATEWAY',
                 parameters: {
-                    gateway: 'example', // Replace 'example' with your actual payment gateway
-                    gatewayMerchantId: 'exampleMerchantId'
+                    gateway: 'interswitch', // Replace 'example' with your actual payment gateway
+                    gatewayMerchantId: 'MX149760'
                 }
+
+                /*type: 'DIRECT',
+                parameters: {
+                    protocolVersion: 'ECv2',
+                    publicKey: 'YOUR_TEST_PUBLIC_KEY' // Replace with your test public key from Google Pay
+                }*/
             }
         };
     }
@@ -127,7 +135,13 @@
     }
 
     function onGooglePayButtonClick() {
-        const selectedCurrency = document.getElementById('currency').value;
+        let selectedCurrency
+
+        try{
+            selectedCurrency = document.getElementById('currency').value;
+        }catch {
+            selectedCurrency = 'NGN'
+        }
         const totalPrice = parseFloat(document.getElementById('totalPrice').textContent.replace('$', ''));
 
         const paymentDataRequest = {
@@ -137,7 +151,7 @@
             transactionInfo: {
                 totalPriceStatus: 'FINAL',
                 totalPrice: totalPrice.toFixed(2),
-                currencyCode: selectedCurrency || 'USD'
+                currencyCode: selectedCurrency || 'NGN'
             },
             merchantInfo: {
                 merchantId: 'BCR2DN4T2P2NT52T',
@@ -145,10 +159,11 @@
             },
             emailRequired: true, // Request user's email
             shippingAddressRequired: true, // Request shipping address
-            shippingAddressParameters: {
-                allowedCountryCodes: ['US', 'CA', 'GB', 'NGN'], // Adjust based on your target market
-                phoneNumberRequired: true
-            }
+            //phoneNumberRequired: true
+            //shippingAddressParameters: {
+                //allowedCountryCodes: ['US', 'CA', 'GB', 'NGN'], // Adjust based on your target market
+                //
+            //}
         };
 
         const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
@@ -158,16 +173,31 @@
     }
 
     function processPayment(paymentData) {
-        console.log('Payment success:', paymentData);
-        
-        // Access email, address, and phone from paymentData
-        const email = paymentData.email;
-        const shippingAddress = paymentData.shippingAddress;
-        
-        console.log("User's Email:", email);
-        console.log("User's Address:", shippingAddress);
+        const token = paymentData.paymentMethodData.tokenizationData.token;
+    
+        // Send the token to your backend
+        fetch('/checkout/process-payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: token,
+                email: paymentData.email, // Optional, for tracking
+                shippingAddress: paymentData.shippingAddress // Optional
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment Successful');
+            } else {
+                alert('Payment Failed: ' + data.error);
+            }
+        })
+        .catch(err => console.error('Error processing payment:', err));
     }
-
+    
     // Initialize total quantity and total price as numbers
     let totalQuantity = 0;
     let totalPrice = 0.0;
@@ -187,10 +217,12 @@
         // Ensure totalPrice is a number before calling .toFixed()
         document.getElementById('totalQuantity').innerText = totalQuantity;
         document.getElementById('totalPrice').innerText = `$${totalPrice.toFixed(2)}`;
+        let finalizeCheckout = document.querySelector('#finalizeCheckout')
+        finalizeCheckout.addEventListener('click', ()=>{
+            document.querySelector('#googlePayButtonContainer').classList.remove('d-none')
+            finalizeCheckout.classList.add('d-none')
+            onGooglePayLoaded()
+        })
     });
 </script>
-
-<!-- Load Google Pay API Script -->
-
-<!-- Load Google Pay API Script and call onGooglePayLoaded when loaded -->
-<script src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+<script src="https://pay.google.com/gp/p/js/pay.js" ></script>

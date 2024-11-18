@@ -25,3 +25,64 @@ export const checkout = async (req, res) => {
     }
 };
 
+
+export const processPayment = async (req, res) => {
+    const { token, email } = req.body;
+
+    const amount = 100000; // Amount in kobo (e.g., 1000 NGN = 100000 kobo)
+
+    try {
+        // Send the token to 
+        const response = await fetch('https://qa.interswitchng.com/quicktellerservice/api/v5/Transactions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer YZMqZezsltpSPNb4+49PGeP7lYkzKn1a5SaVSyzKOiI=`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                authorization_code: token, // Use the token here
+                email: email,
+                amount: amount
+            })
+        });
+
+        console.log(response)
+        res.json({ success: response })
+
+        
+    } catch (err) {
+        res.json({ success: false, error: err.message });
+    }
+};
+
+
+async function makePayment() {
+    const token = "your_token_here"; // Replace with your token
+    const email = "example@example.com"; // Replace with user's email
+    const amount = 100000; // Amount in kobo (e.g., 1000 NGN = 100000 kobo)
+    
+    try {
+        const response = await fetch('https://qa.interswitchng.com/quicktellerservice/api/v5/Transactions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer DDD33A0F54A383792A3837D1B60BFDF17974D585`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                authorization_code: token, // Use the token here
+                email: email,
+                amount: amount
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+    } catch (error) {
+        console.error('Error making payment:', error);
+    }
+}
+
