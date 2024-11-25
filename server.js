@@ -13,6 +13,7 @@ import staticFiles from "./config/staticFiles.js"
 import hbs from "./config/settings.js"
 import removeTrailingSlash  from './middlewares/normalizer.js';
 import fetchGlobalEntitiesWithCache from './middlewares/fetchGlobalEntitiesWithCache.js';
+import logEvent from './middlewares/logEventMiddleware.js';
 import db from './models/index.cjs'
 import { createRequire } from 'module';
 const require = createRequire
@@ -43,6 +44,9 @@ app.use(removeTrailingSlash );
 app.engine('html', hbs.engine);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
+
+
+app.use(logEvent);
 
 // Middleware to parse JSON bodies
 app.use(cookieParser());
