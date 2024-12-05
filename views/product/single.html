@@ -270,6 +270,7 @@
         addToBagBtn.addEventListener('click', function () {
             addToCart({{product.id}}, quantity, selectedSizeId, selectedColorId);
             updateButtonStates();
+            window.location.reload();
         });
     
         updateButtonStates();
