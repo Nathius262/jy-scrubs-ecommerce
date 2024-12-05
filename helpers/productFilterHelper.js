@@ -310,8 +310,6 @@ export const getMultipleFilteredProducts = async (filters, page, limit) => {
             order: [['createdAt', 'DESC'], ['updatedAt', 'DESC']],
         });
 
-        console.log(products)
-
         // Map the products to the desired format
         const mappedProducts = products.map(product => ({
             id: product.id,
