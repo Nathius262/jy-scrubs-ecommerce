@@ -1,5 +1,3 @@
-// cart.js
-
 // Initialize cart module
 document.addEventListener('DOMContentLoaded', initializeCart);
 
@@ -36,12 +34,18 @@ function initializeCart() {
  */
 function handleAddToBag(event) {
     if (!selectedColorId || !selectedSizeId) {
-        alert('Please select both a color and a size.');
+        messageAlert(
+            title = "Warning!",
+            message = `Please select both a color and a size.`,
+            redirectTo ='',
+            classType = "text-warning",
+            btnType = "btn-warning",
+        );
         return;
     }
 
     const productId = event.target.dataset.productId; // Assume product ID is data attribute
-    addToCart(productId, quantity, selectedSizeId, selectedColorId);
+    addToCart(productId, price, quantity, selectedSizeId, selectedColorId);
     updateMinicart(getCart());
 }
 
@@ -59,18 +63,25 @@ function updateMinicart(cart) {
 /**
  * Add item to cart cookie
  */
-function addToCart(productId, quantity, sizeId, colorId) {
+function addToCart(productId, price, quantity, sizeId, colorId) {
     let cart = getCart();
     const existingItemIndex = cart.findIndex(item => item.productId === productId && item.sizeId === sizeId && item.colorId === colorId);
 
     if (existingItemIndex !== -1) {
         cart[existingItemIndex].quantity = Math.min(maxStock, cart[existingItemIndex].quantity + quantity);
     } else {
-        cart.push({ productId, quantity, sizeId, colorId });
+        cart.push({ productId, price, quantity, sizeId, colorId });
     }
 
     setCart(cart);
-    alert('Item added to your bag!');
+    messageAlert(
+        title = "Info!",
+        message = `Item added to your bag!`,
+        redirectTo = window.location.pathname,
+        classType = "text-info",
+        btnType = "btn-info",
+    );
+    
 }
 
 /**
@@ -147,4 +158,23 @@ function getCookie(name) {
         if (cookie.indexOf(nameEQ) == 0) return cookie.substring(nameEQ.length, cookie.length);
     }
     return null;
+}
+
+function messageAlert(title, message, redirectTo, classType, btnType, reloadOnClose = true) {
+    const heading = document.querySelector('#successModalLabel');
+    heading.innerHTML = title;
+    heading.classList.add(classType);
+    document.querySelector('#modal-message').innerHTML = message;
+    const closeModalButton = document.querySelector('#close-modal');
+    closeModalButton.classList.add(btnType);
+
+    $("#successModal").modal('show');
+    
+    $('#successModal').on('hide.bs.modal', function (e) {
+        if (redirectTo) {
+            window.location.href = redirectTo;
+        } else if (reloadOnClose) {
+            //window.location.reload();
+        }
+    });
 }
