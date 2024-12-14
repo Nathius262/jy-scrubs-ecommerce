@@ -11,16 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Order.hasMany(models.OrderItem, { foreignKey: 'orderId', as: 'items' });
     }
   }
   Order.init({
-    userId: DataTypes.INTEGER,
+    trackingId: DataTypes.STRING,
+    customerEmail: DataTypes.STRING,
+    customerPhone: DataTypes.STRING,
     totalAmount: DataTypes.DECIMAL,
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'pending'  // <-- Default value added here
-    }
+    currency: DataTypes.STRING,
+    status: DataTypes.STRING,
+    paidAt: DataTypes.DATE,
+    paymentChannel: DataTypes.STRING,
+    gatewayResponse: DataTypes.STRING,
+    deliveryEligible: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Order',
