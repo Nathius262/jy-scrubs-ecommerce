@@ -1,10 +1,12 @@
 import express, { Router } from "express";
-import {checkout, processPayment} from '../controllers/cartController.js';
+import {checkout, exchangeRate, verifyPaystackTransaction} from '../controllers/cartController.js';
 
 
 const router = Router();
 
+router.get('/api/convert-currency', exchangeRate);
+router.get('/api/verify-payment', verifyPaystackTransaction);
+
 router.get('/', checkout);
-router.post('/process-payment', processPayment);
 
 export default router;
