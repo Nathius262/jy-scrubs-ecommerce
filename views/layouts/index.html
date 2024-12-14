@@ -90,7 +90,7 @@
                         <p>{{this.products.[0].name}}</p>
 
                         <!-- Add a link to the product's page (assuming you have a route) -->
-                        <a href="/product/{{this.products.[0].id}}" class="btn btn-light rounded-0 px-4">Shop Now</a>
+                        <a href="/product/{{this.products.[0].slug}}" class="btn btn-light rounded-0 px-4">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -173,7 +173,7 @@
 
                 </div>
                 <h5 class="mt-2 fs-6 fw-bold"><a href="/product/{{this.slug}}" style="color:var(--black)">{{this.name}}</a></h5>
-                <p class="price fw-bold">${{this.price}}</p>
+                <p class="price fw-bold">₦{{this.price}}</p>
                 <div class="colors d-flex align-items-center">
                     {{#each this.colors}}
                     <div class="color-box" style="background-color: {{this.hex_code}};"></div>
