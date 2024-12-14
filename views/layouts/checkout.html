@@ -30,7 +30,7 @@
                         <h5>{{this.name}}</h5>
                     </td>
                     <!-- Product Price -->
-                    <td class="product-price" data-price="{{this.price}}">${{this.price}}</td>
+                    <td class="product-price" data-price="{{this.price}}">₦{{this.price}}</td>
                     <!-- Quantity -->
                     <td class="product-quantity" data-quantity="{{this.quantity}}">{{this.quantity}}</td>
                     <!-- Color -->
@@ -44,166 +44,122 @@
             </tbody>
             <!-- Total Row -->
             <tfoot>
+                <div class="form-group mt-3">
+                    <label for="currency">Choose your currency:</label>
+                    <select class="form-control" id="currency">
+                        <option value="NGN" selected>NGN</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
                 <tr>
                     <td colspan="3" class="text-end fw-bold">Total Quantity:</td>
                     <td id="totalQuantity">0</td>
                     <td colspan="1" class="text-end fw-bold">Total Price:</td>
-                    <td id="totalPrice">$0.00</td>
+                    <td id="totalPrice">NGN0.00</td>
                 </tr>
             </tfoot>
         </table>
 
-         <!-- Add mor<div class="form-group">
-            <label for="currency" >Choose your currency:</label>
-            <select class="form-control" id="currency" name="currency">
-                <option value="USD" selected>USD</option>
-                <option value="NGN" selected>NGN</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-               e currencies as needed 
-            </select>
-        </div>-->
-
-
-        <!-- Google Pay Button -->
-        <!-- Google Pay Button Container -->
         <div style="transition: .5s display ease-in;" class="d-none"  id="googlePayButtonContainer"></div>
 
         <button style="transition: .5s display ease-out;" id="finalizeCheckout" class="btn btn-dark mt-4">Finalize Checkout</button>
     </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complete Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentForm">
+                        <!-- First Name -->
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" class="form-control" required />
+                        </div>
+    
+                        <!-- Last Name -->
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" required />
+                        </div>
+    
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-control" required />
+                        </div>
+    
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" id="phone" class="form-control" required />
+                        </div>
+    
+                        <!-- Delivery Option -->
+                        <div class="mb-3 form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="deliveryOption"
+                                onchange="toggleAddressField()"
+                            />
+                            <label for="deliveryOption" class="form-check-label">
+                                I want this delivered
+                            </label>
+                        </div>
+    
+                        <!-- Shipping Address -->
+                        <div id="addressField" class="mb-3" style="display: none;">
+                            <label for="address" class="form-label">Shipping Address</label>
+                            <textarea
+                                id="address"
+                                class="form-control"
+                                rows="2"
+                                placeholder="Enter your shipping address"
+                            ></textarea>
+                        </div>
+    
+                        <!-- Pay Now Button -->
+                        <button type="button" id="payNow" class="btn btn-success w-100">
+                            Pay Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 </section>
-
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
-    // Function to configure Google Pay with requested fields
-    function getGooglePayPaymentMethod() {
-        return {
-            type: 'CARD',
-            parameters: {
-                allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                allowedCardNetworks: ['AMEX', 'DISCOVER', 'MASTERCARD', 'VISA'],
-                billingAddressRequired: true,
-                billingAddressParameters: {
-                    format: 'FULL',
-                    phoneNumberRequired: true // Set to true to capture phone number
-                }
-            },
-            tokenizationSpecification: {
-                type: 'PAYMENT_GATEWAY',
-                parameters: {
-                    gateway: 'interswitch', // Replace 'example' with your actual payment gateway
-                    gatewayMerchantId: 'MX149760'
-                }
-
-                /*type: 'DIRECT',
-                parameters: {
-                    protocolVersion: 'ECv2',
-                    publicKey: 'YOUR_TEST_PUBLIC_KEY' // Replace with your test public key from Google Pay
-                }*/
-            }
-        };
-    }
-
-    // Initialize Google Pay button
-    function onGooglePayLoaded() {
-        initializeGooglePay();
-    }
-
-    function initializeGooglePay() {
-        const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
-
-        paymentsClient.isReadyToPay({
-            apiVersion: 2,
-            apiVersionMinor: 0,
-            allowedPaymentMethods: [getGooglePayPaymentMethod()]
-        }).then(response => {
-            if (response.result) {
-                addGooglePayButton(paymentsClient);
-            }
-        }).catch(err => console.error('Error in isReadyToPay:', err));
-    }
-
-    function addGooglePayButton(paymentsClient) {
-        const googlePayButton = paymentsClient.createButton({
-            onClick: onGooglePayButtonClick
-        });
-        const container = document.getElementById('googlePayButtonContainer');
-        if (container) {
-            container.appendChild(googlePayButton);
+    function toggleAddressField() {
+        const deliveryOption = document.getElementById('deliveryOption');
+        const addressField = document.getElementById('addressField');
+    
+        if (deliveryOption.checked) {
+            addressField.style.display = 'block';
         } else {
-            console.error("googlePayButtonContainer not found");
+            addressField.style.display = 'none';
         }
-    }
+    };
 
-    function onGooglePayButtonClick() {
-        let selectedCurrency
-
-        try{
-            selectedCurrency = document.getElementById('currency').value;
-        }catch {
-            selectedCurrency = 'NGN'
-        }
-        const totalPrice = parseFloat(document.getElementById('totalPrice').textContent.replace('$', ''));
-
-        const paymentDataRequest = {
-            apiVersion: 2,
-            apiVersionMinor: 0,
-            allowedPaymentMethods: [getGooglePayPaymentMethod()],
-            transactionInfo: {
-                totalPriceStatus: 'FINAL',
-                totalPrice: totalPrice.toFixed(2),
-                currencyCode: selectedCurrency || 'NGN'
-            },
-            merchantInfo: {
-                merchantId: 'BCR2DN4T2P2NT52T',
-                merchantName: 'Pixtinfinity'
-            },
-            emailRequired: true, // Request user's email
-            shippingAddressRequired: true, // Request shipping address
-            //phoneNumberRequired: true
-            //shippingAddressParameters: {
-                //allowedCountryCodes: ['US', 'CA', 'GB', 'NGN'], // Adjust based on your target market
-                //
-            //}
-        };
-
-        const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
-        paymentsClient.loadPaymentData(paymentDataRequest).then(processPayment).catch(err => {
-            console.error('Google Pay payment failed:', err);
-        });
-    }
-
-    function processPayment(paymentData) {
-        const token = paymentData.paymentMethodData.tokenizationData.token;
+</script>
+<script type="module">
+    import { messageAlert } from "/js/utils.js"
     
-        // Send the token to your backend
-        fetch('/checkout/process-payment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                token: token,
-                email: paymentData.email, // Optional, for tracking
-                shippingAddress: paymentData.shippingAddress // Optional
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Payment Successful');
-            } else {
-                alert('Payment Failed: ' + data.error);
-            }
-        })
-        .catch(err => console.error('Error processing payment:', err));
-    }
-    
-    // Initialize total quantity and total price as numbers
     let totalQuantity = 0;
     let totalPrice = 0.0;
 
+    const modalElement = document.getElementById('paymentModal');
+
+    
     // Calculate total quantity and total price
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const productRows = document.querySelectorAll('.product-row');
 
         productRows.forEach(row => {
@@ -214,15 +170,128 @@
             totalPrice += price * quantity;
         });
 
-        // Ensure totalPrice is a number before calling .toFixed()
         document.getElementById('totalQuantity').innerText = totalQuantity;
-        document.getElementById('totalPrice').innerText = `$${totalPrice.toFixed(2)}`;
-        let finalizeCheckout = document.querySelector('#finalizeCheckout')
-        finalizeCheckout.addEventListener('click', ()=>{
-            document.querySelector('#googlePayButtonContainer').classList.remove('d-none')
-            finalizeCheckout.classList.add('d-none')
-            onGooglePayLoaded()
-        })
+        document.getElementById('totalPrice').innerText = `₦${totalPrice.toFixed(2)}`; // Default NGN
+
+        // Prepare base price for conversion
+        const currencySelect = document.getElementById('currency');
+        currencySelect.addEventListener('change', async () => {
+            const selectedCurrency = currencySelect.value;
+
+            try {
+                const response = await fetch(`/api/convert-currency?toCurrency=${selectedCurrency}`);
+                const data = await response.json();
+                if (data.success) {
+                    const convertedPrice = (totalPrice * data.rate).toFixed(2);
+                    document.getElementById('totalPrice').innerText =
+                        selectedCurrency === 'NGN'
+                            ? `₦${convertedPrice}`
+                            : `$${convertedPrice}`;
+                }
+            } catch (error) {
+
+                messageAlert(
+                    title = "Error fetching exchange rate.",
+                    message = `Detail: "${error.message || error}"`,
+                    redirectTo =window.location.pathname,
+                    classType = "text-error",
+                    btnType = "btn-error",
+                );
+            }
+        });
+
+        // Finalize checkout
+        document.getElementById('finalizeCheckout').addEventListener('click', () => {
+            
+            const modalInstance = new bootstrap.Modal(modalElement);
+            modalInstance.show();
+        });
+
+        // Paystack payment handler
+        document.getElementById('payNow').addEventListener('click', () => {
+            const currency = currencySelect.value;
+            const amount = parseFloat(document.getElementById('totalPrice').textContent.replace(/[^\d.-]/g, '')) * 100;
+
+            const first_name = document.getElementById('firstName').value;
+            const last_name= document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const deliveryOption = document.getElementById('deliveryOption').checked;
+            const address = deliveryOption ? document.getElementById('address').value : null;
+
+            const handler = PaystackPop.setup({
+                key: 'pk_test_314202007cd3e2a3f03b9a4bce2a0415f6435a63', // Replace with your Paystack public key
+                email,
+                amount,
+                first_name: first_name,
+                last_name: last_name,                
+                phone,                
+                currency,
+                metadata: {
+                    address,
+                    first_name: first_name,
+                    last_name: last_name
+                },
+                callback: function (response) {
+
+                    //new bootstrap.Modal(document.getElementById('paymentModal')).hide();
+                    const modalElement = document.getElementById('paymentModal');
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                    // Verify the transaction on the server
+                    
+                    fetch(`/checkout/api/verify-payment?reference=${response.reference}`, {credentials:"include"})
+                        .then((res) => res.json())
+                        .then((data) => {
+                            if (data.success) {
+                                //alert('Payment successful!');
+                                messageAlert(
+                                    title = "Payment successful!",
+                                    message = `Your purchase was successful! You can use the tracking ID to check the state of your product. \ntrackingId: "${data.trackingId}"`,
+                                    redirectTo ='',
+                                    classType = "text-success",
+                                    btnType = "btn-success",
+                                );
+                                // Optionally clear the cart or update the UI
+                            } else {
+                                messageAlert(
+                                    title = "Payment verification failed",
+                                    message = `Please contact support.`,
+                                    redirectTo ='',
+                                    classType = "text-danger",
+                                    btnType = "btn-danger",
+                                );
+                            }
+                        })
+                        .catch((error) => {
+                            
+                            messageAlert(
+                                title = "Error verifying payment.",
+                                message = `Detail: "${error.message || error}"`,
+                                redirectTo ='',
+                                classType = "text-warning",
+                                btnType = "btn-warning",
+                            );
+                            console.error(error);
+                        });
+                },
+                onClose: function () {
+
+                    messageAlert(
+                        title = "Warning.",
+                        message = `Payment process was canceled or not completed.`,
+                        redirectTo ='/checkout',
+                        classType = "text-warning",
+                        btnType = "btn-warning",
+                    );
+                    
+                },
+                
+            });
+            handler.openIframe();
+        });
+
+        
     });
 </script>
-<script src="https://pay.google.com/gp/p/js/pay.js" ></script>
+
