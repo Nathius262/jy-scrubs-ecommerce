@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 
 //custom import
@@ -50,8 +51,9 @@ app.use(logEvent);
 
 // Middleware to parse JSON bodies
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cors());
 
 //staticfiles
 app.use(staticFiles);
