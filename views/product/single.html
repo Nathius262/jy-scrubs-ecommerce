@@ -55,7 +55,7 @@
                 
                 <!-- Price and Stock Section -->
                 <p class="price fs-4 my-4 d-sm-flex justify-content-between me-3">
-                    <span>Price: ${{product.price}}</span> 
+                    <span>Price: ₦{{product.price}}</span> 
                     <span>Stock: <span id="currentStock">{{product.stock}}</span></span>
                 </p>
                 <hr>
@@ -174,6 +174,7 @@
 
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function () {
         let selectedColorId = null;
         let selectedSizeId = null;
@@ -268,9 +269,8 @@
     
         // Add to Bag button logic
         addToBagBtn.addEventListener('click', function () {
-            addToCart({{product.id}}, quantity, selectedSizeId, selectedColorId);
-            updateButtonStates();
-            window.location.reload();
+            addToCart({{product.id}}, {{product.price}}, quantity, selectedSizeId, selectedColorId);
+            updateButtonStates();            
         });
     
         updateButtonStates();
