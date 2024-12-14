@@ -317,6 +317,7 @@ export const getMultipleFilteredProducts = async (filters, page, limit) => {
             description: product.description,
             price: product.price,
             stock: product.stock,
+            slug: product.slug,
             createdAt: product.createdAt,
             updatedAt: product.updatedAt,
             categories: product.categories.map(category => ({
