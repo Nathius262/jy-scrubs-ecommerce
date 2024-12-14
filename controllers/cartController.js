@@ -12,14 +12,15 @@ const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
 
 // Endpoint for getting conversion rates
 export const exchangeRate = async (req, res) => {
-    const { toCurrency } = req.query;
+    const { toCurrency, amount } = req.query;
 
     try {
         const response = await axios.get(
-            `https://v6.exchangerate-api.com/v6/${EXCHANGE_RATE_API_KEY}/latest/NGN`
+            `https://v6.exchangerate-api.com/v6/${EXCHANGE_RATE_API_KEY}/pair/NGN/${toCurrency}/${amount}`
         );
-        const rate = response.data.conversion_rates[toCurrency];
-        res.json({ success: true, rate });
+        const rate = response.data;
+        console.log(rate)
+        res.json({ success: true, rate});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

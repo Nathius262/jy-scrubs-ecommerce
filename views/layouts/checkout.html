@@ -3,7 +3,7 @@
         <h2>Your Cart</h2>
 
         <!-- Product Table -->
-        <table class="table">
+        <table class="table table-responsive">
             <thead>
                 <tr>
                     <th scope="col">Image</th>
@@ -43,16 +43,18 @@
                 {{/each}}
             </tbody>
             <!-- Total Row -->
-            <tfoot>
-                <div class="form-group mt-3">
-                    <label for="currency">Choose your currency:</label>
-                    <select class="form-control" id="currency">
-                        <option value="NGN" selected>NGN</option>
-                        <option value="USD">USD</option>
-                    </select>
-                </div>
+            <tfoot>                
                 <tr>
-                    <td colspan="3" class="text-end fw-bold">Total Quantity:</td>
+                    <td colspan="1">
+                        <div class="form-group mt-3">
+                            <label for="currency">Choose your currency:</label>
+                            <select class="form-control" id="currency" disabled>
+                                <option value="NGN" selected>NGN</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td colspan="1" class="text-end fw-bold">Total Quantity:</td>
                     <td id="totalQuantity">0</td>
                     <td colspan="1" class="text-end fw-bold">Total Price:</td>
                     <td id="totalPrice">NGN0.00</td>
@@ -60,7 +62,6 @@
             </tfoot>
         </table>
 
-        <div style="transition: .5s display ease-in;" class="d-none"  id="googlePayButtonContainer"></div>
 
         <button style="transition: .5s display ease-out;" id="finalizeCheckout" class="btn btn-dark mt-4">Finalize Checkout</button>
     </div>
@@ -179,14 +180,11 @@
             const selectedCurrency = currencySelect.value;
 
             try {
-                const response = await fetch(`/api/convert-currency?toCurrency=${selectedCurrency}`);
+                const response = await fetch(`/checkout/api/convert-currency?toCurrency=${selectedCurrency}&amount=${totalPrice}`);
                 const data = await response.json();
                 if (data.success) {
-                    const convertedPrice = (totalPrice * data.rate).toFixed(2);
-                    document.getElementById('totalPrice').innerText =
-                        selectedCurrency === 'NGN'
-                            ? `₦${convertedPrice}`
-                            : `$${convertedPrice}`;
+                    const convertedPrice = data.rate.conversion_result;
+                    console.log(convertedPrice)
                 }
             } catch (error) {
 
@@ -248,7 +246,7 @@
                                 messageAlert(
                                     title = "Payment successful!",
                                     message = `Your purchase was successful! You can use the tracking ID to check the state of your product. \ntrackingId: "${data.trackingId}"`,
-                                    redirectTo ='',
+                                    redirectTo ='/',
                                     classType = "text-success",
                                     btnType = "btn-success",
                                 );
