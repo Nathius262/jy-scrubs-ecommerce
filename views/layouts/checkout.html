@@ -3,64 +3,66 @@
         <h2>Your Cart</h2>
 
         <!-- Product Table -->
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th scope="col">Image</th>
-                    <th scope="col">Product Title</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Color</th>
-                    <th scope="col">Size</th>
-                </tr>
-            </thead>
-            <tbody id="productTableBody">
-                {{#each products}}
-                <tr class="product-row">
-                    <!-- Product Image -->
-                    <td>
-                        {{#each this.images}}
-                        {{#if @first}}
-                        <img src="{{this.url}}" alt="{{../name}}" style="width: 100px; height: auto;" />
-                        {{/if}}
-                        {{/each}}
-                    </td>
-                    <!-- Product Title -->
-                    <td>
-                        <h5>{{this.name}}</h5>
-                    </td>
-                    <!-- Product Price -->
-                    <td class="product-price" data-price="{{this.price}}">₦{{this.price}}</td>
-                    <!-- Quantity -->
-                    <td class="product-quantity" data-quantity="{{this.quantity}}">{{this.quantity}}</td>
-                    <!-- Color -->
-                    <td>
-                        <div class="color-box rounded-circle" style="background-color: {{this.selectedColor.hex_code}}; width: 30px; height: 30px;"></div>
-                    </td>
-                    <!-- Size -->
-                    <td>{{this.selectedSize.name}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-            <!-- Total Row -->
-            <tfoot>                
-                <tr>
-                    <td colspan="1">
-                        <div class="form-group mt-3">
-                            <label for="currency">Choose your currency:</label>
-                            <select class="form-control" id="currency" disabled>
-                                <option value="NGN" selected>NGN</option>
-                                <option value="USD">USD</option>
-                            </select>
-                        </div>
-                    </td>
-                    <td colspan="1" class="text-end fw-bold">Total Quantity:</td>
-                    <td id="totalQuantity">0</td>
-                    <td colspan="1" class="text-end fw-bold">Total Price:</td>
-                    <td id="totalPrice">NGN0.00</td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Product Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Size</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    {{#each products}}
+                    <tr class="product-row">
+                        <!-- Product Image -->
+                        <td>
+                            {{#each this.images}}
+                            {{#if @first}}
+                            <img src="{{this.url}}" alt="{{../name}}" style="width: 100px; height: auto;" />
+                            {{/if}}
+                            {{/each}}
+                        </td>
+                        <!-- Product Title -->
+                        <td>
+                            <h5>{{this.name}}</h5>
+                        </td>
+                        <!-- Product Price -->
+                        <td class="product-price" data-price="{{this.price}}">₦{{this.price}}</td>
+                        <!-- Quantity -->
+                        <td class="product-quantity" data-quantity="{{this.quantity}}">{{this.quantity}}</td>
+                        <!-- Color -->
+                        <td>
+                            <div class="color-box rounded-circle" style="background-color: {{this.selectedColor.hex_code}}; width: 30px; height: 30px;"></div>
+                        </td>
+                        <!-- Size -->
+                        <td>{{this.selectedSize.name}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+                <!-- Total Row -->
+                <tfoot>                
+                    <tr>
+                        <td colspan="1">
+                            <div class="form-group mt-3">
+                                <label for="currency">Choose your currency:</label>
+                                <select class="form-control" id="currency" disabled>
+                                    <option value="NGN" selected>NGN</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td colspan="1" class="text-end fw-bold">Total Quantity:</td>
+                        <td id="totalQuantity">0</td>
+                        <td colspan="1" class="text-end fw-bold">Total Price:</td>
+                        <td id="totalPrice">NGN0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
 
 
         <button style="transition: .5s display ease-out;" id="finalizeCheckout" class="btn btn-dark mt-4">Finalize Checkout</button>
