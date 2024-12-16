@@ -37,6 +37,8 @@ export async function createOrder(paymentData, cartItems) {
             return {
                 orderId: order.id,
                 productId: item.productId,
+                sizeId:item.sizeId,
+                colorId: item.colorId,
                 quantity: item.quantity,
                 price: item.price,
                 totalPrice: item.quantity * item.price,
