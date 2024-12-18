@@ -9,6 +9,19 @@ export async function createOrder(paymentData, cartItems) {
             throw new Error('Invalid or empty cart items.');
         }
 
+        // Extract address from metadata
+        const addressData = {
+            streetAddress: paymentData.metadata?.address || null,
+            city: paymentData.metadata?.city || null,
+            state: paymentData.metadata?.state || null,
+            country: paymentData.metadata?.country || null,
+        };
+
+        // Validate extracted addressData
+        if (!addressData.streetAddress || !addressData.city || !addressData.state || !addressData.country) {
+            throw new Error('Invalid or incomplete address in metadata.');
+        }
+
         // Create the Order
         const order = await db.Order.create({
             trackingId: uuidv4(),
@@ -20,12 +33,21 @@ export async function createOrder(paymentData, cartItems) {
             paidAt: paymentData.paid_at,
             paymentChannel: paymentData.channel,
             gatewayResponse: paymentData.gateway_response,
-            deliveryEligible: paymentData.amount / 100 > 1000
+            deliveryEligible: paymentData.amount / 100 > 1000,
+        }, { transaction });
+
+        // Create the Address
+        await db.Address.create({
+            orderId: order.id,
+            customerEmail: paymentData.customer.email, // Optional if tied to a user
+            streetAddress: addressData.streetAddress,
+            city: addressData.city,
+            state: addressData.state,
+            country: addressData.country,
         }, { transaction });
 
         // Validate and create OrderItems
         const orderItems = cartItems.map(item => {
-            // Validate each field
             if (
                 typeof item.productId !== 'number' ||
                 typeof item.quantity !== 'number' ||
@@ -33,20 +55,42 @@ export async function createOrder(paymentData, cartItems) {
             ) {
                 throw new Error(`Invalid cart item data: ${JSON.stringify(item)}`);
             }
-        
+
             return {
                 orderId: order.id,
                 productId: item.productId,
-                sizeId:item.sizeId,
+                sizeId: item.sizeId,
                 colorId: item.colorId,
                 quantity: item.quantity,
                 price: item.price,
                 totalPrice: item.quantity * item.price,
             };
         });
-        
-
         await db.OrderItem.bulkCreate(orderItems, { transaction });
+
+        // Reduce Product Stock
+        for (const item of cartItems) {
+            const product = await db.Product.findByPk(item.productId, { transaction });
+
+            if (!product) {
+                throw new Error(`Product with ID ${item.productId} not found.`);
+            }
+
+            if (product.stock < item.quantity) {
+                throw new Error(`Insufficient stock for product ID ${item.productId}.`);
+            }
+
+            // Update stock
+            product.stock -= item.quantity;
+            await product.save({ transaction });
+        }
+
+        // Create initial DeliveryStatus
+        await db.DeliveryStatus.create({
+            orderId: order.id,
+            status: 'pending', // Initial delivery status
+            notes: 'Order has been created and is pending processing.',
+        }, { transaction });
 
         // Commit the transaction
         await transaction.commit();
