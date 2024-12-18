@@ -120,10 +120,31 @@
                             <label for="address" class="form-label">Shipping Address</label>
                             <textarea
                                 id="address"
-                                class="form-control"
+                                class="form-control mb-3"
                                 rows="2"
                                 placeholder="Enter your shipping address"
                             ></textarea>
+
+                            <div class="row">
+                                <div class="col-md-4 form-group mb-3">
+                                    <label for="country_id1" class="form-label">Country</label>
+                                    <select name="p_country" element-id="country" dependent-state-id="state_id1" dependent-city-id="city_id1" id="country_id1" class="countrystatecity form-control">
+                                        <option value="">select</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 form-group mb-3">
+                                    <label class="form-label" for="state_id1">State</label>
+                                    <select name="p_state" element-id="state" dependent-city-id="city_id1" id="state_id1" id="state_id1" class="countrystatecity form-control">
+                                        <option value="">select</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 form-group mb-3">
+                                    <label class="form-label" for="countrystatecity">City</label>
+                                    <select name="p_city" element-id="city" id="city_id1" class="countrystatecity form-control">
+                                        <option value="">select</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
     
                         <!-- Pay Now Button -->
@@ -138,8 +159,13 @@
     
 
 </section>
+<script type="text/javascript" src="js/countrystatecity.js"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
+    $(document).ready(function(){
+		$('.countrystatecity').countrystatecity();
+	});
+    
     function toggleAddressField() {
         const deliveryOption = document.getElementById('deliveryOption');
         const addressField = document.getElementById('addressField');
@@ -218,6 +244,10 @@
             const phone = document.getElementById('phone').value;
             const deliveryOption = document.getElementById('deliveryOption').checked;
             const address = deliveryOption ? document.getElementById('address').value : null;
+            const country = deliveryOption ? $('#country_id1 option:selected').data('address_name') : null;
+            const city = deliveryOption ? $('#city_id1 option:selected').data('address_name') : null;
+            const state = deliveryOption ? $('#state_id1 option:selected').data('address_name') : null;
+
 
             const handler = PaystackPop.setup({
                 key: 'pk_test_314202007cd3e2a3f03b9a4bce2a0415f6435a63', // Replace with your Paystack public key
@@ -228,9 +258,10 @@
                 phone,                
                 currency,
                 metadata: {
-                    address,
                     first_name: first_name,
-                    last_name: last_name
+                    last_name: last_name,
+                    address,
+                    country, state, city                    
                 },
                 callback: function (response) {
 
