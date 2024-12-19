@@ -54,9 +54,9 @@
                 <h5 class="mt-2 fs-2 fw-bold">{{product.name}}</h5>
                 
                 <!-- Price and Stock Section -->
-                <p class="price fs-4 my-4 d-sm-flex justify-content-between me-3">
+                <p class="price fs-4 my-4 d-sm-flex d-block justify-content-between me-3">
                     <span>Price: ₦{{product.price}}</span> 
-                    <span>Stock: <span id="currentStock">{{product.stock}}</span></span>
+                    <span class="mx-2">Available Stock: <span id="currentStock">{{product.stock}}</span></span>
                 </p>
                 <hr>
             
@@ -189,9 +189,8 @@
     
         // Ensure initial quantity does not exceed stock
         function initializeQuantity() {
-            quantity = Math.min(quantity, maxStock); // Set quantity to stock if it's higher
+            quantity = Math.min(maxStock, quantity); // Set quantity to stock if it's higher
             quantityInput.value = quantity;
-            updateButtonStates();
         }
     
         // Update button states based on quantity and stock
@@ -207,7 +206,7 @@
             decreaseQtyButton.disabled = quantity <= 1;
             addToBagBtn.disabled = remainingStock === 0 || !(selectedColorId && selectedSizeId && quantity > 0);
     
-            quantityInput.value = quantity;
+            quantityInput.value = Math.min(remainingStock, quantity);
             currentStockDisplay.textContent = remainingStock;
         }
     
