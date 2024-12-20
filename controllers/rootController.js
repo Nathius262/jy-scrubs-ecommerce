@@ -27,3 +27,35 @@ export const index_view = async (req, res) => {
     res.status(500).send('Error loading products');
   }
 };
+
+export const about_view = async (req, res) => {
+  try {
+    res.render('./others/about');
+  } catch (error) {
+    res.status(500).send('Error loading page', error);
+  }
+}
+
+export const privacy_policy_view = async (req, res) => {
+  try {
+    res.render('./others/privacy_policy');
+  } catch (error) {
+    res.status(500).send('Error loading page', error);
+  }
+}
+
+export const contact_view = async (req, res) => {
+  try {
+    res.render('./others/contact');
+  } catch (error) {
+    res.status(500).send('Error loading page', error);
+  }
+}
+
+export const terms_conditions_view = async (req, res) => {
+  try {
+    res.render('./others/terms_conditions');
+  } catch (error) {
+    res.status(500).send('Error loading page', error);
+  }
+}
