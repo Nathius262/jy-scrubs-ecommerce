@@ -86,7 +86,7 @@
                         }
                     } catch (error) {
                         console.error('Error fetching order details:', error);
-                        alert('Failed to fetch order details. Please try again later.');
+                        alert('Failed to fetch order details. Please try again later.', error.message);
                     }
                 }
             });
