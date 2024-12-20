@@ -35,5 +35,9 @@ app.use('/collection/color/', express.static(path.join(__dirname, '..', 'public'
 app.use('/collection/category/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/collection/collection/', express.static(path.join(__dirname, '..', 'public')));
 
+//checkout
+app.use('/checkout/', express.static(path.join(__dirname, '..', 'public')));
+
+
 
 export default app;
