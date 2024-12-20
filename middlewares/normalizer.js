@@ -12,6 +12,7 @@ const removeTrailingSlash = (req, res, next) => {
       //main
       '/product/',
       '/collection/',
+      '/checkout/',
 
       //collections
       '/collection/category/', '/collection/color/',
