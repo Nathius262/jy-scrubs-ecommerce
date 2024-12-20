@@ -68,13 +68,14 @@
                             const orderItemsTable = document.getElementById('orderItems');
                             orderItemsTable.innerHTML = ''; // Clear previous entries
         
+                            console.log(data.order.items)
                             data.order.items.forEach(item => {
                                 const row = `
                                     <tr>
                                         <td>${item.name}</td>
                                         <td>${item.quantity}</td>
-                                        <td>${item.price.toFixed(2)}</td>
-                                        <td>${(item.quantity * item.price).toFixed(2)}</td>
+                                        <td>${item.price}</td>
+                                        <td>${(item.quantity * item.price)}</td>
                                         <td>${item.deliveryStatus || 'Pending'}</td>
                                     </tr>
                                 `;
