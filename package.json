@@ -51,6 +51,7 @@
     "nodemailer": "^6.9.16",
     "path": "^0.12.7",
     "pg": "^8.13.1",
+    "sequelize": "^6.37.5",
     "slugify": "^1.6.6"
   },
   "devDependencies": {
