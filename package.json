@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
+    "postinstall": "npm install pg",
     "install-pg": "npm install pg",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:status": "npx sequelize-cli db:migrate:status",
