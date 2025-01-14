@@ -15,6 +15,8 @@ import * as size from '../../controllers/admin/sizeController.js';
 import * as color from '../../controllers/admin/colorController.js';
 import * as scurb from '../../controllers/admin/scurbsController.js';
 
+import * as order from '../../controllers/admin/orderController.js';
+
 
 const router = Router()
 
@@ -135,16 +137,20 @@ router.route('/scurb')
     .get(scurb.getAllScurbs)
     .post(scurb.createScrubController);
 router.get('/scurb/create', scurb.renderScurbForm);
-/*
+
 //////////////////////
 //////////////////////
 /// ORDER ROUTER /////
 //////////////////////
 //////////////////////
 router.route('/order')
-    .get(getAllOrders)
-    .post(createOrder);
+    .get(order.getAllOrders);
+    //.post(createOrder);
 
+router.route('/order/:id')
+    .get(order.getOrderById)
+    .delete(order.deleteOrder);
+/*
 
 //////////////////////
 //////////////////////
