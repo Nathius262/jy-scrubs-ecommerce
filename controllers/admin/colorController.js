@@ -14,6 +14,7 @@ export const getAllColors = async (req, res) => {
       totalPages,
       totalItems,
       limit,
+      admin:true
     });
   } catch (error) {
     console.error('Error fetching color:', error);
@@ -75,7 +76,7 @@ export const deleteColor = async (req, res) => {
 
 export const renderColorForm = async (req, res) => {
   try {
-    res.render('./admin/category/create_color')
+    res.render('./admin/category/create_color', {admin:true})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }
@@ -86,7 +87,7 @@ export const renderColorUpdateForm = async (req, res) => {
   const id = req.params.id
   try {
     const color = await colorHelper.getColorById(id)
-    res.render('./admin/category/update_color', {color})
+    res.render('./admin/category/update_color', {color, admin:true})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }

@@ -17,7 +17,8 @@ export const getAllRoles = async (req, res) => {
       roles: result.plainRoles,
       currentPage: result.currentPage,
       totalPages: result.totalPages,
-      totalItems: result.totalItems
+      totalItems: result.totalItems,
+      admin:true
     });
   } catch (error) {
     console.error(error.message);
@@ -30,7 +31,7 @@ export const getRoleById = async (req, res) => {
   const { id } = req.params;
   try {
     const role = await fetchRoleById(id);
-    res.status(200).render('./admin/role/update', {role:role});
+    res.status(200).render('./admin/role/update', {role:role, admin:true});
   } catch (error) {
     if (error.message === 'Role not found') {
       return res.status(404).json({ error: error.message });
@@ -71,7 +72,7 @@ export const updateRole = async (req, res) => {
 
 export const renderRoleForm = async (req, res) => {
   try {
-    res.render('./admin/role/create')
+    res.render('./admin/role/create', {admin:true})
   } catch (error) {
     res.send(404).json("not found")
   }

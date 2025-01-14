@@ -7,7 +7,7 @@ export const getAllUsers = async (req, res) => {
 
   try {
     const data = await fetchAllUsers(page, limit);
-    res.render('./admin/user/list', { users: data.users, pagination: { currentPage: data.currentPage, totalPages: data.totalPages, totalItems: data.totalItems } });
+    res.render('./admin/user/list', {admin:true, users: data.users, pagination: { currentPage: data.currentPage, totalPages: data.totalPages, totalItems: data.totalItems } });
   } catch (error) {
     res.status(500).render('errorPage', { error: error.message });
   }
@@ -21,7 +21,7 @@ export const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).render('errorPage', { message: 'User not found' });
     }
-    res.render('./admin/user/update', { user });
+    res.render('./admin/user/update', { user, admin:true });
   } catch (error) {
     res.status(500).render('errorPage', { message: 'Internal server error' });
   }
@@ -32,7 +32,7 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const newUser = await createNewUser(req.body);
-    res.redirect('/admin/user'); // Redirect to user list
+    res.redirect('/admin/user', {admin:true}); // Redirect to user list
   } catch (error) {
     res.status(500).render('errorPage', { error: error.message });
   }
@@ -61,7 +61,7 @@ export const deleteUser = async (req, res) => {
 
   try {
     await deleteUserById(id);
-    res.redirect('/admin/user'); // Redirect to user list after deletion
+    res.redirect('/admin/user', {admin:true}); // Redirect to user list after deletion
   } catch (error) {
     res.status(500).render('errorPage', { error: error.message });
   }

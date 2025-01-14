@@ -9,7 +9,7 @@ export const getAllOrders = async (req, res) => {
     
     const {orders, totalOrderPages, totalOrderItems, currentOrderPage} = await orderHelper.getOrders(page, limit);
 
-    res.render('./admin/order/list', {orders, totalOrderPages, totalOrderItems, currentOrderPage});
+    res.render('./admin/order/list', {orders, totalOrderPages, totalOrderItems, currentOrderPage, admin:true});
   } catch (error) {
     console.error('Error fetching orders:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -24,7 +24,7 @@ export const getOrderById = async (req, res) => {
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
     }
-    res.render('./admin/order/update', order);
+    res.render('./admin/order/update', {order, admin:true});
   } catch (error) {
     console.error('Error fetching order:', error);
     res.status(500).json({ error: 'Internal server error' });

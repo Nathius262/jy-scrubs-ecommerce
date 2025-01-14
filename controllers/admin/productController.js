@@ -27,6 +27,7 @@ export const renderCreateProductForm = async (req, res) => {
       sizes: sizes.sizes,
       scrubs: scrubs.scrubs,
       collections: collections.collections,
+      admin:true
     });
   } catch (error) {
     console.error('Error rendering create product form:', error);
@@ -63,7 +64,8 @@ export const getProductById = async (req, res) => {
       productCategoryIds,
       productColorIds,
       productSizeIds,
-      productScurbIds
+      productScurbIds,
+      admin:true
     });
   } catch (error) {
     console.error('Error rendering update product form:', error);
@@ -88,6 +90,7 @@ export const getAllProducts = async (req, res) => {
       totalProductPages,
       totalProductItems,
       limit,
+      admin:true
     });
   } catch (error) {
     console.error('Error fetching products with pagination:', error);

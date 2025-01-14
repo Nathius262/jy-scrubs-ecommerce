@@ -14,6 +14,7 @@ export const getAllSize = async (req, res) => {
       totalPages,
       totalItems,
       limit,
+      admin:true
     });
   } catch (error) {
     console.error('Error fetching size:', error);
@@ -36,7 +37,7 @@ export async function createSizeController(req, res) {
 
 export const renderSizeForm = async (req, res) => {
   try {
-    res.render('./admin/category/create_size')
+    res.render('./admin/category/create_size', {admin:true})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }

@@ -14,6 +14,7 @@ export const getAllScurbs = async (req, res) => {
       totalPages,
       totalItems,
       limit,
+      admin:true
     });
   } catch (error) {
     console.error('Error fetching scurb:', error);
@@ -35,7 +36,7 @@ export async function createScrubController(req, res) {
 
 export const renderScurbForm = async (req, res) => {
   try {
-    res.render('./admin/category/create_scurb')
+    res.render('./admin/category/create_scurb', {admin:true})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }

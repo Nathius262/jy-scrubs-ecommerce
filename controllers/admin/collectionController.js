@@ -14,6 +14,7 @@ export const getAllCollections = async (req, res) => {
       totalPages,
       totalItems,
       limit,
+      admin:true
     });
   } catch (error) {
     console.error('Error fetching collections:', error);
@@ -36,7 +37,7 @@ export async function createCollectionController(req, res) {
 
 export const renderCollectionForm = async (req, res) => {
   try {
-    res.render('./admin/category/create_collection')
+    res.render('./admin/category/create_collection', {admin:true})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }

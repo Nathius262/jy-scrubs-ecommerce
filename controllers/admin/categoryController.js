@@ -14,6 +14,7 @@ export const getAllCategories = async (req, res) => {
       totalPages,
       totalItems,
       limit,
+      admin:true
     });
   } catch (error) {
     console.error('Error fetching color:', error);
@@ -43,7 +44,7 @@ export async function createCategoryController(req, res) {
 
 export const renderCategoryForm = async (req, res) => {
   try {
-    res.render('./admin/category/create_category')
+    res.render('./admin/category/create_category', {admin:true})
   } catch (error) {
     res.send(500).json("Internal server error", error)
   }
