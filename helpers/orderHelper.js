@@ -102,3 +102,62 @@ export async function createOrder(paymentData, cartItems) {
         return { success: false, error: error.message };
     }
 }
+
+
+export const getOrders = async (page, limit)=> {
+    const offset = (page - 1) * limit;
+
+    const { rows: orders, count: totalOrderItems } = await db.Order.findAndCountAll({
+    attributes:['id', 'trackingId', 'customerEmail', 'customerPhone', 'totalAmount', 'currency', 'status', 'paidAt', 'paymentChannel', 'gatewayResponse', 'updatedAt', 'createdAt'],   
+        limit,
+        offset,
+        distinct: true,
+        order:[['updatedAt', 'DESC'], ['createdAt', 'DESC']]
+    });
+
+    const totalOrderPages = Math.ceil(totalOrderItems / limit);
+
+    const mappedOrders = orders.map((order) => ({
+        id:order.id,
+        trackingId: order.trackingId,
+        customerEmail: order.customerEmail,
+        customerPhone: order.customerPhone,
+        totalAmount: order.totalAmount,
+        currency: order.currency,
+        status: order.status,
+        paidAt: order.paidAt,
+        paymentChannel: order.paymentChannel,
+        gatewayResponse: order.gatewayResponse,
+        
+    }))
+
+    return {orders:mappedOrders, totalOrderPages:totalOrderPages, totalOrderItems:totalOrderItems, currentOrderPage:page}
+}
+
+
+export const getOrderById = async (id)=> {
+
+    const order = await db.Order.findByPk(id, {
+    attributes:['id', 'trackingId', 'customerEmail', 'customerPhone', 'totalAmount', 'currency', 'status', 'paidAt', 'paymentChannel', 'gatewayResponse', 'updatedAt', 'createdAt'],
+
+    include: [
+
+        {model:db.Address, as:'address', attributes: ['streetAddress', 'city', 'state', 'country']},
+        {model:db.DeliveryStatus, as:'deliveryStatus', attributes: ['status']},
+        {
+            model:db.OrderItem, 
+            as:'items', 
+            attributes: ['quantity', 'price', 'totalPrice'],
+            include:[
+            {model:db.Product, as:'product', attributes:['id', 'name']},
+            {model:db.Color, as:'color', attributes:['id', 'name']},
+            {model:db.Size, as:'size', attributes:['id', 'name']},
+            ]
+        },
+
+        ],
+    });
+
+    if (!order) return null;
+    return order.get({plain:true});
+}
