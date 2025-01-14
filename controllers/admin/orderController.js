@@ -1,12 +1,15 @@
 import db from '../../models/index.cjs';
+import * as orderHelper from '../../helpers/orderHelper.js'
 
 // Get all orders
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await db.Order.findAll({
-      include: { model: db.Product, as: 'products', through: { attributes: [] } }, // Include associated products
-    });
-    res.status(200).json(orders);
+    const limit = req.query.limit || 12;
+    const page = req.query.page || 1;
+    
+    const {orders, totalOrderPages, totalOrderItems, currentOrderPage} = await orderHelper.getOrders(page, limit);
+
+    res.render('./admin/order/list', {orders, totalOrderPages, totalOrderItems, currentOrderPage});
   } catch (error) {
     console.error('Error fetching orders:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -17,13 +20,11 @@ export const getAllOrders = async (req, res) => {
 export const getOrderById = async (req, res) => {
   const { id } = req.params;
   try {
-    const order = await db.Order.findByPk(id, {
-      include: { model: db.Product, as: 'products', through: { attributes: [] } },
-    });
+    const order = await orderHelper.getOrderById(id);
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
     }
-    res.status(200).json(order);
+    res.render('./admin/order/update', order);
   } catch (error) {
     console.error('Error fetching order:', error);
     res.status(500).json({ error: 'Internal server error' });
