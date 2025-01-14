@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import {checkout, exchangeRate, verifyPaystackTransaction, trackOrder, trackOrderPage} from '../controllers/cartController.js';
+import {checkout, exchangeRate, verifyPaystackTransaction, trackOrder, trackOrderPage} from '../controllers/orderController.js';
 
 
 const router = Router();
