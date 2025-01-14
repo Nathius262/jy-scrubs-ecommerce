@@ -23,6 +23,7 @@ app.use('/admin/size/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/color/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/category/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/admin/collection/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/admin/order/', express.static(path.join(__dirname, '..', 'public')));
 
 //main
 app.use('/product/', express.static(path.join(__dirname, '..', 'public')));
