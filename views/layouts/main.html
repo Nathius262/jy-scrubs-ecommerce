@@ -46,6 +46,8 @@
         <!--=========MAIN END===========-->
 
         <!--=========FOOTER BEGIN===========-->
+        
+        {{#if (notEqual admin true)}}
         <div id="floating-cart" class="floating-cart" style="display: block;">
             <a href="/checkout" class="minicart-inner clearfix">
                 <i class="fas fa-solid fa-cart-shopping text-light"></i>
@@ -54,7 +56,6 @@
                 </span>
             </a>
         </div>
-        {{#if (notEqual admin true)}}
         {{> footer}}
         {{/if}}
 

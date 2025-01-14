@@ -37,57 +37,58 @@
               <div class="card-body">
 
                 <!-- Order Information -->
-                <form id="update-order-form" action="/admin/order/{{id}}" method="POST">
+                <form id="update-order-form" action="/admin/order/{{order.id}}" method="POST">
                   <div class="form-group">
                     <label for="trackingId">Tracking ID</label>
-                    <input type="text" class="form-control" id="trackingId" value="{{trackingId}}" readonly>
+                    <input type="text" class="form-control" id="trackingId" value="{{order.trackingId}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="customerEmail">Customer Email</label>
-                    <input type="email" class="form-control" id="customerEmail" value="{{customerEmail}}" readonly>
+                    <input type="email" class="form-control" id="customerEmail" value="{{order.customerEmail}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="customerPhone">Customer Phone</label>
-                    <input type="text" class="form-control" id="customerPhone" value="{{customerPhone}}" readonly>
+                    <input type="text" class="form-control" id="customerPhone" value="{{order.customerPhone}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="totalAmount">Total Amount</label>
-                    <input type="text" class="form-control" id="totalAmount" value="{{totalAmount}} {{currency}}" readonly>
+                    <input type="text" class="form-control" id="totalAmount" value="{{order.totalAmount}} {{order.currency}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="status">Order Status</label>
-                    <input type="text" class="form-control" id="status" value="{{status}}" readonly>
+                    <input type="text" class="form-control" id="status" value="{{order.status}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="paidAt">Paid At</label>
-                    <input type="text" class="form-control" id="paidAt" value="{{paidAt}}" readonly>
+                    <input type="text" class="form-control" id="paidAt" value="{{order.paidAt}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="paymentChannel">Payment Channel</label>
-                    <input type="text" class="form-control" id="paymentChannel" value="{{paymentChannel}}" readonly>
+                    <input type="text" class="form-control" id="paymentChannel" value="{{order.paymentChannel}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="gatewayResponse">Gateway Response</label>
-                    <input type="text" class="form-control" id="gatewayResponse" value="{{gatewayResponse}}" readonly>
+                    <input type="text" class="form-control" id="gatewayResponse" value="{{order.gatewayResponse}}" readonly>
                   </div>
 
                   <!-- Address Information -->
                   <h5 class="mt-4">Address</h5>
+                  
                   <div class="form-group">
                     <label for="streetAddress">Street Address</label>
-                    <input type="text" class="form-control" id="streetAddress" value="{{address.streetAddress}}" readonly>
+                    <input type="text" class="form-control" id="streetAddress" value="{{order.address.streetAddress}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control" id="city" value="{{address.city}}" readonly>
+                    <input type="text" class="form-control" id="city" value="{{order.address.city}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="state">State</label>
-                    <input type="text" class="form-control" id="state" value="{{address.state}}" readonly>
+                    <input type="text" class="form-control" id="state" value="{{order.address.state}}" readonly>
                   </div>
                   <div class="form-group">
                     <label for="country">Country</label>
-                    <input type="text" class="form-control" id="country" value="{{address.country}}" readonly>
+                    <input type="text" class="form-control" id="country" value="{{order.address.country}}" readonly>
                   </div>
 
                   <!-- Delivery Status -->
@@ -116,7 +117,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {{#each items}}
+                      {{#each order.items}}
                       <tr>
                         <td>{{this.product.name}}</td>
                         <td>{{this.color.name}}</td>
