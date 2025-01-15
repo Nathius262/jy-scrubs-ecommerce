@@ -93,13 +93,14 @@
 
                   <!-- Delivery Status -->
                   <h5 class="mt-4">Delivery Status</h5>
+                  {{#if (eq order.deliveryStatus.[0].status 'shipped')}}teste{{/if}}
                   <div class="form-group">
                     <label for="deliveryStatus">Update Delivery Status</label>
-                    <select name="deliveryStatus" class="form-control" id="deliveryStatus">
-                      <option value="pending" {{#eq deliveryStatus.[0].status 'pending'}}selected{{/eq}}>Pending</option>
-                      <option value="shipped" {{#eq deliveryStatus.[0].status 'shipped'}}selected{{/eq}}>Shipped</option>
-                      <option value="delivered" {{#eq deliveryStatus.[0].status 'delivered'}}selected{{/eq}}>Delivered</option>
-                      <option value="cancelled" {{#eq deliveryStatus.[0].status 'cancelled'}}selected{{/eq}}>Cancelled</option>
+                    <select name="status" class="form-control" id="deliveryStatus">
+                      <option value="pending" {{#if (eq order.deliveryStatus.[0].status 'pending')}}selected{{/if}}>Pending</option>
+                      <option value="shipped" {{#if (eq order.deliveryStatus.[0].status 'shipped')}}selected{{/if}}>Shipped</option>
+                      <option value="delivered" {{#if (eq order.deliveryStatus.[0].status 'delivered')}}selected{{/if}}>Delivered</option>
+                      <option value="cancelled" {{#if (eq order.deliveryStatus.[0].status 'cancelled')}}selected{{/if}}>Cancelled</option>
                     </select>
                   </div>
 
@@ -145,6 +146,49 @@
   </div>
   <!-- End of Content Wrapper -->
 </div>
+
+<script type="module">
+  import {messageAlert} from '/js/utils.js'
+  let form = document.querySelector('#update-order-form')
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    e.stopPropagation();
+
+    let form_data = Object.fromEntries(new FormData(form))
+    let url = form.action;
+    let option = {
+      method:"PUT",
+      headers:{
+        "Content-Type":"Application/json"
+      },
+      body:JSON.stringify(form_data)
+    }
+
+    fetch(url, option)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        messageAlert(
+          title ="Alert!", 
+          message =data.message, 
+          redirectTo= `/admin/order/`+{{order.id}}, 
+          classType ="btn-info", 
+          btnType="btn-info",
+        )
+      })
+      .catch((err) => {
+        console.log('err', err)
+        messageAlert(
+          title ="Error!", 
+          message =err, 
+          redirectTo, 
+          classType ="btn-danger", 
+          btnType="btn-danger",
+        )
+      })
+  })
+</script>
 <!-- End of Page Wrapper -->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="js/sb-admin-2.min.js"></script>

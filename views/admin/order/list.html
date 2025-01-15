@@ -42,6 +42,7 @@
                                         <th scope="col">Id</th>
                                         <th scope="col">trackingId</th>
                                         <th scope="col">customerEmail</th>
+                                        <th scope="col">Delivery Status</th>
                                         <th scope="col">Actions</th>
                                       </tr>
                                     </thead>
@@ -56,6 +57,7 @@
                                                 </a>
                                             </td>
                                             <td>{{this.customerEmail}}</td>
+                                            <td>{{this.deliveryStatus.[0].status}}</td>
                                             <td>
                                                 <a href="/admin/order/{{this.id}}" class="btn btn-sm btn-primary">Edit</a>
                                                 <button id="delete" data-url="/admin/order/{{this.id}}" class="btn btn-sm btn-danger delete-user-btn">
