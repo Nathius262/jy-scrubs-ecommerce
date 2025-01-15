@@ -149,6 +149,7 @@ router.route('/order')
 
 router.route('/order/:id')
     .get(order.getOrderById)
+    .put(order.updateOrder)
     .delete(order.deleteOrder);
 /*
 
