@@ -1,3 +1,4 @@
+import { stat } from 'fs/promises';
 import db from '../models/index.cjs';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -108,7 +109,10 @@ export const getOrders = async (page, limit)=> {
     const offset = (page - 1) * limit;
 
     const { rows: orders, count: totalOrderItems } = await db.Order.findAndCountAll({
-    attributes:['id', 'trackingId', 'customerEmail', 'customerPhone', 'totalAmount', 'currency', 'status', 'paidAt', 'paymentChannel', 'gatewayResponse', 'updatedAt', 'createdAt'],   
+        attributes:['id', 'trackingId', 'customerEmail', 'customerPhone', 'totalAmount', 'currency', 'status', 'paidAt', 'paymentChannel', 'gatewayResponse', 'updatedAt', 'createdAt'],   
+        include:[
+            {model:db.DeliveryStatus, as:'deliveryStatus', attributes: ['status']}
+        ],
         limit,
         offset,
         distinct: true,
@@ -128,6 +132,9 @@ export const getOrders = async (page, limit)=> {
         paidAt: order.paidAt,
         paymentChannel: order.paymentChannel,
         gatewayResponse: order.gatewayResponse,
+        deliveryStatus: order.deliveryStatus.map(status => ({
+            status:status.status,
+        }))
         
     }))
 
